@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#00FFFFFF"
+    tools:context=".Tela_servico_activity">
+
+    <EditText
+        android:id="@+id/Cabecalho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="text"
+        android:text="Serviços Acadêmicos"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:layout_editor_absoluteX="52dp"
+        tools:layout_editor_absoluteY="41dp"
+        tools:ignore="MissingConstraints" />
+
+    <ImageButton
+        android:id="@+id/Carreiras"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/carreiras"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="371dp" />
+
+    <ImageButton
+        android:id="@+id/Concurso_e_editais"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/concursos"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="243dp" />
+
+    <ImageButton
+        android:id="@+id/Institucional"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/institucional"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="371dp" />
+
+    <ImageButton
+        android:id="@+id/Revistas"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/revistas"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="498dp" />
+
+    <ImageButton
+        android:id="@+id/Cursos"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/cursos"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="243dp" />
+
+    <ImageButton
+        android:id="@+id/Secretaria"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/secretaria"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="115dp" />
+
+    <ImageButton
+        android:id="@+id/Biblioteca"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/biblioteca"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="35dp"
+        tools:layout_editor_absoluteY="115dp" />
+
+    <ImageButton
+        android:id="@+id/Vestibular"
+        android:layout_width="180dp"
+        android:layout_height="115dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/vestibular"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="498dp" />
+
+    <ImageButton
+        android:id="@+id/BotaoVoltar"
+        android:layout_width="241dp"
+        android:layout_height="86dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/voltar_button"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="629dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
