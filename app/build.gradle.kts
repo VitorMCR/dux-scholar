@@ -1,6 +1,16 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+}
+
+val localProps = Properties()
+val localPropertiesFile = File(rootProject.rootDir,"app.properties")
+if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
+    localPropertiesFile.inputStream().use {
+        localProps.load(it)
+    }
 }
 
 android {
@@ -26,6 +36,11 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            buildConfigField("String", "API_KEY", localProps.getProperty("API_KEY"))
+        }
+
+        debug {
+            buildConfigField("String", "API_KEY", localProps.getProperty("API_KEY"))
         }
     }
     compileOptions {
@@ -35,6 +50,13 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+<<<<<<< HEAD
+=======
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+>>>>>>> 9dad471 (Segurança extra na API)
 }
 
 dependencies {

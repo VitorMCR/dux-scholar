@@ -30,7 +30,7 @@ class ChatBot : AppCompatActivity() {
 
         val generativeModel = GenerativeModel (
             modelName = "gemini-pro",
-            apiKey = ""
+            apiKey = BuildConfig.API_KEY
         )
 
         chat = generativeModel.startChat(
