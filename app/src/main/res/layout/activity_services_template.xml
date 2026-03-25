@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ServicesTemplateActivity">
+
+    <ImageButton
+        android:id="@+id/imgbtnVoltar2"
+        android:layout_width="241dp"
+        android:layout_height="86dp"
+        android:background="#00FFFFFF"
+        android:scaleType="fitCenter"
+        app:srcCompat="@drawable/voltar_button"
+        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
+        tools:layout_editor_absoluteX="85dp"
+        tools:layout_editor_absoluteY="629dp" />
+
+    <ScrollView
+        android:id="@+id/scrlConteudo"
+        android:layout_width="360dp"
+        android:layout_height="600dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/imgbtnVoltar2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtServCabecalho"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:text="Texto Exemplo"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:ignore="MissingConstraints" />
+
+            <View
+                android:id="@+id/viewServCabecalhoDivider"
+                android:layout_width="200dp"
+                android:layout_height="1dp"
+                android:background="#000" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="20dp" />
+
+            <TextView
+                android:id="@+id/txtServConteudo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:text="Sample Text" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

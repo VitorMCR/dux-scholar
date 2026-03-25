@@ -13,7 +13,7 @@ import com.google.ai.client.generativeai.type.content
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class ChatBot : AppCompatActivity() {
+class ChatbotActivity : AppCompatActivity() {
     lateinit var editTextInput: EditText
     lateinit var editTextOutput: EditText
     lateinit var chat: Chat
@@ -23,7 +23,7 @@ class ChatBot : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_chat_bot)
+        setContentView(R.layout.activity_chatbot)
 
         editTextInput = findViewById(R.id.editTextInput)
         editTextOutput = findViewById(R.id.editTextOutput)
@@ -52,10 +52,10 @@ class ChatBot : AppCompatActivity() {
         }
     }
 
-    public fun buttonSendChat(view: View){
+    fun buttonSendChat(view: View){
         stringBuilder.append(editTextInput.text.toString())
         MainScope().launch {
-            var result = chat.sendMessage(editTextInput.text.toString())
+            val result = chat.sendMessage(editTextInput.text.toString())
             stringBuilder.append(result.text + "\n\n")
 
             editTextOutput.setText(stringBuilder.toString())
