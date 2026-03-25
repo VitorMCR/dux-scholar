@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".StudentProfileActivity">
+
+    <TextView
+        android:id="@+id/txtHeader"
+        android:layout_width="350sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="24dp"
+        android:text="DADOS DO ALUNO"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/txtDataLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnRematricula" />
+
+    <TextView
+        android:id="@+id/txtDataLabel"
+        android:layout_width="80sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:lineSpacingExtra="8sp"
+        android:text="Status:\nRA:\nCurso:\nSemestre:\nTurno:"
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+    <TextView
+        android:id="@+id/txtData"
+        android:layout_width="200sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:lineSpacingExtra="8sp"
+        android:text="Lorem\nIpsum\nDolor\nSit\nAmet"
+        app:layout_constraintStart_toEndOf="@+id/txtDataLabel"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="32dp"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/frmPercen">
+
+        <Button
+            android:id="@+id/btnCarteirinha"
+            android:layout_width="110sp"
+            android:layout_height="90sp"
+            android:backgroundTint="@color/white"
+            android:drawableTop="@drawable/icon_carteirinha"
+            android:text="Carteirinha"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:cornerRadius="10dp"
+            app:iconTint="@color/black"
+            app:strokeColor="@color/black"
+            app:strokeWidth="2sp" />
+
+        <Space
+            android:layout_width="12sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnNotasFaltas"
+            android:layout_width="110sp"
+            android:layout_height="90sp"
+            android:backgroundTint="@color/white"
+            android:drawableTop="@drawable/icon_notafalta"
+            android:text="Notas/Faltas"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="10sp"
+            app:cornerRadius="10dp"
+            app:iconTint="@color/black"
+            app:strokeColor="@color/black"
+            app:strokeWidth="2sp" />
+
+        <Space
+            android:layout_width="12sp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btnHorarios"
+            android:layout_width="110sp"
+            android:layout_height="90sp"
+            android:backgroundTint="@color/white"
+            android:drawableTop="@drawable/icon_horario"
+            android:text="Horários"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:cornerRadius="10dp"
+            app:iconTint="@color/black"
+            app:strokeColor="@color/black"
+            app:strokeWidth="2sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnRematricula"
+        android:layout_width="350sp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#928D9B"
+        android:drawableStart="@drawable/icon_matriculablock"
+        android:text="Rematrícula"
+        android:textStyle="bold"
+        app:icon="@drawable/icon_matriculablock"
+        app:iconPadding="-16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+
+    <FrameLayout
+        android:id="@+id/frmPercen"
+        android:layout_width="350dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="90dp"
+        android:background="@drawable/gradient_percenprogressao"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <LinearLayout
+            android:id="@+id/horizlytPercen"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/vertlytPercen"
+                android:layout_width="175dp"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="160dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/txtPercen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="12dp"
+                    android:text="Percentual de Progressão"
+                    android:textColor="@color/white"
+                    android:textSize="14sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/txtPercenFlavor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8sp"
+                    android:text="Este é o seu progresso em relação à carga horária total do curso. Continue assim!"
+                    android:textColor="@color/white" />
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
