@@ -71,4 +71,5 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
     implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
 }
