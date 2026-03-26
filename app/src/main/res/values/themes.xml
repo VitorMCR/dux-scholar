@@ -6,4 +6,10 @@
     </style>
 
     <style name="Theme.DuxScholar" parent="Base.Theme.DuxScholar" />
+
+    <style name="Theme.DuxScholar.SplashScreen" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
+        <item name="postSplashScreenTheme">@style/Theme.DuxScholar</item>
+    </style>
 </resources>
