@@ -7,6 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <include layout="@layout/user_topbar_layout" />
+
+    <include layout="@layout/navbar_layout" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
