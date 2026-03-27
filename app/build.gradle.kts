@@ -74,4 +74,5 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
     implementation("com.github.prolificinteractive:material-calendarview:2.0.1")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    implementation("com.google.android.material:material:1.+")
 }
