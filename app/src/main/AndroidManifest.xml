@@ -13,6 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuxScholar">
         <activity
+            android:name=".NotasFaltasActivity"
+            android:exported="false" />
+        <activity
+            android:name=".HorarioActivity"
+            android:exported="false" />
+        <activity
             android:name=".CarteirinhaActivity"
             android:exported="false" />
         <activity
@@ -24,7 +30,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".StudentProfileActivity"
             android:exported="false" />
@@ -41,6 +46,9 @@
             android:name=".ChatbotActivity"
             android:exported="false"
             android:theme="@style/Theme.DuxScholar" />
+        <activity
+            android:name=".NewsActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

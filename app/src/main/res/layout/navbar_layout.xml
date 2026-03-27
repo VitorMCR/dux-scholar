@@ -49,7 +49,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Botão para aba notícias"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/noticias" />
+            app:srcCompat="@drawable/news" />
 
         <ImageButton
             android:id="@+id/imgbtnUsuario"
