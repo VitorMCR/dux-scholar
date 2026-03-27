@@ -34,7 +34,7 @@
         android:layout_height="80dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/usuário"
+        app:srcCompat="@drawable/usuario"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
         tools:layout_editor_absoluteX="301dp"
         tools:layout_editor_absoluteY="631dp" />
@@ -67,7 +67,7 @@
         android:layout_height="80dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/notícias"
+        app:srcCompat="@drawable/noticias"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
         tools:layout_editor_absoluteX="207dp"
         tools:layout_editor_absoluteY="633dp" />
@@ -87,7 +87,7 @@
         android:layout_height="70dp"
         android:backgroundTint="#00FFFFFF"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/DuqueIcon"
+        app:srcCompat="@drawable/duqueicon"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
         tools:layout_editor_absoluteX="321dp"
         tools:layout_editor_absoluteY="532dp" />
