@@ -7,18 +7,50 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import com.google.ai.client.generativeai.Chat
-import com.google.ai.client.generativeai.GenerativeModel
-import com.google.ai.client.generativeai.type.content
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaType
+import okhttp3.OkHttpClient
+import okhttp3.Request
+import okhttp3.RequestBody.Companion.toRequestBody
+import org.json.JSONArray
+import org.json.JSONObject
 
 class ChatbotActivity : AppCompatActivity() {
+
     lateinit var editTextInput: EditText
     lateinit var editTextOutput: EditText
-    lateinit var chat: Chat
 
-    var stringBuilder: StringBuilder = java.lang.StringBuilder()
+    var stringBuilder: StringBuilder = StringBuilder()
+    var isRequestRunning = false
+
+    val contextoFaculdade = """
+        Você é um assistente virtual da faculdade.
+
+        REGRAS:
+        - Responda apenas perguntas relacionadas à faculdade
+        - Use apenas as informações fornecidas abaixo
+        - Se não souber a resposta, diga: Não tenho essa informação
+        - Se a pergunta não for sobre a faculdade, diga: Só posso ajudar com assuntos da faculdade
+
+        INFORMAÇÕES DA FACULDADE:
+
+        Cursos disponíveis:
+        - Análise e Desenvolvimento de Sistemas (ADS)
+        - Logística
+        - Gestão Empresarial
+
+        Biblioteca:
+        - Funcionamento: das 8h às 22h
+        - Disponível para alunos matriculados
+
+        Serviços acadêmicos:
+        - Secretaria acadêmica
+        - Atendimento ao aluno
+        - Emissão de documentos
+
+        Calendário:
+        - Segue os feriados nacionais do Brasil
+        - Recesso em julho e dezembro
+    """.trimIndent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,21 +60,7 @@ class ChatbotActivity : AppCompatActivity() {
         editTextInput = findViewById(R.id.editTextInput)
         editTextOutput = findViewById(R.id.editTextOutput)
 
-        val generativeModel = GenerativeModel (
-            modelName = "gemini-pro",
-            apiKey = BuildConfig.API_KEY
-        )
-
-        chat = generativeModel.startChat(
-            history = listOf(
-                content(role = "user") { text("Hello, I have 2 dogs in my house.")},
-                content(role = "model") { text("Great to meet you. What would you like to know?")}
-            )
-        )
-
-        stringBuilder.append("Hello, I have 2 dogs in my house.\n")
-        stringBuilder.append("Great to meet you. What would you like to know?\n")
-
+        stringBuilder.append("Bot: Olá! Sou o assistente da faculdade. Como posso te ajudar?\n\n")
         editTextOutput.setText(stringBuilder.toString())
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -52,14 +70,112 @@ class ChatbotActivity : AppCompatActivity() {
         }
     }
 
-    fun buttonSendChat(view: View){
-        stringBuilder.append(editTextInput.text.toString())
-        MainScope().launch {
-            val result = chat.sendMessage(editTextInput.text.toString())
-            stringBuilder.append(result.text + "\n\n")
+    fun buttonSendChat(view: View) {
 
+        if (isRequestRunning) return
+
+        val userMessage = editTextInput.text.toString()
+
+        if (userMessage.isBlank()) return
+
+        stringBuilder.append("Você: $userMessage\n")
+        editTextOutput.setText(stringBuilder.toString())
+        editTextInput.setText("")
+
+        isRequestRunning = true
+        view.isEnabled = false
+
+        sendMessageToGemini(userMessage) { response ->
+            stringBuilder.append("Bot: $response\n\n")
             editTextOutput.setText(stringBuilder.toString())
-            editTextInput.setText("")
+
+            isRequestRunning = false
+            view.isEnabled = true
         }
+    }
+
+    private fun sendMessageToGemini(message: String, callback: (String) -> Unit) {
+
+        val client = OkHttpClient()
+
+        val promptCompleto = """
+            $contextoFaculdade
+
+            Pergunta do aluno:
+            $message
+        """.trimIndent()
+
+        val jsonObject = JSONObject()
+        val contentsArray = JSONArray()
+        val contentObject = JSONObject()
+        val partsArray = JSONArray()
+        val textObject = JSONObject()
+
+        textObject.put("text", promptCompleto)
+        partsArray.put(textObject)
+        contentObject.put("parts", partsArray)
+        contentsArray.put(contentObject)
+        jsonObject.put("contents", contentsArray)
+
+        val requestBody = jsonObject
+            .toString()
+            .toRequestBody("application/json".toMediaType())
+
+        val request = Request.Builder()
+            .url("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${BuildConfig.API_KEY}")
+            .post(requestBody)
+            .build()
+
+        Thread {
+            try {
+                val response = client.newCall(request).execute()
+                val body = response.body?.string()
+
+                if (body == null) {
+                    runOnUiThread {
+                        callback("Erro: resposta vazia da API")
+                    }
+                    return@Thread
+                }
+
+                val jsonResponse = JSONObject(body)
+
+                if (jsonResponse.has("error")) {
+                    val errorMsg = jsonResponse
+                        .getJSONObject("error")
+                        .getString("message")
+
+                    runOnUiThread {
+                        callback("Erro da API: $errorMsg")
+                    }
+                    return@Thread
+                }
+
+                val candidates = jsonResponse.optJSONArray("candidates")
+
+                if (candidates == null || candidates.length() == 0) {
+                    runOnUiThread {
+                        callback("Erro: resposta sem conteúdo")
+                    }
+                    return@Thread
+                }
+
+                val text = candidates
+                    .getJSONObject(0)
+                    .getJSONObject("content")
+                    .getJSONArray("parts")
+                    .getJSONObject(0)
+                    .getString("text")
+
+                runOnUiThread {
+                    callback(text)
+                }
+
+            } catch (e: Exception) {
+                runOnUiThread {
+                    callback("Erro: ${e.message}")
+                }
+            }
+        }.start()
     }
 }
