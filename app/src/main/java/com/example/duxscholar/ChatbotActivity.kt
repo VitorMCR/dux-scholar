@@ -5,6 +5,8 @@ import android.view.View
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import okhttp3.MediaType.Companion.toMediaType
@@ -17,9 +19,11 @@ import org.json.JSONObject
 class ChatbotActivity : AppCompatActivity() {
 
     lateinit var editTextInput: EditText
-    lateinit var editTextOutput: EditText
+    lateinit var recyclerView: RecyclerView
+    lateinit var adapter: MessageAdapter
 
-    var stringBuilder: StringBuilder = StringBuilder()
+    val messages = mutableListOf<Message>()
+
     var isRequestRunning = false
 
     val contextoFaculdade = """
@@ -58,16 +62,25 @@ class ChatbotActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chatbot)
 
         editTextInput = findViewById(R.id.editTextInput)
-        editTextOutput = findViewById(R.id.editTextOutput)
+        recyclerView = findViewById(R.id.recyclerView)
 
-        stringBuilder.append("Bot: Olá! Sou o assistente da faculdade. Como posso te ajudar?\n\n")
-        editTextOutput.setText(stringBuilder.toString())
+        adapter = MessageAdapter(messages)
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager = LinearLayoutManager(this)
+
+        addMessage("Olá! Sou o assistente da faculdade. Como posso te ajudar?", false)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+    }
+
+    private fun addMessage(text: String, isUser: Boolean) {
+        messages.add(Message(text, isUser))
+        adapter.notifyItemInserted(messages.size - 1)
+        recyclerView.scrollToPosition(messages.size - 1)
     }
 
     fun buttonSendChat(view: View) {
@@ -78,16 +91,14 @@ class ChatbotActivity : AppCompatActivity() {
 
         if (userMessage.isBlank()) return
 
-        stringBuilder.append("Você: $userMessage\n")
-        editTextOutput.setText(stringBuilder.toString())
+        addMessage(userMessage, true)
         editTextInput.setText("")
 
         isRequestRunning = true
         view.isEnabled = false
 
         sendMessageToGemini(userMessage) { response ->
-            stringBuilder.append("Bot: $response\n\n")
-            editTextOutput.setText(stringBuilder.toString())
+            addMessage(response, false)
 
             isRequestRunning = false
             view.isEnabled = true
