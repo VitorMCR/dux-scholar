@@ -15,6 +15,8 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+import java.io.BufferedReader
+import java.io.InputStreamReader
 
 class ChatbotActivity : AppCompatActivity() {
 
@@ -25,36 +27,6 @@ class ChatbotActivity : AppCompatActivity() {
     val messages = mutableListOf<Message>()
 
     var isRequestRunning = false
-
-    val contextoFaculdade = """
-        Você é um assistente virtual da faculdade.
-
-        REGRAS:
-        - Responda apenas perguntas relacionadas à faculdade
-        - Use apenas as informações fornecidas abaixo
-        - Se não souber a resposta, diga: Não tenho essa informação
-        - Se a pergunta não for sobre a faculdade, diga: Só posso ajudar com assuntos da faculdade
-
-        INFORMAÇÕES DA FACULDADE:
-
-        Cursos disponíveis:
-        - Análise e Desenvolvimento de Sistemas (ADS)
-        - Logística
-        - Gestão Empresarial
-
-        Biblioteca:
-        - Funcionamento: das 8h às 22h
-        - Disponível para alunos matriculados
-
-        Serviços acadêmicos:
-        - Secretaria acadêmica
-        - Atendimento ao aluno
-        - Emissão de documentos
-
-        Calendário:
-        - Segue os feriados nacionais do Brasil
-        - Recesso em julho e dezembro
-    """.trimIndent()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,6 +40,7 @@ class ChatbotActivity : AppCompatActivity() {
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        // Mensagem inicial
         addMessage("Olá! Sou o assistente da faculdade. Como posso te ajudar?", false)
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -105,13 +78,37 @@ class ChatbotActivity : AppCompatActivity() {
         }
     }
 
+    private fun loadContextFromAssets(): String {
+        val builder = StringBuilder()
+
+        try {
+            val inputStream = assets.open("faculdade.txt")
+            val reader = BufferedReader(InputStreamReader(inputStream))
+
+            var line: String?
+
+            while (reader.readLine().also { line = it } != null) {
+                builder.append(line).append("\n")
+            }
+
+            reader.close()
+
+        } catch (e: Exception) {
+            return "Erro ao carregar contexto"
+        }
+
+        return builder.toString()
+    }
+
     private fun sendMessageToGemini(message: String, callback: (String) -> Unit) {
 
         val client = OkHttpClient()
 
-        val promptCompleto = """
-            $contextoFaculdade
+        val contexto = loadContextFromAssets()
 
+        val promptCompleto = """
+            $contexto
+            
             Pergunta do aluno:
             $message
         """.trimIndent()
