@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <include layout="@layout/user_topbar_layout" />
+    <include layout="@layout/activity_user_topbar" />
 
     <include layout="@layout/navbar_layout" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/btnChatbot"
         android:layout_width="305dp"
         android:layout_height="48dp"
         android:text="Duque, seu assistente pessoal"
@@ -26,7 +26,7 @@
         app:layout_constraintVertical_bias="0.114" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgChatbotlogo"
         android:layout_width="65dp"
         android:layout_height="68dp"
         android:elevation="10dp"

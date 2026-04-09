@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".StudentProfileActivity">
 
-    <include layout="@layout/user_topbar_layout" />
+    <include layout="@layout/activity_user_topbar" />
 
     <include layout="@layout/navbar_layout" />
 

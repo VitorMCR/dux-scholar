@@ -9,20 +9,35 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.imageview.ShapeableImageView
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var button: Button
+    private lateinit var btnChatbot: Button
+    lateinit var imgbtnUser: ShapeableImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
 
-        button = findViewById(R.id.button)
+        imgbtnUser = findViewById(R.id.imgbtnUser)
 
-        button.setOnClickListener {
+        imgbtnUser.setOnClickListener {
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(intent)
+        }
+
+
+        btnChatbot = findViewById(R.id.btnChatbot)
+
+        btnChatbot.setOnClickListener {
             val intent = Intent(this@MainActivity, ChatbotActivity::class.java)
             startActivity(intent)
         }
@@ -36,12 +51,6 @@ class MainActivity : AppCompatActivity() {
         val newsText = findViewById<TextView>(R.id.textView7)
         newsText.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
-        }
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
         }
     }
 }
