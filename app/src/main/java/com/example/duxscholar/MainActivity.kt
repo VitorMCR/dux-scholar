@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val servicesText = findViewById<TextView>(R.id.textView2)
+        val servicesText = findViewById<TextView>(R.id.txtMaisServ)
         servicesText.setOnClickListener {
             val intent = Intent(this, ServicesActivity::class.java)
             startActivity(intent)
         }
 
-        val newsText = findViewById<TextView>(R.id.textView7)
+        val newsText = findViewById<TextView>(R.id.txtMaisNews)
         newsText.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
         }

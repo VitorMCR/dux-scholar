@@ -15,7 +15,7 @@ if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
 }
 
 android {
-    namespace = "com.example.duxscholar"
+    namespace = "com.fatec.duxscholar"
     compileSdk {
         version = release(36)
     }
