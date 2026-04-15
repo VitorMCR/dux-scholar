@@ -15,13 +15,13 @@ if (localPropertiesFile.exists() && localPropertiesFile.isFile) {
 }
 
 android {
-    namespace = "com.fatec.duxscholar"
+    namespace = "com.example.duxscholar"
     compileSdk {
         version = release(36)
     }
 
     defaultConfig {
-        applicationId = "com.fatec.duxscholar"
+        applicationId = "com.example.duxscholar"
         minSdk = 24
         targetSdk = 36
         versionCode = 1
