@@ -3,12 +3,14 @@ package com.example.duxscholar
 import android.os.Bundle
 import android.view.View
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.duxscholar.BuildConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -42,6 +44,12 @@ class ChatbotActivity : AppCompatActivity() {
 
         // Mensagem inicial
         addMessage("Olá! Sou o assistente da faculdade. Como posso te ajudar?", false)
+
+        val btnClose = findViewById<TextView>(R.id.btnClose)
+
+        btnClose.setOnClickListener {
+            finish()
+        }
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
