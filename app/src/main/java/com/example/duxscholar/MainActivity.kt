@@ -10,11 +10,16 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.android.material.imageview.ShapeableImageView
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var btnChatbot: Button
+    private lateinit var auth: FirebaseAuth
+    lateinit var btnChatbot: Button
     lateinit var imgbtnUser: ShapeableImageView
+    lateinit var txtGreet: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -28,12 +33,21 @@ class MainActivity : AppCompatActivity() {
         }
 
         imgbtnUser = findViewById(R.id.imgbtnUser)
+        txtGreet = findViewById(R.id.txtGreet)
+        auth = Firebase.auth
 
-        imgbtnUser.setOnClickListener {
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
+        if (auth.currentUser != null) {
+            txtGreet.text = "Olá, ${auth.currentUser?.displayName}"
+            imgbtnUser.setOnClickListener {
+                val intent = Intent(this@MainActivity, StudentProfileActivity::class.java)
+                startActivity(intent)
+            }
+        } else {
+            imgbtnUser.setOnClickListener {
+                val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                startActivity(intent)
+            }
         }
-
 
         btnChatbot = findViewById(R.id.btnChatbot)
 
