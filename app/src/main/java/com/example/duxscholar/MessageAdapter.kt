@@ -2,15 +2,18 @@ package com.example.duxscholar
 
 import android.view.*
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.LinearLayout
 import android.view.Gravity
+import android.widget.FrameLayout
 
 class MessageAdapter(private val messages: MutableList<Message>) :
     RecyclerView.Adapter<MessageAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textMessage: TextView = view.findViewById(R.id.textMessage)
+        val imageBot: ImageView = view.findViewById(R.id.imageBot)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -26,16 +29,22 @@ class MessageAdapter(private val messages: MutableList<Message>) :
 
         holder.textMessage.text = message.text
 
-        val params = holder.textMessage.layoutParams as LinearLayout.LayoutParams
+        val container = holder.itemView.findViewById<LinearLayout>(R.id.container)
+        val params = container.layoutParams as FrameLayout.LayoutParams
 
         if (message.isUser) {
             params.gravity = Gravity.END
+
             holder.textMessage.setBackgroundResource(R.drawable.bg_message_user)
+            holder.imageBot.visibility = View.GONE
+
         } else {
             params.gravity = Gravity.START
+
             holder.textMessage.setBackgroundResource(R.drawable.bg_message_bot)
+            holder.imageBot.visibility = View.VISIBLE
         }
 
-        holder.textMessage.layoutParams = params
+        container.layoutParams = params
     }
 }
