@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
         authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-                txtGreet.text = "Olá, ${auth.currentUser?.displayName}"
+                txtGreet.text = "Olá, ${user.displayName}"
                 imgbtnUser.setOnClickListener {
                     val intent = Intent(this@MainActivity, StudentProfileActivity::class.java)
                     startActivity(intent)

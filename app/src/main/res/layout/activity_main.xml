@@ -11,6 +11,46 @@
 
     <include layout="@layout/activity_user_topbar" />
 
+    <Button
+        android:id="@+id/btnChatbot"
+        android:layout_width="350dp"
+        android:layout_height="52dp"
+        android:layout_marginTop="96dp"
+        android:background="@drawable/duque_back"
+        android:drawableEnd="@drawable/icon_enviar"
+        android:text="Duque, seu assistente pessoal"
+        android:textAlignment="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textColor="#48444E"
+        android:textSize="16sp"
+        app:backgroundTint="@null"
+        app:iconSize="48dp"
+        app:iconTint="@null"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imgDuqueIcon"
+        android:layout_width="54dp"
+        android:layout_height="52dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="96dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/duqueicon" />
+
+    <ImageView
+        android:id="@+id/imgCarousel"
+        android:layout_width="300dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.531"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnChatbot"
+        app:srcCompat="@drawable/horario_main" />
+
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
         android:layout_width="0dp"
@@ -88,25 +128,6 @@
         </LinearLayout>
     </HorizontalScrollView>
 
-    <Button
-        android:id="@+id/btnChatbot"
-        android:layout_width="350dp"
-        android:layout_height="52dp"
-        android:layout_marginTop="86dp"
-        android:background="@drawable/duque_back"
-        android:drawableEnd="@drawable/icon_enviar"
-        android:text="Duque, seu assistente pessoal"
-        android:textAlignment="center"
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#48444E"
-        android:textSize="16sp"
-        app:backgroundTint="@null"
-        app:iconSize="48dp"
-        app:iconTint="@null"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
         android:id="@+id/lnlytNewsHeader"
         android:layout_width="match_parent"
@@ -154,20 +175,6 @@
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
-
-    <TextView
-        android:id="@+id/txtMaisServ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/more_services_link"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="#12439E"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lnyltInfoAcademica" />
 
     <LinearLayout
         android:id="@+id/lnyltInfoAcademica"
@@ -219,25 +226,18 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imgCarousel"
-        android:layout_width="300dp"
-        android:layout_height="250dp"
+    <TextView
+        android:id="@+id/txtMaisServ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
+        android:clickable="true"
+        android:focusable="true"
+        android:text="@string/more_services_link"
+        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+        android:textColor="#12439E"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChatbot"
-        app:srcCompat="@drawable/horario_main" />
-
-    <ImageView
-        android:id="@+id/imgDuqueIcon"
-        android:layout_width="54dp"
-        android:layout_height="52dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="86dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/duqueicon" />
+        app:layout_constraintTop_toBottomOf="@+id/lnyltInfoAcademica" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
