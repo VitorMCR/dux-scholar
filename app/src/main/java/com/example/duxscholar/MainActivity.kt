@@ -17,6 +17,7 @@ import com.google.firebase.auth.auth
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var authListener: FirebaseAuth.AuthStateListener
     lateinit var btnChatbot: Button
     lateinit var imgbtnUser: ShapeableImageView
     lateinit var txtGreet: TextView
@@ -36,16 +37,19 @@ class MainActivity : AppCompatActivity() {
         txtGreet = findViewById(R.id.txtGreet)
         auth = Firebase.auth
 
-        if (auth.currentUser != null) {
-            txtGreet.text = "Olá, ${auth.currentUser?.displayName}"
-            imgbtnUser.setOnClickListener {
-                val intent = Intent(this@MainActivity, StudentProfileActivity::class.java)
-                startActivity(intent)
-            }
-        } else {
-            imgbtnUser.setOnClickListener {
-                val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                startActivity(intent)
+        authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+            val user = firebaseAuth.currentUser
+            if (user != null) {
+                txtGreet.text = "Olá, ${auth.currentUser?.displayName}"
+                imgbtnUser.setOnClickListener {
+                    val intent = Intent(this@MainActivity, StudentProfileActivity::class.java)
+                    startActivity(intent)
+                }
+            } else {
+                imgbtnUser.setOnClickListener {
+                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
+                    startActivity(intent)
+                }
             }
         }
 
@@ -66,5 +70,15 @@ class MainActivity : AppCompatActivity() {
         newsText.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        auth.addAuthStateListener(authListener)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        auth.removeAuthStateListener(authListener)
     }
 }
