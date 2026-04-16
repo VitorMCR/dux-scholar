@@ -2,7 +2,9 @@ package com.example.duxscholar
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var btnChatbot: Button
     lateinit var imgbtnUser: ShapeableImageView
     lateinit var txtGreet: TextView
+    lateinit var imgbtnEditor: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -35,6 +38,7 @@ class MainActivity : AppCompatActivity() {
 
         imgbtnUser = findViewById(R.id.imgbtnUser)
         txtGreet = findViewById(R.id.txtGreet)
+        imgbtnEditor = findViewById(R.id.imgbtnEditor)
         auth = Firebase.auth
 
         authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -50,6 +54,7 @@ class MainActivity : AppCompatActivity() {
                     val intent = Intent(this@MainActivity, LoginActivity::class.java)
                     startActivity(intent)
                 }
+                imgbtnEditor.visibility = View.GONE
             }
         }
 
@@ -57,6 +62,11 @@ class MainActivity : AppCompatActivity() {
 
         btnChatbot.setOnClickListener {
             val intent = Intent(this@MainActivity, ChatbotActivity::class.java)
+            startActivity(intent)
+        }
+
+        imgbtnEditor.setOnClickListener {
+            val intent = Intent(this@MainActivity, EditActivity::class.java)
             startActivity(intent)
         }
 

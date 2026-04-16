@@ -37,6 +37,15 @@
             android:textStyle="bold" />
 
         <ImageButton
+            android:id="@+id/imgbtnEditor"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_weight="0"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="Editar leiaute"
+            app:srcCompat="@drawable/icon_edit" />
+
+        <ImageButton
             android:id="@+id/imgbtnToggleTheme"
             android:layout_width="48dp"
             android:layout_height="48dp"

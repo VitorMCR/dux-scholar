@@ -19,6 +19,7 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
+import java.util.concurrent.TimeUnit
 
 class ChatbotActivity : AppCompatActivity() {
 
@@ -110,7 +111,7 @@ class ChatbotActivity : AppCompatActivity() {
 
     private fun sendMessageToGemini(message: String, callback: (String) -> Unit) {
 
-        val client = OkHttpClient()
+        val client = OkHttpClient.Builder().readTimeout(30, TimeUnit.SECONDS).writeTimeout(30, TimeUnit.SECONDS).build()
 
         val contexto = loadContextFromAssets()
 
@@ -138,7 +139,7 @@ class ChatbotActivity : AppCompatActivity() {
             .toRequestBody("application/json".toMediaType())
 
         val request = Request.Builder()
-            .url("https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${BuildConfig.API_KEY}")
+            .url("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-lite-preview:generateContent?key=${BuildConfig.API_KEY}")
             .post(requestBody)
             .build()
 

@@ -51,9 +51,10 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val user = auth.currentUser
                     Toast.makeText(baseContext,
-                        "PARABÉNS!!!!!!",
+                        "Logado com sucesso.",
                         Toast.LENGTH_SHORT
                     ).show()
+                    finish()
                 } else {
                     Toast.makeText(
                         baseContext,
