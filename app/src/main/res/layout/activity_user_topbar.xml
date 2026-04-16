@@ -43,6 +43,7 @@
             android:layout_weight="0"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Editar leiaute"
+            android:visibility="gone"
             app:srcCompat="@drawable/icon_edit" />
 
         <ImageButton

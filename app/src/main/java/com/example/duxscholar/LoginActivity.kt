@@ -2,6 +2,7 @@ package com.example.duxscholar
 
 import android.os.Bundle
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -11,12 +12,17 @@ import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.auth.userProfileChangeRequest
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
     lateinit var edtxtEmail: EditText
     lateinit var edtxtSenha: EditText
+    lateinit var btnEntrar: Button
+    lateinit var btnDeslogar: Button
+    lateinit var btnDefinirNome: Button
+    lateinit var edtxtNome: EditText
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -33,35 +39,61 @@ class LoginActivity : AppCompatActivity() {
 
         edtxtEmail = findViewById(R.id.edtxtEmail)
         edtxtSenha = findViewById(R.id.edtxtSenha)
-    }
 
-    fun btnLoginClicked(view: View) {
-        val email: String = edtxtEmail.text.toString()
-        val senha: String = edtxtSenha.text.toString()
+        btnEntrar = findViewById(R.id.btnEntrar)
+        btnDeslogar = findViewById(R.id.btnDeslogar)
 
-        if (email.isBlank() || senha.isBlank()) {
-            Toast.makeText(baseContext,
-                "Preencha todos os campos!",
-                Toast.LENGTH_SHORT
-            ).show()
+        btnDefinirNome = findViewById(R.id.btnDefinirNome)
+        edtxtNome = findViewById(R.id.edtxtNome)
+
+        btnEntrar.setOnClickListener {
+            val email: String = edtxtEmail.text.toString()
+            val senha: String = edtxtSenha.text.toString()
+
+            if (email.isBlank() || senha.isBlank()) {
+                Toast.makeText(baseContext,
+                    "Preencha todos os campos!",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            auth.signInWithEmailAndPassword(edtxtEmail.text.toString(), edtxtSenha.text.toString())
+                .addOnCompleteListener(this) { task ->
+                    if (task.isSuccessful) {
+                        val user = auth.currentUser
+                        Toast.makeText(baseContext,
+                            "Logado com sucesso.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    } else {
+                        Toast.makeText(
+                            baseContext,
+                            "Falha na autenticação.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
         }
 
-        auth.signInWithEmailAndPassword(edtxtEmail.text.toString(), edtxtSenha.text.toString())
-            .addOnCompleteListener(this) { task ->
-                if (task.isSuccessful) {
-                    val user = auth.currentUser
-                    Toast.makeText(baseContext,
-                        "Logado com sucesso.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                    finish()
-                } else {
-                    Toast.makeText(
-                        baseContext,
-                        "Falha na autenticação.",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
+        btnDeslogar.setOnClickListener {
+            auth.signOut()
+        }
+
+        btnDefinirNome.setOnClickListener {
+            val profileUpdate = userProfileChangeRequest {
+                displayName = edtxtNome.text.toString()
             }
+
+            auth.currentUser!!.updateProfile(profileUpdate)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Toast.makeText(baseContext,
+                            "Alterado com sucesso.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+        }
     }
 }

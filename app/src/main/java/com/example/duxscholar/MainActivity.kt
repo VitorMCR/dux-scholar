@@ -45,17 +45,22 @@ class MainActivity : AppCompatActivity() {
             val user = firebaseAuth.currentUser
             if (user != null) {
                 txtGreet.text = "Olá, ${user.displayName}"
-                imgbtnUser.setOnClickListener {
-                    val intent = Intent(this@MainActivity, StudentProfileActivity::class.java)
-                    startActivity(intent)
-                }
+//                imgbtnUser.setOnClickListener {
+//                    val intent = Intent(this@MainActivity, StudentProfileActivity::class.java)
+//                    startActivity(intent)
+//                }
+                imgbtnEditor.visibility = View.VISIBLE
             } else {
-                imgbtnUser.setOnClickListener {
-                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
-                    startActivity(intent)
-                }
-                imgbtnEditor.visibility = View.GONE
+//                imgbtnUser.setOnClickListener {
+//                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
+//                    startActivity(intent)
+//                }
             }
+        }
+
+        imgbtnUser.setOnClickListener {
+            val intent = Intent(this@MainActivity, LoginActivity::class.java)
+            startActivity(intent)
         }
 
         btnChatbot = findViewById(R.id.btnChatbot)
