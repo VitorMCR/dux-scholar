@@ -11,56 +11,67 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:background="#6060c8"
+        android:background="#FFFFFF"
         android:gravity="center_vertical"
         android:paddingHorizontal="12dp">
 
-        <TextView
+        <ImageView
             android:id="@+id/btnClose"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="X"
-            android:textSize="18sp"
-            android:textColor="#FFFFFF"
-            android:textStyle="bold"
-            android:padding="8dp"/>
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:src="@drawable/ic_arrow_back"
+            android:layout_marginEnd="25dp"/>
+
+
 
         <TextView
             android:id="@+id/txtTitle"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Duque, seu assistente pessoal!"
-            android:textColor="#FFFFFF"
-            android:textSize="16sp"
-            android:textStyle="bold"
-            android:gravity="center"/>
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="8dp"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="8dp">
-
-        <EditText
-            android:id="@+id/editTextInput"
-            android:layout_width="0dp"
-            android:layout_height="59dp"
-            android:layout_weight="1"
-            android:hint="Digite sua mensagem" />
-
-        <Button
-            android:text="Enviar"
-            android:onClick="buttonSendChat"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:text="Converse com Duque"
+            android:textColor="#000000"
+            android:textSize="18sp"
+            />
+
     </LinearLayout>
 
-</LinearLayout>
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/recyclerView"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="1"
+         android:padding="8dp"/>
+
+     <LinearLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+         android:padding="12dp"
+         android:orientation="horizontal"
+         android:gravity="center_vertical">
+
+         <EditText
+             android:id="@+id/editTextInput"
+             android:layout_width="0dp"
+             android:layout_height="wrap_content"
+             android:layout_weight="1"
+             android:background="@drawable/bg_input"
+             android:hint="Digite sua mensagem..."
+             android:textSize="15sp"
+             android:minHeight="56dp"
+             android:maxLines="5"
+             android:gravity="center_vertical"/>
+
+         <ImageButton
+             android:id="@+id/buttonSend"
+             android:layout_width="48dp"
+             android:layout_height="48dp"
+             android:layout_marginStart="8dp"
+             android:background="@drawable/bg_send_button"
+             android:src="@drawable/ic_send"
+             android:contentDescription="Enviar"
+             android:padding="12dp"
+             android:onClick="buttonSendChat"/>
+
+     </LinearLayout>
+
+ </LinearLayout>
