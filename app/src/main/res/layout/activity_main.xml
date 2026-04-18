@@ -39,7 +39,7 @@
         android:layout_marginTop="96dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/img_duque_icon" />
+        app:srcCompat="@drawable/img_icon_duque" />
 
     <ImageView
         android:id="@+id/imgCarousel"
@@ -50,7 +50,7 @@
         app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnChatbot"
-        app:srcCompat="@drawable/img_main_banner_temp" />
+        app:srcCompat="@drawable/img_default_mainbanner" />
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -75,7 +75,7 @@
                 android:layout_height="96dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/news_back">
+                android:background="@drawable/bg_news">
 
                 <TextView
                     android:id="@+id/txtNewstitle1"
@@ -104,7 +104,7 @@
                 android:layout_height="96dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
-                android:background="@drawable/news_back">
+                android:background="@drawable/bg_news">
 
                 <TextView
                     android:id="@+id/txtNewstitle2"
@@ -196,7 +196,7 @@
             android:id="@+id/imgInstitucional"
             android:layout_width="107dp"
             android:layout_height="90dp"
-            app:srcCompat="@drawable/img_institucional_button" />
+            app:srcCompat="@drawable/img_button_institucional" />
 
         <Space
             android:layout_width="wrap_content"
@@ -207,7 +207,7 @@
             android:id="@+id/imgCursos"
             android:layout_width="107dp"
             android:layout_height="90dp"
-            app:srcCompat="@drawable/img_cursos_button" />
+            app:srcCompat="@drawable/img_button_cursos" />
 
         <Space
             android:layout_width="wrap_content"
@@ -218,7 +218,7 @@
             android:id="@+id/imgSecretaria"
             android:layout_width="107dp"
             android:layout_height="90dp"
-            app:srcCompat="@drawable/img_secretaria_button" />
+            app:srcCompat="@drawable/img_button_secretaria" />
 
         <Space
             android:layout_width="wrap_content"

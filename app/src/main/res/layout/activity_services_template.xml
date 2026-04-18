@@ -13,7 +13,7 @@
         android:layout_height="86dp"
         android:background="#00FFFFFF"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/img_voltar_button_custom"
+        app:srcCompat="@drawable/img_button_voltar_custom"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
         tools:layout_editor_absoluteX="85dp"
         tools:layout_editor_absoluteY="629dp" />

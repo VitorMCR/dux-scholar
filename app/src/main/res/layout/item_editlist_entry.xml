@@ -1,29 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:id="@+id/frmEditableItem"
+    android:layout_width="350dp"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginTop="8dp"
+    android:elevation="4dp">
 
-    <FrameLayout
-        android:id="@+id/frmEditableItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+    <LinearLayout
+        android:id="@+id/lnlytItemParts"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/bg_editlist"
+        android:orientation="horizontal">
 
-        <LinearLayout
-            android:id="@+id/lnlytItemParts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/txtItemtitle"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="12dp"
+            android:textColor="#000"
+            tools:text="Item 1" />
 
-            <TextView
-                android:id="@+id/txtItemtitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Item 1" />
-        </LinearLayout>
+        <ImageButton
+            android:id="@+id/imgbtnItemEdit"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="Editar"
+            app:srcCompat="@drawable/ic_edit_square" />
 
-    </FrameLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.2" />
+
+        <ImageButton
+            android:id="@+id/imgbtnItemDelete"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:backgroundTint="#00FFFFFF"
+            android:contentDescription="Excluir"
+            app:srcCompat="@drawable/ic_delete" />
+
+    </LinearLayout>
+
+</FrameLayout>

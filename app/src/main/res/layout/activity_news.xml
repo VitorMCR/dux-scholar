@@ -48,7 +48,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/img_duque_icon"
+        app:srcCompat="@drawable/img_icon_duque"
         tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
         tools:layout_editor_absoluteY="532dp" />
 

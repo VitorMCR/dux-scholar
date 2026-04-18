@@ -76,11 +76,11 @@ class MessageAdapter(private val messages: MutableList<Message>) :
 
             if (message.isUser) {
                 params.gravity = Gravity.END
-                holder.textMessage.setBackgroundResource(R.drawable.bg_message_user)
+                holder.textMessage.setBackgroundResource(R.drawable.bg_chatbot_message_user)
                 holder.imageBot.visibility = View.GONE
             } else {
                 params.gravity = Gravity.START
-                holder.textMessage.setBackgroundResource(R.drawable.bg_message_bot)
+                holder.textMessage.setBackgroundResource(R.drawable.bg_chatbot_message_bot)
                 holder.imageBot.visibility = View.VISIBLE
             }
 

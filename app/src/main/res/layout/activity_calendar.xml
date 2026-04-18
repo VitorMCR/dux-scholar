@@ -26,7 +26,7 @@
     <FrameLayout
         android:layout_width="325dp"
         android:layout_height="237dp"
-        android:background="@drawable/shape_outline"
+        android:background="@drawable/bg_calendar"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

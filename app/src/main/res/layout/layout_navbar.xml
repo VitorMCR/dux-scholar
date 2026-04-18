@@ -31,7 +31,7 @@
             android:backgroundTint="#01FFFFFF"
             android:contentDescription="Botão para página principal"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/img_home_icon" />
+            app:srcCompat="@drawable/img_icon_home" />
 
         <ImageButton
             android:id="@+id/imgbtnCalendário"
@@ -40,7 +40,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Botão para calendário"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/img_calendar_icon" />
+            app:srcCompat="@drawable/img_icon_calendar" />
 
         <ImageButton
             android:id="@+id/imgbtnNoticias"
@@ -49,7 +49,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Botão para aba notícias"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/img_newspaper_icon" />
+            app:srcCompat="@drawable/img_icon_newspaper" />
 
         <ImageButton
             android:id="@+id/imgbtnUsuario"
