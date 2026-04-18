@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".CalendarActivity">
 
-    <include layout="@layout/navbar_layout" />
+    <include layout="@layout/layout_navbar" />
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
@@ -26,7 +26,7 @@
     <FrameLayout
         android:layout_width="325dp"
         android:layout_height="237dp"
-        android:background="@drawable/layout_border"
+        android:background="@drawable/shape_outline"
         android:padding="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

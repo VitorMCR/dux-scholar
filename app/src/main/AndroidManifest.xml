@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuxScholar">
         <activity
+            android:name=".Editpt2Activity"
+            android:exported="false" />
+        <activity
             android:name=".EditActivity"
             android:exported="false" />
         <activity

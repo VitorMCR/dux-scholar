@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".HorarioActivity">
 
-    <include layout="@layout/navbar_layout" />
+    <include layout="@layout/layout_navbar" />
 
     <TextView
         android:id="@+id/txtServCabecalho4"
@@ -57,6 +57,6 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_voltar"
+        app:srcCompat="@drawable/ic_arrow_back_alt"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>

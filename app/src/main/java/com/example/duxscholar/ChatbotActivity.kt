@@ -6,7 +6,6 @@ import android.os.Looper
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
@@ -43,7 +42,7 @@ class ChatbotActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chatbot)
 
         editTextInput = findViewById(R.id.editTextInput)
-        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView = findViewById(R.id.recvChat)
 
         adapter = MessageAdapter(messages)
         recyclerView.adapter = adapter

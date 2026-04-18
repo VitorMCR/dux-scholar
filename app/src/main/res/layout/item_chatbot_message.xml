@@ -15,7 +15,7 @@
             android:id="@+id/imageBot"
             android:layout_width="36dp"
             android:layout_height="36dp"
-            android:src="@drawable/duquebigicon"
+            android:src="@drawable/img_duque"
             android:visibility="gone"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="4dp"

@@ -44,7 +44,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnCursos"
-        app:srcCompat="@drawable/carreiras"
+        app:srcCompat="@drawable/img_carreiras_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -57,7 +57,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnBiblioteca"
-        app:srcCompat="@drawable/concursos"
+        app:srcCompat="@drawable/img_concursos_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -70,7 +70,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnConcEditais"
-        app:srcCompat="@drawable/institucional"
+        app:srcCompat="@drawable/img_institucional_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -83,7 +83,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnInstit"
-        app:srcCompat="@drawable/revistas"
+        app:srcCompat="@drawable/img_revistas_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -96,7 +96,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnSecretaria"
-        app:srcCompat="@drawable/cursos"
+        app:srcCompat="@drawable/img_cursos_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -109,7 +109,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCabecalho"
-        app:srcCompat="@drawable/secretaria"
+        app:srcCompat="@drawable/img_secretaria_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -122,7 +122,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtCabecalho"
-        app:srcCompat="@drawable/biblioteca"
+        app:srcCompat="@drawable/img_biblioteca_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -135,7 +135,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnCarreiras"
-        app:srcCompat="@drawable/vestibular"
+        app:srcCompat="@drawable/img_vestibular_button"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
     <ImageButton
@@ -148,7 +148,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnRevistas"
-        app:srcCompat="@drawable/voltar_button"
+        app:srcCompat="@drawable/img_voltar_button_custom"
         tools:ignore="ContentDescription,MissingConstraints,SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

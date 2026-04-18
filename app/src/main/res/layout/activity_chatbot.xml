@@ -7,7 +7,7 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:id="@+id/topBar"
+        android:id="@+id/lnlytTopbar"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -36,7 +36,7 @@
     </LinearLayout>
 
      <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/recyclerView"
+         android:id="@+id/recvChat"
          android:layout_width="match_parent"
          android:layout_height="0dp"
          android:layout_weight="1"

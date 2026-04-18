@@ -23,7 +23,7 @@
             android:background="#eadcff"
             android:scaleType="centerCrop"
             app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
-            app:srcCompat="@drawable/usuario" />
+            app:srcCompat="@drawable/img_default_user" />
 
 
         <TextView
@@ -44,7 +44,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Editar leiaute"
             android:visibility="gone"
-            app:srcCompat="@drawable/icon_edit" />
+            app:srcCompat="@drawable/ic_edit" />
 
         <ImageButton
             android:id="@+id/imgbtnToggleTheme"
@@ -53,7 +53,7 @@
             android:layout_weight="0"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Alterar tema"
-            app:srcCompat="@drawable/icon_nighttheme" />
+            app:srcCompat="@drawable/ic_nighttheme" />
 
         <ImageButton
             android:id="@+id/imgbtnNotifs"
@@ -63,7 +63,7 @@
             android:layout_weight="0"
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Notificações"
-            app:srcCompat="@drawable/icon_notifs" />
+            app:srcCompat="@drawable/ic_bell" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

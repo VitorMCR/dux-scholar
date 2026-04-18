@@ -7,9 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".StudentProfileActivity">
 
-    <include layout="@layout/activity_user_topbar" />
+    <include layout="@layout/layout_user_topbar" />
 
-    <include layout="@layout/navbar_layout" />
+    <include layout="@layout/layout_navbar" />
 
     <TextView
         android:id="@+id/txtHeader"
@@ -66,7 +66,7 @@
             android:layout_width="110sp"
             android:layout_height="90sp"
             android:backgroundTint="@color/white"
-            android:drawableTop="@drawable/icon_carteirinha"
+            android:drawableTop="@drawable/ic_carteirinha"
             android:text="Carteirinha"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -86,7 +86,7 @@
             android:layout_width="110sp"
             android:layout_height="90sp"
             android:backgroundTint="@color/white"
-            android:drawableTop="@drawable/icon_notafalta"
+            android:drawableTop="@drawable/ic_grades"
             android:text="Notas/Faltas"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -106,7 +106,7 @@
             android:layout_width="110sp"
             android:layout_height="90sp"
             android:backgroundTint="@color/white"
-            android:drawableTop="@drawable/icon_horario"
+            android:drawableTop="@drawable/ic_clock"
             android:text="Horários"
             android:textAlignment="center"
             android:textColor="@color/black"
@@ -124,10 +124,10 @@
         android:layout_height="0dp"
         android:layout_marginTop="32dp"
         android:backgroundTint="#928D9B"
-        android:drawableStart="@drawable/icon_matriculablock"
+        android:drawableStart="@drawable/ic_blocked"
         android:text="Rematrícula"
         android:textStyle="bold"
-        app:icon="@drawable/icon_matriculablock"
+        app:icon="@drawable/ic_blocked"
         app:iconPadding="-16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
@@ -139,7 +139,7 @@
         android:layout_width="350dp"
         android:layout_height="120dp"
         android:layout_marginTop="90dp"
-        android:background="@drawable/gradient_percenprogressao"
+        android:background="@drawable/shape_progressiongradient"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

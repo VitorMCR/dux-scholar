@@ -57,8 +57,8 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon_voltar"
+        app:srcCompat="@drawable/ic_arrow_back_alt"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
-    <include layout="@layout/navbar_layout" />
+    <include layout="@layout/layout_navbar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -7,4 +7,118 @@
     android:layout_height="match_parent"
     tools:context=".EditActivity">
 
+    <LinearLayout
+        android:id="@+id/lnlytTopbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="#FFFFFF"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btnEditClose"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="25dp"
+            android:contentDescription="Botão voltar"
+            android:src="@drawable/ic_arrow_back" />
+
+
+        <TextView
+            android:id="@+id/txtTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Painel de Configuração"
+            android:textColor="#000000"
+            android:textSize="18sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btnEditAlunos"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="72dp"
+        android:backgroundTint="#5D5C5C"
+        android:onClick="goToPt2Screen"
+        android:text="Alunos"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnlytTopbar" />
+
+    <Button
+        android:id="@+id/btnEditProfessores"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#5D5C5C"
+        android:onClick="goToPt2Screen"
+        android:text="Professores"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditAlunos" />
+
+    <Button
+        android:id="@+id/btnEditCursos"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#5D5C5C"
+        android:onClick="goToPt2Screen"
+        android:text="Cursos"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditProfessores" />
+
+    <Button
+        android:id="@+id/btnEditDisciplinas"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#5D5C5C"
+        android:onClick="goToPt2Screen"
+        android:text="Disciplinas"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditCursos" />
+
+    <Button
+        android:id="@+id/btnEditNoticias"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#5D5C5C"
+        android:onClick="goToPt2Screen"
+        android:text="Notícias"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditDisciplinas" />
+
+    <Button
+        android:id="@+id/btnEditInfAcademicas"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#5D5C5C"
+        android:onClick="goToPt2Screen"
+        android:text="Informações Acadêmicas"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditNoticias" />
 </androidx.constraintlayout.widget.ConstraintLayout>

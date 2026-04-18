@@ -7,10 +7,7 @@ import android.widget.LinearLayout
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.RecyclerView
 import android.view.Gravity
-import android.view.animation.AnimationUtils
-import android.view.animation.Animation
 import android.animation.ObjectAnimator
-import android.animation.AnimatorSet
 import android.view.animation.AccelerateDecelerateInterpolator
 
 
@@ -40,11 +37,11 @@ class MessageAdapter(private val messages: MutableList<Message>) :
 
         return if (viewType == TYPE_TYPING) {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_typing, parent, false)
+                .inflate(R.layout.item_chatbot_typing, parent, false)
             TypingViewHolder(view)
         } else {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_message, parent, false)
+                .inflate(R.layout.item_chatbot_message, parent, false)
             MessageViewHolder(view)
         }
     }
