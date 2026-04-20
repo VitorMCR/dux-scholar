@@ -2,6 +2,9 @@ package com.example.duxscholar
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.view.View
+import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -12,6 +15,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -20,9 +24,10 @@ import com.google.firebase.database.ValueEventListener
 
 class Editpt2Activity : AppCompatActivity() {
     lateinit var txtEditTitle : TextView
+    lateinit var txtEditLoading : TextView
     lateinit var recvEditList : RecyclerView
     lateinit var entries : ArrayList<EditEntry>
-    lateinit var editadapter : EditEntryAdapter
+    lateinit var editEntryAdapter : EditEntryAdapter
     var databaseReference : DatabaseReference? = null
     var eventListener : ValueEventListener? = null
 
@@ -42,6 +47,7 @@ class Editpt2Activity : AppCompatActivity() {
         }
 
         txtEditTitle = findViewById(R.id.txtEdit2Title)
+        txtEditLoading = findViewById(R.id.txtEditLoading)
         val WHAT_TO_EDIT = intent.getStringExtra("WHAT_TO_EDIT").toString()
 
         when (WHAT_TO_EDIT) {
@@ -57,10 +63,10 @@ class Editpt2Activity : AppCompatActivity() {
         }
 
         entries = ArrayList()
-        editadapter = EditEntryAdapter(entries)
+        editEntryAdapter = EditEntryAdapter(entries)
 
         recvEditList = findViewById(R.id.recvEditList)
-        recvEditList.adapter = editadapter
+        recvEditList.adapter = editEntryAdapter
 
         databaseReference = FirebaseDatabase.getInstance().getReference(WHAT_TO_EDIT.lowercase())
 
@@ -69,10 +75,11 @@ class Editpt2Activity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 entries.clear()
                 for (data in snapshot.children) {
-                    val entry = EditEntry(data.value.toString())
+                    val entry = EditEntry(data.child("name").value.toString())
                     entry.let { entries.add(it) }
                 }
-                editadapter.notifyDataSetChanged()
+                editEntryAdapter.notifyDataSetChanged()
+                txtEditLoading.visibility = View.GONE
             }
             override fun onCancelled(error: DatabaseError) {
                 Toast.makeText(baseContext, "ERRO: ${error}", Toast.LENGTH_LONG).show()
@@ -86,14 +93,36 @@ class Editpt2Activity : AppCompatActivity() {
             val dialogView = layoutInflater.inflate(editPromptLayout, null)
             val dialog = AlertDialog.Builder(this)
                 .setView(dialogView)
-                .setPositiveButton("OK") { dialog, which ->
+                .setPositiveButton("OK") { dialog, _ ->
+                    @Suppress("UNCHECKED_CAST") val editTexts = getViewsByType(dialogView as ViewGroup, EditText::class.java) as List<EditText>
+
+                    val entryRef = databaseReference!!.push()
+                    var dclass : Any? = 0
+                    when (WHAT_TO_EDIT) {
+                        "Noticias" -> dclass = Noticia(editTexts[0].text.toString(), editTexts[1].text.toString(), editTexts[2].text.toString())
+                    }
+                    entryRef.setValue(dclass)
+                    Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
                     dialog.dismiss()
                 }
-                .setNegativeButton("Cancelar") { dialog, which ->
+                .setNegativeButton("Cancelar") { dialog, _ ->
                     dialog.dismiss()
                 }
                 .create()
             dialog.show()
         }
+    }
+
+    fun getViewsByType(view: View, type: Class<*>): List<View> {
+        val result = mutableListOf<View>()
+        if (type.isInstance(view)) {
+            result.add(view)
+        }
+        if (view is ViewGroup) {
+            for (i in 0 until view.childCount) {
+                result.addAll(getViewsByType(view.getChildAt(i), type))
+            }
+        }
+        return result
     }
 }
