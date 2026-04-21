@@ -1,6 +1,7 @@
 package com.example.duxscholar
 
 import android.annotation.SuppressLint
+import android.content.res.XmlResourceParser
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -62,20 +63,42 @@ class Editpt2Activity : AppCompatActivity() {
             }
         }
 
+        databaseReference = FirebaseDatabase.getInstance().getReference(WHAT_TO_EDIT.lowercase())
+
         entries = ArrayList()
-        editEntryAdapter = EditEntryAdapter(entries)
+        editEntryAdapter = EditEntryAdapter(entries, object : EditEntryAdapter.EntryInteractionListener {
+            override fun onEditClick(position: Int) {
+                val editPrompt = "dialog_prompt_" + WHAT_TO_EDIT.lowercase()
+                val editPromptLayout = resources.getLayout(resources.getIdentifier(editPrompt, "layout", packageName))
+
+                loadAlertDialog(editPromptLayout, WHAT_TO_EDIT, true, position)
+            }
+
+            override fun onDeleteClick(position: Int) {
+                val deleteDialog = AlertDialog.Builder(this@Editpt2Activity)
+                    .setTitle("Confirmar Ação")
+                    .setMessage("Deseja mesmo deletar esta entrada?")
+                    .setPositiveButton("Sim") { dialog, _ ->
+                        databaseReference!!.child(entries[position].id).removeValue()
+                        dialog.dismiss()
+                    }
+                    .setNegativeButton("Não") { dialog, _ ->
+                        dialog.dismiss()
+                    }
+                    .create()
+                deleteDialog.show()
+            }
+        })
 
         recvEditList = findViewById(R.id.recvEditList)
         recvEditList.adapter = editEntryAdapter
-
-        databaseReference = FirebaseDatabase.getInstance().getReference(WHAT_TO_EDIT.lowercase())
 
         eventListener = databaseReference!!.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 entries.clear()
                 for (data in snapshot.children) {
-                    val entry = EditEntry(data.child("name").value.toString())
+                    val entry = EditEntry(data.child("name").value.toString(), data.key.toString(), data.value)
                     entry.let { entries.add(it) }
                 }
                 editEntryAdapter.notifyDataSetChanged()
@@ -90,27 +113,62 @@ class Editpt2Activity : AppCompatActivity() {
             val editPrompt = "dialog_prompt_" + WHAT_TO_EDIT.lowercase()
             val editPromptLayout = resources.getLayout(resources.getIdentifier(editPrompt, "layout", packageName))
 
-            val dialogView = layoutInflater.inflate(editPromptLayout, null)
-            val dialog = AlertDialog.Builder(this)
-                .setView(dialogView)
-                .setPositiveButton("OK") { dialog, _ ->
-                    @Suppress("UNCHECKED_CAST") val editTexts = getViewsByType(dialogView as ViewGroup, EditText::class.java) as List<EditText>
+            loadAlertDialog(editPromptLayout, WHAT_TO_EDIT)
+        }
+    }
 
-                    val entryRef = databaseReference!!.push()
+    fun loadAlertDialog(layoutToLoad: XmlResourceParser, WHAT_TO_EDIT: String, editMode: Boolean = false, editModePos: Int = 0) {
+        val dialogView = layoutInflater.inflate(layoutToLoad, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setPositiveButton("OK", null)
+            .setNegativeButton("Cancelar") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+
+        @Suppress("UNCHECKED_CAST") val editTexts = getViewsByType(dialogView, EditText::class.java) as List<EditText>
+        if (editMode) {
+            val dataMap = entries[editModePos].dataClass as Map<*, *>
+            val dataList = dataMap.values.toList()
+
+            for (i in 0 until editTexts.size) {
+                editTexts[i].setText(dataList[i].toString())
+            }
+        }
+
+        dialog.setOnShowListener {
+            val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            button.setOnClickListener {
+                var inputIsValid = true
+                for (edtxt in editTexts) {
+                    if (edtxt.text.isBlank()) {
+                        Snackbar.make(dialogView, "Um ou mais campos estão vazios.", Snackbar.LENGTH_LONG).show()
+                        inputIsValid = false
+                        break
+                    }
+                }
+
+                if (inputIsValid) {
                     var dclass : Any? = 0
                     when (WHAT_TO_EDIT) {
                         "Noticias" -> dclass = Noticia(editTexts[0].text.toString(), editTexts[1].text.toString(), editTexts[2].text.toString())
                     }
-                    entryRef.setValue(dclass)
-                    Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
-                    dialog.dismiss()
+
+                    if (editMode) {
+                        databaseReference!!.child(entries[editModePos].id).setValue(dclass)
+                        Snackbar.make(window.decorView.rootView, "Editado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        dialog.dismiss()
+                    } else {
+                        val entryRef = databaseReference!!.push()
+                        entryRef.setValue(dclass)
+                        Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        dialog.dismiss()
+                    }
                 }
-                .setNegativeButton("Cancelar") { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .create()
-            dialog.show()
+            }
         }
+        dialog.show()
     }
 
     fun getViewsByType(view: View, type: Class<*>): List<View> {

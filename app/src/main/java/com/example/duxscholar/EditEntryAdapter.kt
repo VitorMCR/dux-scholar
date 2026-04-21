@@ -3,12 +3,32 @@ package com.example.duxscholar
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class EditEntryAdapter(private val entries: MutableList<EditEntry>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-    class EditEntryViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+class EditEntryAdapter(private val entries: MutableList<EditEntry>, private val listener: EntryInteractionListener) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    class EditEntryViewHolder(view: View, private val listener: EntryInteractionListener) : RecyclerView.ViewHolder(view) {
         val txtItemTitle : TextView = view.findViewById(R.id.txtItemtitle)
+        val imgbtnItemEdit : ImageButton = view.findViewById(R.id.imgbtnItemEdit)
+        val imgbtnItemDelete : ImageButton = view.findViewById(R.id.imgbtnItemDelete)
+
+        init {
+            imgbtnItemEdit.setOnClickListener {
+                val position = absoluteAdapterPosition
+                if (position != RecyclerView.NO_POSITION) listener.onEditClick(position)
+            }
+
+            imgbtnItemDelete.setOnClickListener {
+                val position = absoluteAdapterPosition
+                if (position != RecyclerView.NO_POSITION) listener.onDeleteClick(position)
+            }
+        }
+    }
+
+    interface EntryInteractionListener {
+        fun onEditClick(position: Int)
+        fun onDeleteClick(position: Int)
     }
 
     override fun onCreateViewHolder(
@@ -17,7 +37,7 @@ class EditEntryAdapter(private val entries: MutableList<EditEntry>) : RecyclerVi
     ): RecyclerView.ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.item_editlist_entry, parent, false)
-        return EditEntryViewHolder(view)
+        return EditEntryViewHolder(view, listener)
     }
 
     override fun onBindViewHolder(
