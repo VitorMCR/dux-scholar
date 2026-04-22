@@ -3,17 +3,19 @@ package com.example.duxscholar
 import android.annotation.SuppressLint
 import android.content.res.XmlResourceParser
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.children
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
@@ -105,7 +107,7 @@ class Editpt2Activity : AppCompatActivity() {
                 txtEditLoading.visibility = View.GONE
             }
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(baseContext, "ERRO: ${error}", Toast.LENGTH_LONG).show()
+                Log.e("Firebase", "ERRO: ${error.message}")
             }
         })
 
@@ -129,6 +131,9 @@ class Editpt2Activity : AppCompatActivity() {
 
         @Suppress("UNCHECKED_CAST") val editTexts = getViewsByType(dialogView, EditText::class.java) as List<EditText>
         if (editMode) {
+            val promptLayout = (dialogView as ViewGroup).children.firstOrNull() as LinearLayout
+            val title = promptLayout.children.firstOrNull() as TextView
+            title.text = "Editar " + title.text.split(" ")[1]
             val dataMap = entries[editModePos].dataClass as Map<*, *>
             val dataList = dataMap.values.toList()
 

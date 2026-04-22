@@ -65,68 +65,10 @@
         app:layout_constraintTop_toBottomOf="@+id/lnlytNewsHeader">
 
         <LinearLayout
+            android:id="@+id/lnlytNews"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
-
-            <FrameLayout
-                android:id="@+id/frmNews1"
-                android:layout_width="220dp"
-                android:layout_height="96dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_news">
-
-                <TextView
-                    android:id="@+id/txtNewstitle1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Grama da Faculdade"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="#000"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtNewsdesc1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="4sp"
-                    android:paddingTop="15dp"
-                    android:text="Após um período de 6 meses sem corte da grama, os alunos ficaram surpresos com o novo visual do campus!"
-                    android:textColor="#000"
-                    android:textSize="10sp" />
-            </FrameLayout>
-
-            <FrameLayout
-                android:id="@+id/frmNews2"
-                android:layout_width="220dp"
-                android:layout_height="96dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_news">
-
-                <TextView
-                    android:id="@+id/txtNewstitle2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Conheça o Mascote da Fatec!"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-                    android:textColor="#000"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/txtNewsdesc2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
-                    android:lineSpacingExtra="4sp"
-                    android:paddingTop="15dp"
-                    android:text="O mascote da Fatec - que infelizmente não está mais entre nós -, era um marco. Conheça sobre ele e sua história!"
-                    android:textColor="#000"
-                    android:textSize="10sp" />
-            </FrameLayout>
-        </LinearLayout>
+            android:orientation="horizontal" />
     </HorizontalScrollView>
 
     <LinearLayout
@@ -144,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="fill"
-            android:layout_marginLeft="24dp"
+            android:layout_marginStart="24dp"
             android:text="Notícias rápidas"
             android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:textColor="#000000"
@@ -155,7 +97,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_gravity="end"
-            android:layout_marginLeft="180dp"
+            android:layout_marginStart="180dp"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/all_news_link"

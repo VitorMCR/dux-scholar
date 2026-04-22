@@ -2,9 +2,12 @@ package com.example.duxscholar
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +18,11 @@ import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -24,6 +32,8 @@ class MainActivity : AppCompatActivity() {
     lateinit var imgbtnUser: ShapeableImageView
     lateinit var txtGreet: TextView
     lateinit var imgbtnEditor: ImageButton
+    lateinit var lnlytNews: LinearLayout
+    var databaseReference : DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -39,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         imgbtnUser = findViewById(R.id.imgbtnUser)
         txtGreet = findViewById(R.id.txtGreet)
         imgbtnEditor = findViewById(R.id.imgbtnEditor)
+        lnlytNews = findViewById(R.id.lnlytNews)
         auth = Firebase.auth
 
         authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
@@ -84,7 +95,32 @@ class MainActivity : AppCompatActivity() {
         val newsText = findViewById<TextView>(R.id.txtMaisNews)
         newsText.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
+            startActivity(intent)
         }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("noticias")
+
+        databaseReference!!.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                lnlytNews.removeAllViews()
+                val inflater = LayoutInflater.from(this@MainActivity)
+                var limit = 4
+                for (data in snapshot.children) {
+                    if (limit > 0) {
+                        val newLayoutInstance = inflater.inflate(R.layout.item_main_news, lnlytNews, false)
+                        newLayoutInstance.findViewById<TextView>(R.id.txtNewstitle).text = data.child("name").value.toString()
+                        newLayoutInstance.findViewById<TextView>(R.id.txtNewsdesc).text = data.child("header").value.toString()
+                        lnlytNews.addView(newLayoutInstance)
+                        limit -= 1
+                    } else break
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "ERRO: ${error.message}")
+            }
+
+        })
     }
 
     override fun onStart() {
