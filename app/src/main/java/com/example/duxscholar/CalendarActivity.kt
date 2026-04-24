@@ -12,6 +12,7 @@ import androidx.core.view.WindowInsetsCompat
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 
+
 class CalendarActivity : AppCompatActivity() {
 
     private val notes = mutableMapOf<String, String>()

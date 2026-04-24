@@ -29,24 +29,13 @@
         android:id="@+id/txtDataLabel"
         android:layout_width="80sp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:lineSpacingExtra="8sp"
-        android:text="Status:\nRA:\nCurso:\nSemestre:\nTurno:"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="36dp"
+        android:lineSpacingExtra="24sp"
+        android:text="Nome:\nE-mail:\nRA:"
         android:textAlignment="textEnd"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
-
-    <TextView
-        android:id="@+id/txtData"
-        android:layout_width="200sp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="24dp"
-        android:lineSpacingExtra="8sp"
-        android:text="Lorem\nIpsum\nDolor\nSit\nAmet"
-        app:layout_constraintStart_toEndOf="@+id/txtDataLabel"
         app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
 
     <LinearLayout
@@ -177,5 +166,50 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
+
+    <EditText
+        android:id="@+id/edttxtNome"
+        android:layout_width="250dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="80dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+    <EditText
+        android:id="@+id/edttxtEmail"
+        android:layout_width="249dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="80dp"
+        android:ems="10"
+        android:inputType="textEmailAddress"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+    <EditText
+        android:id="@+id/edttxtRa"
+        android:layout_width="250dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="104dp"
+        android:layout_marginEnd="80dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+
+    <Button
+        android:id="@+id/btnSalvar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Salvar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.785" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

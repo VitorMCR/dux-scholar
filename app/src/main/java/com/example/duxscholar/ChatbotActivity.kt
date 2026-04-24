@@ -22,6 +22,7 @@ import java.io.BufferedReader
 import java.io.InputStreamReader
 import java.util.concurrent.TimeUnit
 
+
 class ChatbotActivity : AppCompatActivity() {
 
     lateinit var editTextInput: EditText
