@@ -7,9 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".StudentProfileActivity">
 
-    <include layout="@layout/layout_user_topbar" />
+    <Button
+        android:id="@+id/btnSairuser"
+        android:layout_width="350sp"
+        android:layout_height="0dp"
+        android:layout_marginTop="420dp"
+        android:backgroundTint="#F21313"
+        android:drawableStart="@drawable/ic_arrow_back"
+        android:text="Sair"
+        android:textStyle="bold"
+        app:icon="@drawable/ic_arrow_back"
+        app:iconPadding="-16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.524"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 
-    <include layout="@layout/layout_navbar" />
+    <include
+        layout="@layout/layout_user_topbar"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <include
+        layout="@layout/layout_navbar"
+        app:layout_constraintBottom_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txtHeader"
@@ -171,44 +197,36 @@
         android:id="@+id/edttxtNome"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="12dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="76dp"
         android:ems="10"
         android:inputType="text"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/edttxtEmail"
         android:layout_width="250dp"
         android:layout_height="48dp"
-        android:layout_marginTop="60dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="76dp"
         android:ems="10"
         android:inputType="textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <EditText
         android:id="@+id/edttxtRa"
         android:layout_width="250dp"
         android:layout_height="48dp"
         android:layout_marginTop="104dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginEnd="76dp"
         android:ems="10"
         android:inputType="number"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
-
-    <Button
-        android:id="@+id/btnSalvar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="56dp"
-        android:text="Salvar"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edttxtRa" />
+        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
+        tools:ignore="SpeakableTextPresentCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
