@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:text="Inserir Aluno"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtxtNewFullName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="16dp"
+            android:hint="Nome Completo"
+            android:inputType="text|textPersonName"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtlblProfilePic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:labelFor="@id/btnProfilePic"
+            android:text="Foto de Perfil"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnProfilePic"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_import_button"
+            android:elevation="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Selecionar"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_image_upload"
+            app:iconSize="24dp"
+            app:iconTint="#A9A8AA" />
+
+        <EditText
+            android:id="@+id/edtxtNewEmail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="E-mail"
+            android:inputType="text|textEmailAddress"
+            android:justificationMode="inter_word"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtxtNewRA"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="RA"
+            android:inputType="number"
+            android:justificationMode="inter_word"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtxtNewPhone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Telefone"
+            android:inputType="phone"
+            android:justificationMode="inter_word"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtxtNewPassword"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="Senha temporária"
+            android:inputType="text|textVisiblePassword"
+            android:justificationMode="inter_word"
+            android:maxLines="1"
+            android:scrollbars="vertical"
+            android:singleLine="false"
+            android:textSize="14sp"
+            android:verticalScrollbarPosition="right" />
+
+        <Space
+            android:layout_width="match_parent"
+            android:layout_height="12dp" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/drpdwnCourse"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/actxtCourse"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:hint="Curso"
+                android:inputType="none"
+                android:text="Selecione o Curso" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/txtlblSemester"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/npickSemester"
+            android:text="Semestre"
+            android:textAlignment="center" />
+
+        <me.angrybyte.numberpicker.view.ActualNumberPicker
+            android:id="@+id/npickSemester"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            app:controls_color="@color/black"
+            app:draw_over_controls="true"
+            app:draw_over_text="false"
+            app:max_value="6"
+            app:min_value="1"
+            app:selection_color="#A0DD98FB"
+            app:show_bars="false"
+            app:show_controls="true"
+            app:show_fast_controls="false"
+            app:show_highlight="true"
+            app:show_text="true"
+            app:text_color="@color/black"
+            app:text_size="16sp"
+            app:value="1" />
+
+        <TextView
+            android:id="@+id/txtlblCarteirinhaFront"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:labelFor="@id/btnProfilePic"
+            android:text="Carteirinha - Frente"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnCarteirinhaFront"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_import_button"
+            android:elevation="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Selecionar"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_image_upload"
+            app:iconSize="24dp"
+            app:iconTint="#A9A8AA" />
+
+        <TextView
+            android:id="@+id/txtlblCarteirinhaBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:labelFor="@id/btnProfilePic"
+            android:text="Carteirinha - Verso"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnCarteirinhaBack"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_import_button"
+            android:elevation="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Selecionar"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_image_upload"
+            app:iconSize="24dp"
+            app:iconTint="#A9A8AA" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

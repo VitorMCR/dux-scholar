@@ -81,7 +81,11 @@ class Editpt2Activity : AppCompatActivity() {
                     .setTitle("Confirmar Ação")
                     .setMessage("Deseja mesmo deletar esta entrada?")
                     .setPositiveButton("Sim") { dialog, _ ->
-                        databaseReference!!.child(entries[position].id).removeValue()
+                        databaseReference!!.child(entries[position].id).removeValue().addOnSuccessListener {
+                            Snackbar.make(window.decorView.rootView, "Entrada removida com sucesso.", Snackbar.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
+                        }
                         dialog.dismiss()
                     }
                     .setNegativeButton("Não") { dialog, _ ->
@@ -161,13 +165,20 @@ class Editpt2Activity : AppCompatActivity() {
                     }
 
                     if (editMode) {
-                        databaseReference!!.child(entries[editModePos].id).setValue(dclass)
-                        Snackbar.make(window.decorView.rootView, "Editado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        databaseReference!!.child(entries[editModePos].id).setValue(dclass).addOnSuccessListener {
+                            Snackbar.make(window.decorView.rootView, "Editado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
+                        }
                         dialog.dismiss()
                     } else {
                         val entryRef = databaseReference!!.push()
-                        entryRef.setValue(dclass)
-                        Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        entryRef.setValue(dclass).addOnSuccessListener {
+                            Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
+                        }
+
                         dialog.dismiss()
                     }
                 }
