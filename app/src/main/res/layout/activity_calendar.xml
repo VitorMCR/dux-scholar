@@ -7,7 +7,9 @@
     android:layout_height="match_parent"
     tools:context=".CalendarActivity">
 
-    <include layout="@layout/layout_navbar" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_navbar" />
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
@@ -23,22 +25,24 @@
         app:layout_constraintTop_toTopOf="parent"
         app:mcv_selectionColor="#eb4034" />
 
-    <FrameLayout
-        android:layout_width="325dp"
-        android:layout_height="237dp"
-        android:background="@drawable/bg_calendar"
-        android:padding="5dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewNotes"
+        android:layout_width="288dp"
+        android:layout_height="171dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.689">
+        app:layout_constraintVertical_bias="0.685" />
 
-        <TextView
-            android:id="@+id/TextView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|start" />
-    </FrameLayout>
+    <TextView
+        android:id="@+id/emptyStateText"
+        android:layout_width="78dp"
+        android:layout_height="23dp"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="596dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
