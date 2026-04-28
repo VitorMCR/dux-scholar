@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Editpt2Activity : AppCompatActivity() {
     lateinit var txtEditTitle : TextView
@@ -161,7 +163,8 @@ class Editpt2Activity : AppCompatActivity() {
                 if (inputIsValid) {
                     var dclass : Any? = 0
                     when (WHAT_TO_EDIT) {
-                        "Noticias" -> dclass = Noticia(editTexts[0].text.toString(), editTexts[1].text.toString(), editTexts[2].text.toString())
+                        "Noticias" -> dclass = Noticia(editTexts[0].text.toString(), editTexts[1].text.toString(), editTexts[2].text.toString(),
+                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                     }
 
                     if (editMode) {
