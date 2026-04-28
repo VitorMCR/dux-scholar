@@ -7,6 +7,74 @@
     android:layout_height="match_parent"
     tools:context=".CarteirinhaActivity">
 
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="384dp"
+        android:layout_height="262dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.481"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFrente"
+        app:srcCompat="@drawable/img_icon_carteirinha" />
+
+    <TextView
+        android:id="@+id/txtNomeCarteirinha"
+        android:layout_width="168dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="120dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="@+id/txtDataLabel2"
+        app:layout_constraintTop_toBottomOf="@+id/txtFrente" />
+
+    <TextView
+        android:id="@+id/txtFrente"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="64dp"
+        android:text="FRENTE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.516"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtBenefEstudantis" />
+
+    <TextView
+        android:id="@+id/txtRACarteirinha"
+        android:layout_width="171dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="192dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.096"
+        app:layout_constraintStart_toStartOf="@+id/txtDataLabel2"
+        app:layout_constraintTop_toBottomOf="@+id/txtFrente" />
+
+    <TextView
+        android:id="@+id/txtEmailCarteirinha"
+        android:layout_width="168dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginTop="156dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.088"
+        app:layout_constraintStart_toStartOf="@+id/txtDataLabel2"
+        app:layout_constraintTop_toBottomOf="@+id/txtFrente" />
+
+    <TextView
+        android:id="@+id/txtDataLabel2"
+        android:layout_width="80sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="116dp"
+        android:layout_marginTop="120dp"
+        android:lineSpacingExtra="20sp"
+        android:text="Nome:\nE-mail:\nRA:"
+        android:textAlignment="textEnd"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toBottomOf="@+id/txtFrente" />
+
     <TextView
         android:id="@+id/txtBenefEstudantis"
         android:layout_width="370sp"
@@ -18,49 +86,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imgbtnVoltarCarteirinha" />
 
-    <TextView
-        android:id="@+id/txtFrente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="FRENTE"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtBenefEstudantis" />
-
-    <TextView
-        android:id="@+id/txtVerso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="VERSO"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgFrente" />
-
-    <ImageView
-        android:id="@+id/imgFrente"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:contentDescription="Frente da Carteirinha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtFrente"
-        tools:srcCompat="@tools:sample/avatars" />
-
-    <ImageView
-        android:id="@+id/imgVerso"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:contentDescription="Verso da Carteirinha"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtVerso"
-        tools:srcCompat="@tools:sample/avatars" />
-
     <ImageButton
         android:id="@+id/imgbtnVoltarCarteirinha"
         android:layout_width="48dp"
@@ -71,4 +96,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back_alt" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

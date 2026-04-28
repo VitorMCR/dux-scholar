@@ -20,6 +20,7 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.prolificinteractive.materialcalendarview.spans.DotSpan
 import java.util.UUID
 
+
 class CalendarActivity : AppCompatActivity() {
 
     private lateinit var databaseReference: DatabaseReference

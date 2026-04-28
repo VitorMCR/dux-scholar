@@ -24,6 +24,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class Editpt2Activity : AppCompatActivity() {
     lateinit var txtEditTitle : TextView
@@ -81,7 +83,11 @@ class Editpt2Activity : AppCompatActivity() {
                     .setTitle("Confirmar Ação")
                     .setMessage("Deseja mesmo deletar esta entrada?")
                     .setPositiveButton("Sim") { dialog, _ ->
-                        databaseReference!!.child(entries[position].id).removeValue()
+                        databaseReference!!.child(entries[position].id).removeValue().addOnSuccessListener {
+                            Snackbar.make(window.decorView.rootView, "Entrada removida com sucesso.", Snackbar.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
+                        }
                         dialog.dismiss()
                     }
                     .setNegativeButton("Não") { dialog, _ ->
@@ -157,17 +163,25 @@ class Editpt2Activity : AppCompatActivity() {
                 if (inputIsValid) {
                     var dclass : Any? = 0
                     when (WHAT_TO_EDIT) {
-                        "Noticias" -> dclass = Noticia(editTexts[0].text.toString(), editTexts[1].text.toString(), editTexts[2].text.toString())
+                        "Noticias" -> dclass = Noticia(editTexts[0].text.toString(), editTexts[1].text.toString(), editTexts[2].text.toString(),
+                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
                     }
 
                     if (editMode) {
-                        databaseReference!!.child(entries[editModePos].id).setValue(dclass)
-                        Snackbar.make(window.decorView.rootView, "Editado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        databaseReference!!.child(entries[editModePos].id).setValue(dclass).addOnSuccessListener {
+                            Snackbar.make(window.decorView.rootView, "Editado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
+                        }
                         dialog.dismiss()
                     } else {
                         val entryRef = databaseReference!!.push()
-                        entryRef.setValue(dclass)
-                        Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        entryRef.setValue(dclass).addOnSuccessListener {
+                            Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
+                        }
+
                         dialog.dismiss()
                     }
                 }

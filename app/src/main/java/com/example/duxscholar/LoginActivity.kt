@@ -1,7 +1,6 @@
 package com.example.duxscholar
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -13,6 +12,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.userProfileChangeRequest
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -44,7 +44,7 @@ class LoginActivity : AppCompatActivity() {
         btnDeslogar = findViewById(R.id.btnDeslogar)
 
         btnDefinirNome = findViewById(R.id.btnDefinirNome)
-        edtxtNome = findViewById(R.id.edtxtNome)
+        edtxtNome = findViewById(R.id.edttxtNome)
 
         btnEntrar.setOnClickListener {
             val email: String = edtxtEmail.text.toString()

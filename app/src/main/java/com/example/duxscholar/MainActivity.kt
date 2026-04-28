@@ -24,6 +24,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
@@ -51,6 +52,19 @@ class MainActivity : AppCompatActivity() {
         imgbtnEditor = findViewById(R.id.imgbtnEditor)
         lnlytNews = findViewById(R.id.lnlytNews)
         auth = Firebase.auth
+
+        // Ação do botão user inferior + verificação
+        val imgbtnUsuario = findViewById<ImageButton>(R.id.imgbtnUsuario)
+
+        imgbtnUsuario.setOnClickListener {
+            if (auth.currentUser != null) {
+                val intent = Intent(this, StudentProfileActivity::class.java)
+                startActivity(intent)
+            } else {
+                val intent = Intent(this, LoginActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
         authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser

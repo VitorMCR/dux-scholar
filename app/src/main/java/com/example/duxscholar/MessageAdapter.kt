@@ -11,6 +11,7 @@ import android.animation.ObjectAnimator
 import android.view.animation.AccelerateDecelerateInterpolator
 
 
+
 class MessageAdapter(private val messages: MutableList<Message>) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
