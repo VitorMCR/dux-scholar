@@ -85,13 +85,14 @@ class CalendarActivity : AppCompatActivity() {
         val key = "${date.year}-${date.month}-${date.day}"
 
         databaseReference.orderByChild("dateKey").equalTo(key)
-            .addValueEventListener(object : ValueEventListener {
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     currentNotesList.clear()
                     for (noteSnapshot in snapshot.children) {
                         val note = noteSnapshot.getValue(Note::class.java)
-                        note?.let { currentNotesList.add(it) }
+                        note?.let { currentNotesList.add(it) } // Adiciona na mesma lista
                     }
+                    adapter.notifyDataSetChanged()
 
                     if (currentNotesList.isEmpty()) {
                         emptyStateText.text = "Nenhum lembrete. Toque para adicionar (+)"
