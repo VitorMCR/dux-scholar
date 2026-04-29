@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -14,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -118,12 +120,18 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 lnlytNews.removeAllViews()
                 val inflater = LayoutInflater.from(this@MainActivity)
-                var limit = 4
+                var limit = if (snapshot.childrenCount <= 4) snapshot.childrenCount else 4
                 for (data in snapshot.children) {
                     if (limit > 0) {
                         val newLayoutInstance = inflater.inflate(R.layout.item_main_news, lnlytNews, false)
                         newLayoutInstance.findViewById<TextView>(R.id.txtNewstitle).text = data.child("name").value.toString()
                         newLayoutInstance.findViewById<TextView>(R.id.txtNewsdesc).text = data.child("header").value.toString()
+                        if ((limit - 1).toInt() == 0) {
+                            newLayoutInstance.updateLayoutParams<ViewGroup.MarginLayoutParams>{
+                                marginEnd = (8 * baseContext.resources.displayMetrics.density).toInt()
+                            }
+                        }
+
                         lnlytNews.addView(newLayoutInstance)
                         limit -= 1
                     } else break

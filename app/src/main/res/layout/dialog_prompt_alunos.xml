@@ -27,7 +27,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="16dp"
-            android:hint="Nome Completo"
+            android:hint="@string/hint_aluno_nome"
             android:inputType="text|textPersonName"
             android:maxLines="1"
             android:singleLine="false"
@@ -66,7 +66,7 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="E-mail"
+            android:hint="@string/hint_aluno_email"
             android:inputType="text|textEmailAddress"
             android:justificationMode="inter_word"
             android:maxLines="1"
@@ -79,7 +79,7 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="RA"
+            android:hint="@string/hint_aluno_ra"
             android:inputType="number"
             android:justificationMode="inter_word"
             android:maxLines="1"
@@ -92,7 +92,7 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Telefone"
+            android:hint="@string/hint_aluno_tel"
             android:inputType="phone"
             android:justificationMode="inter_word"
             android:maxLines="1"
@@ -105,7 +105,7 @@
             android:layout_height="match_parent"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="Senha temporária"
+            android:hint="@string/hint_aluno_senha"
             android:inputType="text|textVisiblePassword"
             android:justificationMode="inter_word"
             android:maxLines="1"
@@ -131,7 +131,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:hint="Curso"
+                android:hint="@string/hint_aluno_curso"
                 android:inputType="none"
                 android:text="Selecione o Curso" />
 
@@ -174,38 +174,11 @@
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
             android:labelFor="@id/btnProfilePic"
-            android:text="Carteirinha - Frente"
+            android:text="Carteirinha"
             android:textAlignment="center" />
 
         <Button
             android:id="@+id/btnCarteirinhaFront"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/bg_import_button"
-            android:elevation="4dp"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:text="Selecionar"
-            android:textColor="@color/black"
-            app:backgroundTint="@null"
-            app:icon="@drawable/ic_image_upload"
-            app:iconSize="24dp"
-            app:iconTint="#A9A8AA" />
-
-        <TextView
-            android:id="@+id/txtlblCarteirinhaBack"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="4dp"
-            android:labelFor="@id/btnProfilePic"
-            android:text="Carteirinha - Verso"
-            android:textAlignment="center" />
-
-        <Button
-            android:id="@+id/btnCarteirinhaBack"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
