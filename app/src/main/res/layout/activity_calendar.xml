@@ -19,7 +19,7 @@
         android:layout_marginTop="72dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:mcv_selectionColor="#8218f2"
+        app:mcv_selectionColor="#8218f1"
         app:mcv_tileSize="match_parent" />
 
     <androidx.recyclerview.widget.RecyclerView

@@ -38,4 +38,5 @@ class NoteAdapter(
         this.notes = newNotes
         notifyDataSetChanged()
     }
+    //a
 }

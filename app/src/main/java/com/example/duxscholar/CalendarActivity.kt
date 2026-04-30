@@ -30,6 +30,7 @@ class CalendarActivity : AppCompatActivity() {
     private lateinit var adapter: NoteAdapter
     private lateinit var emptyStateText: TextView
     private lateinit var btnAdd: ImageButton
+    //a
 
     // Lista local para o RecyclerView
     private var currentNotesList = mutableListOf<Note>()
