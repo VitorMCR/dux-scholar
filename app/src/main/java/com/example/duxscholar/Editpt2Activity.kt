@@ -115,7 +115,7 @@ class Editpt2Activity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 entries.clear()
                 for (data in snapshot.children) {
-                    val entry = EditEntry(data.child("name").value.toString(), data.key.toString(), data.value)
+                    val entry = EditEntry(data.child("name").value.toString(), data.key.toString())
                     entry.let { entries.add(it) }
                 }
                 editEntryAdapter.notifyDataSetChanged()
@@ -190,11 +190,11 @@ class Editpt2Activity : AppCompatActivity() {
                 }
 
                 val quickDatabaseReference = FirebaseDatabase.getInstance().getReference(referenceDir)
-                val dropDownItems = mutableMapOf<String, String>()
+                val dropDownItems = mutableListOf<String>()
 
                 quickDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        dropDownItems[snapshot.key.toString()] = snapshot.child("name").value.toString()
+                        dropDownItems.add(snapshot.child("name").value.toString())
                     }
 
                     override fun onCancelled(error: DatabaseError) {
@@ -202,7 +202,7 @@ class Editpt2Activity : AppCompatActivity() {
                     }
                 })
 
-                val acAdapter = ArrayAdapter(this, R.layout.item_dropdown, dropDownItems.values.toList())
+                val acAdapter = ArrayAdapter(this, R.layout.item_dropdown, dropDownItems)
                 acTextView.setAdapter(acAdapter)
             }
         }
@@ -213,11 +213,24 @@ class Editpt2Activity : AppCompatActivity() {
             val title = promptLayout.children.firstOrNull() as TextView
             title.text = "Editar " + title.text.split(" ").drop(1).joinToString(" ")
 
-            TODO("Refazer lógica - '.dataClass' desnecessário?")
-//            val dataMap = entries[editModePos].dataClass as Map<*, *>
-//            val dataList = dataMap.values.toList()
-//
-//            val inputableViews = allViews.filterNot{ it is Button }
+            var dataMap = listOf<Any?>()
+            databaseReference!!.child(entries[editModePos].id).get().addOnSuccessListener { snapshot ->
+                if (snapshot.exists()) {
+                    dataMap = (snapshot.value as Map<*, *>).values.toList()
+                }
+            }
+
+
+            for (i in 0 until allViews.size) {
+                if (allViews[i] is EditText) {
+                    (allViews[i] as EditText).setText(dataMap[i].toString())
+                } else if (allViews[i] is ActualNumberPicker) {
+                    (allViews[i] as ActualNumberPicker).value = dataMap[i].toString().toInt()
+                } else if (allViews[i] is TextInputLayout) {
+                    TODO("Finalizar preenchimento")
+//                    ((allViews[i] as TextInputLayout).getChildAt(1) as AutoCompleteTextView)
+                }
+            }
         }
 
         dialog.setOnShowListener {
