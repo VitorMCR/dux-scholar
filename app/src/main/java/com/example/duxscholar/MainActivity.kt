@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var imgbtnEditor: ImageButton
     lateinit var lnlytNews: LinearLayout
     var databaseReference : DatabaseReference? = null
+    lateinit var imgbtnCalendario: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
@@ -50,6 +51,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         imgbtnUser = findViewById(R.id.imgbtnUser)
+        imgbtnCalendario = findViewById(R.id.imgbtnCalendario)
         txtGreet = findViewById(R.id.txtGreet)
         imgbtnEditor = findViewById(R.id.imgbtnEditor)
         lnlytNews = findViewById(R.id.lnlytNews)
@@ -89,6 +91,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        imgbtnCalendario.setOnClickListener {
+            val intent = Intent(this@MainActivity, CalendarActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
         btnChatbot = findViewById(R.id.btnChatbot)
 
