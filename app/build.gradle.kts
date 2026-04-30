@@ -77,4 +77,5 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("com.google.android.material:material:1.+")
     implementation("me.angrybyte.picker:picker:1.3.1")
+    implementation("io.coil-kt:coil:2.6.0")
 }
