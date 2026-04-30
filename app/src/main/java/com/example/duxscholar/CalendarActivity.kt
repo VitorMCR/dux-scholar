@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -28,6 +29,8 @@ class CalendarActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NoteAdapter
     private lateinit var emptyStateText: TextView
+    private lateinit var btnAdd: ImageButton
+    //a
 
     // Lista local para o RecyclerView
     private var currentNotesList = mutableListOf<Note>()
@@ -36,13 +39,14 @@ class CalendarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calendar)
 
-        // Inicializar Firebase (Referência igual ao seu sistema de notícias)
+        // Inicializar Firebase
         databaseReference = FirebaseDatabase.getInstance().getReference("anotacoes")
 
         // Inicializar Views
         calendarView = findViewById(R.id.calendarView)
         recyclerView = findViewById(R.id.recyclerViewNotes)
         emptyStateText = findViewById(R.id.emptyStateText) // Usando o ID do seu XML
+        btnAdd = findViewById<ImageButton>(R.id.btnAdd)
 
         // Configurar RecyclerView
         // Dentro do onCreate da CalendarActivity
@@ -68,7 +72,7 @@ class CalendarActivity : AppCompatActivity() {
         }
 
         // Clique no texto vazio para adicionar nova nota
-        emptyStateText.setOnClickListener {
+        btnAdd.setOnClickListener {
             val selectedDate = calendarView.selectedDate ?: CalendarDay.today()
             showAddDialogue(selectedDate)
         }
@@ -97,7 +101,7 @@ class CalendarActivity : AppCompatActivity() {
                     databaseReference.child(id).removeValue()
                         .addOnSuccessListener {
                             Toast.makeText(this, "Removido com sucesso!", Toast.LENGTH_SHORT).show()
-                            // A lista atualizará sozinha pelo addValueEventListener
+                                // A lista atualizará sozinha pelo addValueEventListener
                         }
                 }
             }
@@ -151,7 +155,7 @@ class CalendarActivity : AppCompatActivity() {
         val key = "${date.year}-${date.month}-${date.day}"
 
         databaseReference.orderByChild("dateKey").equalTo(key)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     currentNotesList.clear()
                     for (noteSnapshot in snapshot.children) {
@@ -190,7 +194,7 @@ class CalendarActivity : AppCompatActivity() {
                     }
                 }
                 calendarView.removeDecorators()
-                calendarView.addDecorator(EventDecorator(Color.parseColor("#eb4034"), datesWithNotes))
+                calendarView.addDecorator(EventDecorator(Color.parseColor("#8218f2"), datesWithNotes))
             }
 
             override fun onCancelled(error: DatabaseError) {}

@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
 class NoteAdapter(
-    private val notes: List<Note>, // Lista que o restante do código acessa
+    private var notes: List<Note>, // Lista que o restante do código acessa
     private val onItemClick: (Note) -> Unit // Função de clique para editar/remover
 ) : RecyclerView.Adapter<NoteAdapter.NoteVH>() {
 
@@ -33,4 +33,10 @@ class NoteAdapter(
     }
 
     override fun getItemCount() = notes.size
+
+    fun updateData(newNotes: List<Note>) {
+        this.notes = newNotes
+        notifyDataSetChanged()
+    }
+    //a
 }
