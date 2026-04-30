@@ -2,4 +2,12 @@
     <string name="app_name">Dux Scholar</string>
     <string name="all_news_link"><u><i>Ver todas...</i></u></string>
     <string name="more_services_link"><u><i>Mais serviços...</i></u></string>
+
+    <string name="hint_aluno_nome">Nome Completo <font color='#FC5653'>*</font></string>
+    <string name="hint_aluno_email">E-mail <font color='#FC5653'>*</font></string>
+    <string name="hint_aluno_ra">RA <font color='#FC5653'>*</font></string>
+    <string name="hint_aluno_tel">Telefone <font color='#FC5653'>*</font></string>
+    <string name="hint_aluno_senha">Senha temporária <font color='#FC5653'>*</font></string>
+    <string name="hint_aluno_curso">Curso <font color='#FC5653'>*</font></string>
+
 </resources>

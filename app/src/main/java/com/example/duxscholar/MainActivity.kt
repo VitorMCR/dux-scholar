@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.LinearLayout
@@ -14,6 +15,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.updateLayoutParams
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.duxscholar.databinding.ActivityMainBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -29,29 +33,37 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var authListener: FirebaseAuth.AuthStateListener
+
+    private lateinit var binding: ActivityMainBinding
     lateinit var btnChatbot: Button
     lateinit var imgbtnUser: ShapeableImageView
     lateinit var txtGreet: TextView
     lateinit var imgbtnEditor: ImageButton
     lateinit var lnlytNews: LinearLayout
     var databaseReference : DatabaseReference? = null
+    lateinit var imgbtnCalendario: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+
         }
 
         imgbtnUser = findViewById(R.id.imgbtnUser)
+        imgbtnCalendario = findViewById(R.id.imgbtnCalendario)
         txtGreet = findViewById(R.id.txtGreet)
         imgbtnEditor = findViewById(R.id.imgbtnEditor)
         lnlytNews = findViewById(R.id.lnlytNews)
         auth = Firebase.auth
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Ação do botão user inferior + verificação
         val imgbtnUsuario = findViewById<ImageButton>(R.id.imgbtnUsuario)
@@ -88,6 +100,13 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        imgbtnCalendario.setOnClickListener {
+            val intent = Intent(this@MainActivity, CalendarActivity::class.java)
+            startActivity(intent)
+        }
+
+
+
         btnChatbot = findViewById(R.id.btnChatbot)
 
         btnChatbot.setOnClickListener {
@@ -118,12 +137,18 @@ class MainActivity : AppCompatActivity() {
             override fun onDataChange(snapshot: DataSnapshot) {
                 lnlytNews.removeAllViews()
                 val inflater = LayoutInflater.from(this@MainActivity)
-                var limit = 4
+                var limit = if (snapshot.childrenCount <= 4) snapshot.childrenCount else 4
                 for (data in snapshot.children) {
                     if (limit > 0) {
                         val newLayoutInstance = inflater.inflate(R.layout.item_main_news, lnlytNews, false)
                         newLayoutInstance.findViewById<TextView>(R.id.txtNewstitle).text = data.child("name").value.toString()
                         newLayoutInstance.findViewById<TextView>(R.id.txtNewsdesc).text = data.child("header").value.toString()
+                        if ((limit - 1).toInt() == 0) {
+                            newLayoutInstance.updateLayoutParams<ViewGroup.MarginLayoutParams>{
+                                marginEnd = (8 * baseContext.resources.displayMetrics.density).toInt()
+                            }
+                        }
+
                         lnlytNews.addView(newLayoutInstance)
                         limit -= 1
                     } else break

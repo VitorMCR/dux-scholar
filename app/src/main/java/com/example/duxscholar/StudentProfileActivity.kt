@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -18,6 +19,7 @@ class StudentProfileActivity : AppCompatActivity() {
     lateinit var edttxtRA: EditText
     lateinit var btnCarteirinha: Button
     lateinit var btnSairuser: Button
+    lateinit var txtLink: TextView
     lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,15 +34,21 @@ class StudentProfileActivity : AppCompatActivity() {
         edttxtRA = findViewById(R.id.edttxtRa)
         btnCarteirinha = findViewById(R.id.btnCarteirinha)
         btnSairuser = findViewById(R.id.btnSairuser)
+        txtLink = findViewById(R.id.txtLink)
+
+        txtLink.paint.isUnderlineText = true
+
+        txtLink.setOnClickListener {
+            val intent = Intent(this, TrocarSenhaActivity::class.java)
+            startActivity(intent)
+        }
 
         val prefs = getSharedPreferences("perfil_usuario", MODE_PRIVATE)
 
-        //mantive os campos por enquanto mesmo sem o botão salvar, asssim que for decididido oq fazer nesse quesito eu retiro
         edttxtNome.setText(prefs.getString("nome", ""))
         edttxtEmail.setText(prefs.getString("email", ""))
         edttxtRA.setText(prefs.getString("ra", ""))
 
-        //botão sair + confirmação
         btnSairuser.setOnClickListener {
             val builder = AlertDialog.Builder(this)
 
