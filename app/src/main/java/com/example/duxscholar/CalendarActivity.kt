@@ -45,7 +45,12 @@ class CalendarActivity : AppCompatActivity() {
         emptyStateText = findViewById(R.id.emptyStateText) // Usando o ID do seu XML
 
         // Configurar RecyclerView
-        adapter = NoteAdapter(currentNotesList)
+        // Dentro do onCreate da CalendarActivity
+        adapter = NoteAdapter(currentNotesList) { note ->
+            // Chama a função que criamos para mostrar Editar/Excluir
+            showOptionsDialog(note)
+        }
+        recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = adapter
 
@@ -69,6 +74,67 @@ class CalendarActivity : AppCompatActivity() {
         }
     }
 
+    private fun showOptionsDialog(note: Note) {
+        val options = arrayOf("Editar", "Excluir")
+        AlertDialog.Builder(this)
+            .setTitle("O que deseja fazer?")
+            .setItems(options) { _, which ->
+                when (which) {
+                    0 -> showEditDialogue(note) // Editar
+                    1 -> confirmDelete(note)    // Excluir
+                }
+            }
+            .show()
+    }
+
+    // --- FUNÇÃO REMOVER ---
+    private fun confirmDelete(note: Note) {
+        AlertDialog.Builder(this)
+            .setTitle("Excluir Anotação")
+            .setMessage("Tem certeza que deseja apagar esta nota?")
+            .setPositiveButton("Sim") { _, _ ->
+                note.id?.let { id ->
+                    databaseReference.child(id).removeValue()
+                        .addOnSuccessListener {
+                            Toast.makeText(this, "Removido com sucesso!", Toast.LENGTH_SHORT).show()
+                            // A lista atualizará sozinha pelo addValueEventListener
+                        }
+                }
+            }
+            .setNegativeButton("Não", null)
+            .show()
+    }
+
+    // --- FUNÇÃO EDITAR ---
+    private fun showEditDialogue(note: Note) {
+        val dialogView = LayoutInflater.from(this).inflate(R.layout.dialog_add_note, null)
+        val editTitle = dialogView.findViewById<EditText>(R.id.editTitle)
+        val editDesc = dialogView.findViewById<EditText>(R.id.editDescription)
+
+        // Preenche os campos com os dados atuais
+        editTitle.setText(note.title)
+        editDesc.setText(note.description)
+
+        AlertDialog.Builder(this)
+            .setTitle("Editar Anotação")
+            .setView(dialogView)
+            .setPositiveButton("Salvar Alterações") { _, _ ->
+                val newTitle = editTitle.text.toString()
+                val newDesc = editDesc.text.toString()
+
+                if (newTitle.isNotEmpty()) {
+                    val updatedNote = note.copy(title = newTitle, description = newDesc)
+                    note.id?.let { id ->
+                        databaseReference.child(id).setValue(updatedNote)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Atualizado!", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+            }
+            .setNegativeButton("Cancelar", null)
+            .show()
+    }
     private fun setupCalendar() {
         calendarView.state().edit()
             .setMinimumDate(CalendarDay.from(2020, 1, 1))

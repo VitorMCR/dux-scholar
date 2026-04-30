@@ -16,6 +16,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.duxscholar.databinding.ActivityMainBinding
 import com.google.android.material.imageview.ShapeableImageView
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
@@ -31,29 +33,37 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var authListener: FirebaseAuth.AuthStateListener
+
+    private lateinit var binding: ActivityMainBinding
     lateinit var btnChatbot: Button
     lateinit var imgbtnUser: ShapeableImageView
     lateinit var txtGreet: TextView
     lateinit var imgbtnEditor: ImageButton
     lateinit var lnlytNews: LinearLayout
     var databaseReference : DatabaseReference? = null
+    lateinit var imgbtnCalendario: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+
         }
 
         imgbtnUser = findViewById(R.id.imgbtnUser)
+        imgbtnCalendario = findViewById(R.id.imgbtnCalendario)
         txtGreet = findViewById(R.id.txtGreet)
         imgbtnEditor = findViewById(R.id.imgbtnEditor)
         lnlytNews = findViewById(R.id.lnlytNews)
         auth = Firebase.auth
+
+        binding.recyclerView.layoutManager = LinearLayoutManager(this)
 
         // Ação do botão user inferior + verificação
         val imgbtnUsuario = findViewById<ImageButton>(R.id.imgbtnUsuario)
@@ -89,6 +99,13 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this@MainActivity, LoginActivity::class.java)
             startActivity(intent)
         }
+
+        imgbtnCalendario.setOnClickListener {
+            val intent = Intent(this@MainActivity, CalendarActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
         btnChatbot = findViewById(R.id.btnChatbot)
 
