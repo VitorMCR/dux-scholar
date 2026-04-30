@@ -13,17 +13,14 @@
 
     <com.prolificinteractive.materialcalendarview.MaterialCalendarView
         android:id="@+id/calendarView"
-        android:layout_width="328dp"
-        android:layout_height="243dp"
-        android:layout_marginStart="41dp"
-        android:layout_marginTop="80dp"
-        android:layout_marginEnd="42dp"
-        android:layout_marginBottom="408dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="322dp"
+        android:layout_height="282dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="72dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:mcv_selectionColor="#eb4034" />
+        app:mcv_selectionColor="#8218f2"
+        app:mcv_tileSize="match_parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNotes"
@@ -42,15 +39,42 @@
 
     <TextView
         android:id="@+id/emptyStateText"
-        android:layout_width="213dp"
-        android:layout_height="60dp"
+        android:layout_width="193dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="108dp"
+        android:layout_marginTop="376dp"
+        android:textAlignment="center"
         android:textSize="14dp"
         android:textStyle="bold"
-        android:textAlignment="center"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="52dp"
+        android:layout_height="52dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.913"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.499" />
+        app:layout_constraintVertical_bias="0.88"
+        app:srcCompat="@drawable/bg_input" />
+
+    <ImageButton
+        android:id="@+id/btnAdd"
+        android:layout_width="51dp"
+        android:layout_height="49dp"
+        android:backgroundTint="#00FFFFFF"
+        android:scaleType="fitCenter"
+        android:tint="#090404"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.911"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.881"
+        app:srcCompat="@drawable/ic_add"
+        tools:ignore="SpeakableTextPresentCheck,UseAppTint" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
