@@ -39,7 +39,7 @@ class ServicesActivity : AppCompatActivity() {
         recycler.layoutManager = GridLayoutManager(this, 2)
         recycler.adapter = adapter
 
-        db = FirebaseDatabase.getInstance().getReference("infacademicas")
+        db = FirebaseDatabase.getInstance().getReference("infoacademicas")
 
         db.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {

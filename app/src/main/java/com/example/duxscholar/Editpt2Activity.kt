@@ -6,6 +6,7 @@ import android.content.res.XmlResourceParser
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +17,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -33,17 +35,38 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import me.angrybyte.numberpicker.view.ActualNumberPicker
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import java.io.InputStream
 
 class Editpt2Activity : AppCompatActivity() {
-    lateinit var txtEditTitle : TextView
-    lateinit var txtEditLoading : TextView
-    lateinit var recvEditList : RecyclerView
-    lateinit var entries : ArrayList<EditEntry>
-    lateinit var editEntryAdapter : EditEntryAdapter
-    var databaseReference : DatabaseReference? = null
-    var eventListener : ValueEventListener? = null
+    lateinit var txtEditTitle: TextView
+    lateinit var txtEditLoading: TextView
+    lateinit var recvEditList: RecyclerView
+    lateinit var entries: ArrayList<EditEntry>
+    lateinit var editEntryAdapter: EditEntryAdapter
+    var databaseReference: DatabaseReference? = null
+    var eventListener: ValueEventListener? = null
+
+    private var lastClickedButton: Button? = null
+
+    private val pickMedia =
+        registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+            uri?.let {
+                Log.d("Editpt2Activity", getBase64FromUri(it, this).toString())
+                val sizeInBytes = getFileSize(it, this)
+                val limitInBytes = 256 * 1024 // 256KB
+
+                if (sizeInBytes > limitInBytes) {
+                    Toast.makeText(
+                        this,
+                        "A imagem selecionada excede o tamanho máximo permitido (256 KB)",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    lastClickedButton?.text = getFileName(it, this)
+                    lastClickedButton?.hint = getBase64FromUri(it, this) // Funciona?
+                }
+            }
+        }
 
     @SuppressLint("DiscouragedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,7 +75,12 @@ class Editpt2Activity : AppCompatActivity() {
         setContentView(R.layout.activity_editpt2)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(
+                systemBars.left,
+                systemBars.top,
+                systemBars.right,
+                systemBars.bottom
+            )
             insets
         }
 
@@ -68,73 +96,108 @@ class Editpt2Activity : AppCompatActivity() {
             "Noticias" -> {
                 txtEditTitle.text = "EDITANDO Notícias"
             }
+
             "InfAcademicas" -> {
                 txtEditTitle.text = "EDITANDO Informações Acadêmicas"
             }
+
             else -> {
                 txtEditTitle.text = "EDITANDO ${WHAT_TO_EDIT}"
             }
         }
 
-        databaseReference = FirebaseDatabase.getInstance().getReference(WHAT_TO_EDIT.lowercase())
+        databaseReference =
+            FirebaseDatabase.getInstance().getReference(WHAT_TO_EDIT.lowercase())
 
         entries = ArrayList()
-        editEntryAdapter = EditEntryAdapter(entries, object : EditEntryAdapter.EntryInteractionListener {
-            override fun onEditClick(position: Int) {
-                val editPrompt = "dialog_prompt_" + WHAT_TO_EDIT.lowercase()
-                val editPromptLayout = resources.getLayout(resources.getIdentifier(editPrompt, "layout", packageName))
+        editEntryAdapter =
+            EditEntryAdapter(entries, object : EditEntryAdapter.EntryInteractionListener {
+                override fun onEditClick(position: Int) {
+                    val editPrompt = "dialog_prompt_" + WHAT_TO_EDIT.lowercase()
+                    val editPromptLayout = resources.getLayout(
+                        resources.getIdentifier(
+                            editPrompt,
+                            "layout",
+                            packageName
+                        )
+                    )
 
-                loadAlertDialog(editPromptLayout, WHAT_TO_EDIT, true, position)
-            }
+                    loadAlertDialog(editPromptLayout, WHAT_TO_EDIT, true, position)
+                }
 
-            override fun onDeleteClick(position: Int) {
-                val deleteDialog = AlertDialog.Builder(this@Editpt2Activity)
-                    .setTitle("Confirmar Ação")
-                    .setMessage("Deseja mesmo deletar esta entrada?")
-                    .setPositiveButton("Sim") { dialog, _ ->
-                        databaseReference!!.child(entries[position].id).removeValue().addOnSuccessListener {
-                            Snackbar.make(window.decorView.rootView, "Entrada removida com sucesso.", Snackbar.LENGTH_LONG).show()
-                        }.addOnFailureListener {
-                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
+                override fun onDeleteClick(position: Int) {
+                    val deleteDialog = AlertDialog.Builder(this@Editpt2Activity)
+                        .setTitle("Confirmar Ação")
+                        .setMessage("Deseja mesmo deletar esta entrada?")
+                        .setPositiveButton("Sim") { dialog, _ ->
+                            databaseReference!!.child(entries[position].id).removeValue()
+                                .addOnSuccessListener {
+                                    Snackbar.make(
+                                        window.decorView.rootView,
+                                        "Entrada removida com sucesso.",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }.addOnFailureListener {
+                                    Snackbar.make(
+                                        window.decorView.rootView,
+                                        "Algo de errado ocorreu. Tente novamente mais tarde.",
+                                        Snackbar.LENGTH_LONG
+                                    ).show()
+                                }
+                            dialog.dismiss()
                         }
-                        dialog.dismiss()
-                    }
-                    .setNegativeButton("Não") { dialog, _ ->
-                        dialog.dismiss()
-                    }
-                    .create()
-                deleteDialog.show()
-            }
-        })
+                        .setNegativeButton("Não") { dialog, _ ->
+                            dialog.dismiss()
+                        }
+                        .create()
+                    deleteDialog.show()
+                }
+            })
 
         recvEditList = findViewById(R.id.recvEditList)
         recvEditList.adapter = editEntryAdapter
 
-        eventListener = databaseReference!!.addValueEventListener(object : ValueEventListener {
-            @SuppressLint("NotifyDataSetChanged")
-            override fun onDataChange(snapshot: DataSnapshot) {
-                entries.clear()
-                for (data in snapshot.children) {
-                    val entry = EditEntry(data.child("name").value.toString(), data.key.toString())
-                    entry.let { entries.add(it) }
+        eventListener =
+            databaseReference!!.addValueEventListener(object : ValueEventListener {
+                @SuppressLint("NotifyDataSetChanged")
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    entries.clear()
+                    for (data in snapshot.children) {
+                        val entry = EditEntry(
+                            data.child("name").value.toString(),
+                            data.key.toString()
+                        )
+                        entry.let { entries.add(it) }
+                    }
+                    editEntryAdapter.notifyDataSetChanged()
+                    txtEditLoading.visibility = View.GONE
                 }
-                editEntryAdapter.notifyDataSetChanged()
-                txtEditLoading.visibility = View.GONE
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("Firebase", "ERRO: ${error.message}")
-            }
-        })
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "ERRO: ${error.message}")
+                }
+            })
 
         findViewById<FloatingActionButton>(R.id.fabAdd).setOnClickListener {
             val editPrompt = "dialog_prompt_" + WHAT_TO_EDIT.lowercase()
-            val editPromptLayout = resources.getLayout(resources.getIdentifier(editPrompt, "layout", packageName))
+            val editPromptLayout = resources.getLayout(
+                resources.getIdentifier(
+                    editPrompt,
+                    "layout",
+                    packageName
+                )
+            )
 
             loadAlertDialog(editPromptLayout, WHAT_TO_EDIT)
         }
     }
 
-    fun loadAlertDialog(layoutToLoad: XmlResourceParser, WHAT_TO_EDIT: String, editMode: Boolean = false, editModePos: Int = 0) {
+    fun loadAlertDialog(
+        layoutToLoad: XmlResourceParser,
+        WHAT_TO_EDIT: String,
+        editMode: Boolean = false,
+        editModePos: Int = 0
+    ) {
         val dialogView = layoutInflater.inflate(layoutToLoad, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
@@ -152,21 +215,7 @@ class Editpt2Activity : AppCompatActivity() {
 
             for (button in selectButtons) {
                 button.setOnClickListener {
-                    val pickMedia = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-                        uri?.let {
-                            val sizeInBytes = getFileSize(it, this)
-                            val limitInBytes = 256 * 1024 // 256KB
-
-                            if (sizeInBytes > limitInBytes) {
-                                Snackbar.make(dialogView, "A imagem selecionada excede o tamanho máximo permitido (256 KB)",
-                                    Snackbar.LENGTH_LONG).show()
-                            } else {
-                                button.text = getFileName(it, this)
-                                button.hint = it.toString() // Funciona?
-                            }
-                        }
-                    }
-
+                    lastClickedButton = button
                     pickMedia.launch("image/*")
                 }
             }
@@ -174,31 +223,35 @@ class Editpt2Activity : AppCompatActivity() {
 
         // Setup de dropdowns
         if (allViews.any { it is TextInputLayout }) {
-            val dropDowns: List<TextInputLayout> = allViews.filterIsInstance<TextInputLayout>()
-
+            val dropDowns: List<TextInputLayout> =
+                allViews.filterIsInstance<TextInputLayout>()
             for (dropDown in dropDowns) {
-                val acTextView = dropDown.getChildAt(1) as AutoCompleteTextView
-                var referenceDir = acTextView.hint.split(" ")[0].lowercase()
-
-                when (referenceDir) {
+                val acTextView = dropDown.editText as AutoCompleteTextView
+                var refDir = acTextView.hint.split(" ")[0].lowercase()
+                when (refDir) {
                     "professor" -> {
-                        referenceDir = "professores"
+                        refDir = "professores"
                     }
+
                     else -> {
-                        referenceDir += "s"
+                        refDir += "s"
                     }
                 }
 
-                val quickDatabaseReference = FirebaseDatabase.getInstance().getReference(referenceDir)
+                val quickDatabaseReference =
+                    FirebaseDatabase.getInstance().getReference(refDir)
                 val dropDownItems = mutableListOf<String>()
 
-                quickDatabaseReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                quickDatabaseReference.addListenerForSingleValueEvent(object :
+                    ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        dropDownItems.add(snapshot.child("name").value.toString())
+                        if (snapshot.exists()) {
+                            dropDownItems.add(snapshot.child("name").value.toString())
+                        }
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        Log.w("Firebase", "loadPost:onCancelled", error.toException())
+                        Log.w("Firebase", "DropDownSetup:onCancelled", error.toException())
                     }
                 })
 
@@ -209,26 +262,59 @@ class Editpt2Activity : AppCompatActivity() {
 
 
         if (editMode) {
-            val promptLayout = (dialogView as ViewGroup).children.firstOrNull() as LinearLayout
+            val promptLayout =
+                (dialogView as ViewGroup).children.firstOrNull() as LinearLayout
             val title = promptLayout.children.firstOrNull() as TextView
             title.text = "Editar " + title.text.split(" ").drop(1).joinToString(" ")
 
-            var dataMap = listOf<Any?>()
-            databaseReference!!.child(entries[editModePos].id).get().addOnSuccessListener { snapshot ->
-                if (snapshot.exists()) {
-                    dataMap = (snapshot.value as Map<*, *>).values.toList()
+            var dataMap = mutableListOf<Any?>()
+            when (WHAT_TO_EDIT) {
+                "Alunos" -> {
+                    val tempPassEdTxt =
+                        promptLayout.findViewById<EditText>(R.id.edtxtStuPassword)
+                    tempPassEdTxt.hint = tempPassEdTxt.hint.toString().replace(" *", "")
+                }
+
+                "Professores" -> {
+                    // Mesmo que Alunos
                 }
             }
 
+            databaseReference!!.child(entries[editModePos].id).get()
+                .addOnSuccessListener { snapshot ->
+                    if (snapshot.exists()) {
+                        dataMap = (snapshot.value as Map<*, *>).values.toMutableList()
+                    }
+                }
 
             for (i in 0 until allViews.size) {
                 if (allViews[i] is EditText) {
                     (allViews[i] as EditText).setText(dataMap[i].toString())
                 } else if (allViews[i] is ActualNumberPicker) {
-                    (allViews[i] as ActualNumberPicker).value = dataMap[i].toString().toInt()
+                    (allViews[i] as ActualNumberPicker).value =
+                        dataMap[i].toString().toInt()
                 } else if (allViews[i] is TextInputLayout) {
-                    TODO("Finalizar preenchimento")
-//                    ((allViews[i] as TextInputLayout).getChildAt(1) as AutoCompleteTextView)
+                    // Só temos o UID, portanto é necessário encontrar o nome da entrada
+                    val acTextView =
+                        ((allViews[i] as TextInputLayout).editText as AutoCompleteTextView)
+                    var refDir = acTextView.hint.split(" ")[0].lowercase()
+                    when (refDir) {
+                        "professor" -> {
+                            refDir = "professores"
+                        }
+
+                        else -> {
+                            refDir += "s"
+                        }
+                    }
+
+                    FirebaseDatabase.getInstance().getReference(refDir)
+                        .child(dataMap[i].toString()).get()
+                        .addOnSuccessListener { snapshot ->
+                            if (snapshot.exists()) {
+                                acTextView.setText(snapshot.child("name").toString(), false)
+                            }
+                        }
                 }
             }
         }
@@ -275,55 +361,75 @@ class Editpt2Activity : AppCompatActivity() {
         }
         dialog.show()
     }
+}
 
-    fun getAllValidViews(view: View): List<View> {
-        val result = mutableListOf<View>()
-        val types = listOf<Class<*>>(EditText::class.java, Button::class.java, ActualNumberPicker::class.java,
-            TextInputLayout::class.java)
-        for (type in types) {
-            if (type.isInstance(view)) {
-                result.add(view)
-            }
-        }
 
-        if (view is ViewGroup) {
-            for (i in 0 until view.childCount) {
-                result.addAll(getAllValidViews(view.getChildAt(i)))
-            }
+// HELPER FUNCTIONS
+
+fun getAllValidViews(view: View): List<View> {
+    val result = mutableListOf<View>()
+    val types = listOf<Class<*>>(
+        EditText::class.java, Button::class.java, ActualNumberPicker::class.java,
+        TextInputLayout::class.java
+    )
+    for (type in types) {
+        if (type.isInstance(view)) {
+            result.add(view)
         }
-        return result
     }
 
-    fun getFileName(uri: Uri, context: Context): String? {
-        var fileName: String? = null
+    if (view is ViewGroup) {
+        for (i in 0 until view.childCount) {
+            result.addAll(getAllValidViews(view.getChildAt(i)))
+        }
+    }
+    return result
+}
 
-        if (uri.scheme == "content") {
-            val cursor = context.contentResolver.query(uri, null, null, null, null)
-            cursor?.use {
-                if (it.moveToFirst()) {
-                    val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
-                    if (nameIndex != -1) {
-                        fileName = it.getString(nameIndex)
-                    }
+// Tratamento do arquivo escolhido
+fun getFileName(uri: Uri, context: Context): String? {
+    var fileName: String? = null
+
+    if (uri.scheme == "content") {
+        val cursor = context.contentResolver.query(uri, null, null, null, null)
+        cursor?.use {
+            if (it.moveToFirst()) {
+                val nameIndex = it.getColumnIndex(OpenableColumns.DISPLAY_NAME)
+                if (nameIndex != -1) {
+                    fileName = it.getString(nameIndex)
                 }
             }
         }
-
-        if (fileName == null) {
-            fileName = uri.path
-            val cut = fileName?.lastIndexOf('/')
-            if (cut != -1) {
-                fileName = fileName?.substring(cut!! + 1)
-            }
-        }
-        return fileName
     }
 
-    fun getFileSize(uri: Uri, context: Context): Long {
-        return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
-            val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
-            cursor.moveToFirst()
-            cursor.getLong(sizeIndex) // em bytes
-        } ?: 0L
+    if (fileName == null) {
+        fileName = uri.path
+        val cut = fileName?.lastIndexOf('/')
+        if (cut != -1) {
+            fileName = fileName?.substring(cut!! + 1)
+        }
+    }
+    return fileName
+}
+
+fun getFileSize(uri: Uri, context: Context): Long {
+    return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
+        val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
+        cursor.moveToFirst()
+        cursor.getLong(sizeIndex) // em bytes
+    } ?: 0L
+}
+
+fun getBase64FromUri(uri: Uri, context: Context): String? {
+    return try {
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        val bytes = inputStream?.readBytes()
+
+        bytes?.let {
+            Base64.encodeToString(it, Base64.NO_WRAP)
+        }
+    } catch (e: Exception) {
+        e.printStackTrace()
+        null
     }
 }

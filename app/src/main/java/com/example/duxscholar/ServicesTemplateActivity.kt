@@ -1,8 +1,8 @@
 package com.example.duxscholar
 
-import android.os.Build
 import android.os.Bundle
 import android.text.Html
+import android.text.method.LinkMovementMethod
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -26,11 +26,8 @@ class ServicesTemplateActivity : AppCompatActivity() {
 
         txtTitle.text = title
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            txtContent.text = Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT)
-        } else {
-            txtContent.text = Html.fromHtml(content)
-        }
+        txtContent.text = Html.fromHtml(content, Html.FROM_HTML_MODE_COMPACT)
+        txtContent.movementMethod = LinkMovementMethod.getInstance()
 
         btnBack.setOnClickListener {
             finish()

@@ -8,6 +8,6 @@ data class Aluno(
     val telephone: String,
     val temppass: String,
     val curso: String, // UID
-    val semestre: Int,
+    val semester: Int,
     val carteirinha: String // URI
 )

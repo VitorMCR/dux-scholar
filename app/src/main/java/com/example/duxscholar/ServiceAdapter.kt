@@ -32,7 +32,7 @@ class ServiceAdapter(
         holder.binding.txtNome.text = item.name
 
         try {
-            if (item.icon.isNotEmpty() && item.icon.contains(",")) {
+            if (item.icon.isNotEmpty()) {
                 val base64String = item.icon.substringAfter(",")
                 val imageBytes = Base64.decode(base64String, Base64.DEFAULT)
                 holder.binding.imgIcon.load(imageBytes)
@@ -40,7 +40,7 @@ class ServiceAdapter(
                 // fallback caso não seja base64
                 holder.binding.imgIcon.setImageResource(android.R.drawable.ic_menu_gallery)
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             // evita crash
             holder.binding.imgIcon.setImageResource(android.R.drawable.ic_menu_report_image)
         }
