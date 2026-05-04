@@ -36,6 +36,9 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import me.angrybyte.numberpicker.view.ActualNumberPicker
 import java.io.InputStream
+import java.time.ZoneId
+import java.time.ZonedDateTime
+import java.time.format.DateTimeFormatter
 
 class Editpt2Activity : AppCompatActivity() {
     lateinit var txtEditTitle: TextView
@@ -90,9 +93,9 @@ class Editpt2Activity : AppCompatActivity() {
 
         txtEditTitle = findViewById(R.id.txtEdit2Title)
         txtEditLoading = findViewById(R.id.txtEditLoading)
-        val WHAT_TO_EDIT = intent.getStringExtra("WHAT_TO_EDIT").toString()
+        val editTarget = intent.getStringExtra("WHAT_TO_EDIT").toString()
 
-        when (WHAT_TO_EDIT) {
+        when (editTarget) {
             "Noticias" -> {
                 txtEditTitle.text = "EDITANDO Notícias"
             }
@@ -102,18 +105,18 @@ class Editpt2Activity : AppCompatActivity() {
             }
 
             else -> {
-                txtEditTitle.text = "EDITANDO ${WHAT_TO_EDIT}"
+                txtEditTitle.text = "EDITANDO $editTarget"
             }
         }
 
         databaseReference =
-            FirebaseDatabase.getInstance().getReference(WHAT_TO_EDIT.lowercase())
+            FirebaseDatabase.getInstance().getReference(editTarget.lowercase())
 
         entries = ArrayList()
         editEntryAdapter =
             EditEntryAdapter(entries, object : EditEntryAdapter.EntryInteractionListener {
                 override fun onEditClick(position: Int) {
-                    val editPrompt = "dialog_prompt_" + WHAT_TO_EDIT.lowercase()
+                    val editPrompt = "dialog_prompt_" + editTarget.lowercase()
                     val editPromptLayout = resources.getLayout(
                         resources.getIdentifier(
                             editPrompt,
@@ -122,7 +125,7 @@ class Editpt2Activity : AppCompatActivity() {
                         )
                     )
 
-                    loadAlertDialog(editPromptLayout, WHAT_TO_EDIT, true, position)
+                    loadAlertDialog(editPromptLayout, editTarget, true, position)
                 }
 
                 override fun onDeleteClick(position: Int) {
@@ -179,7 +182,7 @@ class Editpt2Activity : AppCompatActivity() {
             })
 
         findViewById<FloatingActionButton>(R.id.fabAdd).setOnClickListener {
-            val editPrompt = "dialog_prompt_" + WHAT_TO_EDIT.lowercase()
+            val editPrompt = "dialog_prompt_" + editTarget.lowercase()
             val editPromptLayout = resources.getLayout(
                 resources.getIdentifier(
                     editPrompt,
@@ -188,13 +191,13 @@ class Editpt2Activity : AppCompatActivity() {
                 )
             )
 
-            loadAlertDialog(editPromptLayout, WHAT_TO_EDIT)
+            loadAlertDialog(editPromptLayout, editTarget)
         }
     }
 
     fun loadAlertDialog(
         layoutToLoad: XmlResourceParser,
-        WHAT_TO_EDIT: String,
+        editTarget: String,
         editMode: Boolean = false,
         editModePos: Int = 0
     ) {
@@ -255,8 +258,26 @@ class Editpt2Activity : AppCompatActivity() {
                     }
                 })
 
-                val acAdapter = ArrayAdapter(this, R.layout.item_dropdown, dropDownItems)
-                acTextView.setAdapter(acAdapter)
+                if (dropDownItems.isEmpty()) {
+                    val refDirFormatted = when (refDir) {
+                        "infoacademicas" -> {
+                            "Informações Acadêmicas"
+                        }
+
+                        else -> {
+                            refDir.replaceFirstChar { it.uppercase() }
+                        }
+                    }
+                    Snackbar.make(
+                        window.decorView.rootView,
+                        "Não há nenhuma entrada em $refDirFormatted para usar na inserção!",
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                    return
+                } else {
+                    val acAdapter = ArrayAdapter(this, R.layout.item_dropdown, dropDownItems)
+                    acTextView.setAdapter(acAdapter)
+                }
             }
         }
 
@@ -268,7 +289,7 @@ class Editpt2Activity : AppCompatActivity() {
             title.text = "Editar " + title.text.split(" ").drop(1).joinToString(" ")
 
             var dataMap = mutableListOf<Any?>()
-            when (WHAT_TO_EDIT) {
+            when (editTarget) {
                 "Alunos" -> {
                     val tempPassEdTxt =
                         promptLayout.findViewById<EditText>(R.id.edtxtStuPassword)
@@ -289,7 +310,9 @@ class Editpt2Activity : AppCompatActivity() {
 
             for (i in 0 until allViews.size) {
                 if (allViews[i] is EditText) {
-                    (allViews[i] as EditText).setText(dataMap[i].toString())
+                    if ((allViews[i] as EditText).hint != getString(R.string.hint_senha)) {
+                        (allViews[i] as EditText).setText(dataMap[i].toString())
+                    }
                 } else if (allViews[i] is ActualNumberPicker) {
                     (allViews[i] as ActualNumberPicker).value =
                         dataMap[i].toString().toInt()
@@ -322,41 +345,70 @@ class Editpt2Activity : AppCompatActivity() {
         dialog.setOnShowListener {
             val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             button.setOnClickListener {
-                TODO("Refazer lógica")
-//                var inputIsValid = true
-//                for (edtxt in editTexts) {
-//                    if (edtxt.text.isBlank()) {
-//                        Snackbar.make(dialogView, "Um ou mais campos estão vazios.", Snackbar.LENGTH_LONG).show()
-//                        inputIsValid = false
-//                        break
-//                    }
-//                }
-//
-//                if (inputIsValid) {
-//                    var dclass : Any? = 0
-//                    when (WHAT_TO_EDIT) {
-//                        "Noticias" -> dclass = Noticia(editTexts[0].text.toString(), editTexts[1].text.toString(), editTexts[2].text.toString(),
-//                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")))
-//                    }
-//
-//                    if (editMode) {
-//                        databaseReference!!.child(entries[editModePos].id).setValue(dclass).addOnSuccessListener {
-//                            Snackbar.make(window.decorView.rootView, "Editado com sucesso.", Snackbar.LENGTH_LONG).show()
-//                        }.addOnFailureListener {
-//                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
-//                        }
-//                        dialog.dismiss()
-//                    } else {
-//                        val entryRef = databaseReference!!.push()
-//                        entryRef.setValue(dclass).addOnSuccessListener {
-//                            Snackbar.make(window.decorView.rootView, "Adicionado com sucesso.", Snackbar.LENGTH_LONG).show()
-//                        }.addOnFailureListener {
-//                            Snackbar.make(window.decorView.rootView, "Algo de errado ocorreu. Tente novamente mais tarde.", Snackbar.LENGTH_LONG).show()
-//                        }
-//
-//                        dialog.dismiss()
-//                    }
-//                }
+                var inputIsValid = true
+
+                val edtxts = allViews.filterIsInstance<EditText>()
+                for (edtxt in edtxts) {
+                    if (edtxt.text.contains("*") && edtxt.text.isBlank()) {
+                        Snackbar.make(
+                            dialogView,
+                            "Um ou mais campos obrigatórios estão vazios.",
+                            Snackbar.LENGTH_LONG
+                        ).show()
+                        inputIsValid = false
+                        break
+                    }
+                }
+
+                if (inputIsValid) {
+                    var dclass: Any? = 0
+                    when (editTarget) {
+                        // Adicionar para cada caso
+                        "Noticias" -> dclass = Noticia(
+                            (allViews[0] as EditText).text.toString(),
+                            (allViews[1] as EditText).text.toString(),
+                            (allViews[2] as Button).hint.toString(),
+                            (allViews[3] as EditText).text.toString(),
+                            ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).format(
+                                DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                            )
+                        )
+                    }
+
+                    if (editMode) {
+                        databaseReference!!.child(entries[editModePos].id).setValue(dclass)
+                            .addOnSuccessListener {
+                                Snackbar.make(
+                                    window.decorView.rootView,
+                                    "Editado com sucesso.",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }.addOnFailureListener {
+                                Snackbar.make(
+                                    window.decorView.rootView,
+                                    "Algo de errado ocorreu. Tente novamente mais tarde.",
+                                    Snackbar.LENGTH_LONG
+                                ).show()
+                            }
+                        dialog.dismiss()
+                    } else {
+                        val entryRef = databaseReference!!.push()
+                        entryRef.setValue(dclass).addOnSuccessListener {
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                "Adicionado com sucesso.",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }.addOnFailureListener {
+                            Snackbar.make(
+                                window.decorView.rootView,
+                                "Algo de errado ocorreu. Tente novamente mais tarde.",
+                                Snackbar.LENGTH_LONG
+                            ).show()
+                        }
+                        dialog.dismiss()
+                    }
+                }
             }
         }
         dialog.show()

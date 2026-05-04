@@ -47,6 +47,33 @@
             android:singleLine="false"
             android:textSize="14sp" />
 
+        <TextView
+            android:id="@+id/txtlblNewImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:labelFor="@id/btnStuProfilePic"
+            android:text="Imagem de Destaque"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnNewImage"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_import_button"
+            android:elevation="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="Selecionar"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_image_upload"
+            app:iconSize="24dp"
+            app:iconTint="#A9A8AA" />
+
         <EditText
             android:id="@+id/edtxtNewContent"
             android:layout_width="match_parent"
