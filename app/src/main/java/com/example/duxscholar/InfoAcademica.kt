@@ -2,6 +2,6 @@ package com.example.duxscholar
 
 data class InfoAcademica(
     val name: String = "",
-    val content: String = "",
-    val icon: String = ""
+    val icon: String = "",
+    val content: String = ""
 )

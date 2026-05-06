@@ -9,5 +9,8 @@
     <string name="hint_tel">Telefone <font color='#FC5653'>*</font></string>
     <string name="hint_senha">Senha temporária <font color='#FC5653'>*</font></string>
     <string name="hint_curso">Curso <font color='#FC5653'>*</font></string>
+    <string name="hint_title">Título <font color='#FC5653'>*</font></string>
+    <string name="hint_header">Cabeçalho <font color='#FC5653'>*</font></string>
+    <string name="hint_content">Conteúdo <font color='#FC5653'>*</font></string>
 
 </resources>

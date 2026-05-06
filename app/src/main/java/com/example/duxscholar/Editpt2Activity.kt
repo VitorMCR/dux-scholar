@@ -100,7 +100,7 @@ class Editpt2Activity : AppCompatActivity() {
                 txtEditTitle.text = "EDITANDO Notícias"
             }
 
-            "InfAcademicas" -> {
+            "InfoAcademicas" -> {
                 txtEditTitle.text = "EDITANDO Informações Acadêmicas"
             }
 
@@ -304,42 +304,42 @@ class Editpt2Activity : AppCompatActivity() {
             databaseReference!!.child(entries[editModePos].id).get()
                 .addOnSuccessListener { snapshot ->
                     if (snapshot.exists()) {
-                        dataMap = (snapshot.value as Map<*, *>).values.toMutableList()
-                    }
-                }
+                        //dataMap = reorderDataAsList((snapshot.value as Map<String, String>))
 
-            for (i in 0 until allViews.size) {
-                if (allViews[i] is EditText) {
-                    if ((allViews[i] as EditText).hint != getString(R.string.hint_senha)) {
-                        (allViews[i] as EditText).setText(dataMap[i].toString())
-                    }
-                } else if (allViews[i] is ActualNumberPicker) {
-                    (allViews[i] as ActualNumberPicker).value =
-                        dataMap[i].toString().toInt()
-                } else if (allViews[i] is TextInputLayout) {
-                    // Só temos o UID, portanto é necessário encontrar o nome da entrada
-                    val acTextView =
-                        ((allViews[i] as TextInputLayout).editText as AutoCompleteTextView)
-                    var refDir = acTextView.hint.split(" ")[0].lowercase()
-                    when (refDir) {
-                        "professor" -> {
-                            refDir = "professores"
-                        }
+                        for (i in 0 until allViews.size) {
+                            if (allViews[i] is EditText) {
+                                if ((allViews[i] as EditText).hint.toString() != getString(R.string.hint_senha)) {
+                                    (allViews[i] as EditText).setText(dataMap[i].toString())
+                                }
+                            } else if (allViews[i] is ActualNumberPicker) {
+                                (allViews[i] as ActualNumberPicker).value =
+                                    dataMap[i].toString().toInt()
+                            } else if (allViews[i] is TextInputLayout) {
+                                // Só temos o UID, portanto é necessário encontrar o nome da entrada
+                                val acTextView =
+                                    ((allViews[i] as TextInputLayout).editText as AutoCompleteTextView)
+                                var refDir = acTextView.hint.split(" ")[0].lowercase()
+                                when (refDir) {
+                                    "professor" -> {
+                                        refDir = "professores"
+                                    }
 
-                        else -> {
-                            refDir += "s"
-                        }
-                    }
+                                    else -> {
+                                        refDir += "s"
+                                    }
+                                }
 
-                    FirebaseDatabase.getInstance().getReference(refDir)
-                        .child(dataMap[i].toString()).get()
-                        .addOnSuccessListener { snapshot ->
-                            if (snapshot.exists()) {
-                                acTextView.setText(snapshot.child("name").toString(), false)
+                                FirebaseDatabase.getInstance().getReference(refDir)
+                                    .child(dataMap[i].toString()).get()
+                                    .addOnSuccessListener { snapshot ->
+                                        if (snapshot.exists()) {
+                                            acTextView.setText(snapshot.child("name").toString(), false)
+                                        }
+                                    }
                             }
                         }
+                    }
                 }
-            }
         }
 
         dialog.setOnShowListener {
@@ -372,6 +372,11 @@ class Editpt2Activity : AppCompatActivity() {
                             ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).format(
                                 DateTimeFormatter.ofPattern("dd/MM/yyyy")
                             )
+                        )
+                        "InfoAcademicas" -> dclass = InfoAcademica(
+                            (allViews[0] as EditText).text.toString(),
+                            (allViews[1] as Button).hint.toString(),
+                            (allViews[2] as EditText).text.toString()
                         )
                     }
 
@@ -484,4 +489,8 @@ fun getBase64FromUri(uri: Uri, context: Context): String? {
         e.printStackTrace()
         null
     }
+}
+
+fun reorderDataAsList(dataMap: MutableMap<String, String>): List<String> {
+    TODO("calma calabreso")
 }
