@@ -5,6 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <EditText
+        android:id="@+id/editTextTurnoCurso"
+        android:layout_width="352dp"
+        android:layout_height="43dp"
+        android:hint="Turno"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.204"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/textViewCurso"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="48dp"
+        android:text="Inserir Dados do Curso"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/editTextText"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="123dp" />
+
+    <EditText
+        android:id="@+id/editTextNomeCurso"
+        android:layout_width="352dp"
+        android:layout_height="43dp"
+        android:hint="Nome"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.135"
+        tools:ignore="TouchTargetSizeCheck" />
+
+    <EditText
+        android:id="@+id/edtxtNewContent2"
+        android:layout_width="352dp"
+        android:layout_height="120dp"
+        android:layout_marginTop="76dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Conteúdo"
+        android:inputType="textMultiLine"
+        android:justificationMode="inter_word"
+        android:maxLines="15"
+        android:minLines="5"
+        android:scrollbars="vertical"
+        android:singleLine="false"
+        android:textSize="14sp"
+        android:verticalScrollbarPosition="right"
+        app:layout_constraintBottom_toTopOf="@+id/txtlblDuracaoSemester"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNomeCurso"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/txtlblDuracaoSemester"
         android:layout_width="match_parent"
@@ -16,7 +81,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="318dp" />
+        tools:layout_editor_absoluteY="372dp" />
 
     <me.angrybyte.numberpicker.view.ActualNumberPicker
         android:id="@+id/npickDuracaoSemester"
@@ -25,13 +90,13 @@
         android:layout_centerHorizontal="true"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="12dp"
-        android:layout_marginBottom="484dp"
+        android:layout_marginBottom="424dp"
         app:controls_color="@color/black"
         app:draw_over_controls="true"
         app:draw_over_text="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtlblSemester2"
         app:layout_constraintVertical_bias="0.0"
@@ -47,35 +112,46 @@
         app:value="1"
         tools:ignore="SpeakableTextPresentCheck" />
 
-    <EditText
-        android:id="@+id/edtxtNewContent2"
-        android:layout_width="352dp"
-        android:layout_height="120dp"
-        android:ems="10"
-        android:gravity="start|top"
-        android:hint="Conteúdo"
-        android:inputType="textMultiLine"
-        android:justificationMode="inter_word"
-        android:maxLines="15"
-        android:minLines="5"
-        android:scrollbars="vertical"
-        android:singleLine="false"
-        android:textSize="14sp"
-        android:verticalScrollbarPosition="right"
-        tools:layout_editor_absoluteX="29dp"
-        tools:layout_editor_absoluteY="163dp" />
+    <TextView
+        android:id="@+id/txtlblCapacidadeAlunos"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:labelFor="@id/npickStuSemester"
+        android:text="Capacidade de alunos"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="509dp" />
 
-    <EditText
-        android:id="@+id/editTextNomeCurso"
-        tools:ignore="TouchTargetSizeCheck"
-        android:layout_width="352dp"
-        android:layout_height="43dp"
-        android:hint="Nome"
-        android:inputType="text"
+    <me.angrybyte.numberpicker.view.ActualNumberPicker
+        android:id="@+id/npickCapacidadeAlunos"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="288dp"
+        app:controls_color="@color/black"
+        app:draw_over_controls="true"
+        app:draw_over_text="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.122" />
+        app:layout_constraintTop_toBottomOf="@+id/txtlblSemester2"
+        app:layout_constraintVertical_bias="0.0"
+        app:max_value="40"
+        app:min_value="1"
+        app:selection_color="#A0DD98FB"
+        app:show_bars="false"
+        app:show_controls="true"
+        app:show_highlight="true"
+        app:show_text="true"
+        app:text_color="@color/black"
+        app:text_size="16sp"
+        app:value="1"
+        tools:ignore="SpeakableTextPresentCheck" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
