@@ -34,11 +34,14 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import me.angrybyte.numberpicker.view.ActualNumberPicker
 import java.io.InputStream
 import java.time.ZoneId
 import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import kotlin.reflect.full.memberProperties
 
 class Editpt2Activity : AppCompatActivity() {
     lateinit var txtEditTitle: TextView
@@ -199,7 +202,7 @@ class Editpt2Activity : AppCompatActivity() {
         layoutToLoad: XmlResourceParser,
         editTarget: String,
         editMode: Boolean = false,
-        editModePos: Int = 0
+        editModePos: Int = 0,
     ) {
         val dialogView = layoutInflater.inflate(layoutToLoad, null)
         val dialog = AlertDialog.Builder(this)
@@ -288,7 +291,6 @@ class Editpt2Activity : AppCompatActivity() {
             val title = promptLayout.children.firstOrNull() as TextView
             title.text = "Editar " + title.text.split(" ").drop(1).joinToString(" ")
 
-            var dataMap = mutableListOf<Any?>()
             when (editTarget) {
                 "Alunos" -> {
                     val tempPassEdTxt =
@@ -304,16 +306,16 @@ class Editpt2Activity : AppCompatActivity() {
             databaseReference!!.child(entries[editModePos].id).get()
                 .addOnSuccessListener { snapshot ->
                     if (snapshot.exists()) {
-                        //dataMap = reorderDataAsList((snapshot.value as Map<String, String>))
-
+                        val dataMap = reorderDataAsList((snapshot.value as Map<String, Any?>), editTarget)
+                        Log.d("Editpt2Activity", dataMap.toString())
                         for (i in 0 until allViews.size) {
                             if (allViews[i] is EditText) {
                                 if ((allViews[i] as EditText).hint.toString() != getString(R.string.hint_senha)) {
-                                    (allViews[i] as EditText).setText(dataMap[i].toString())
+                                    (allViews[i] as EditText).setText(dataMap[i] as String)
                                 }
                             } else if (allViews[i] is ActualNumberPicker) {
                                 (allViews[i] as ActualNumberPicker).value =
-                                    dataMap[i].toString().toInt()
+                                    dataMap[i] as Int
                             } else if (allViews[i] is TextInputLayout) {
                                 // Só temos o UID, portanto é necessário encontrar o nome da entrada
                                 val acTextView =
@@ -330,7 +332,7 @@ class Editpt2Activity : AppCompatActivity() {
                                 }
 
                                 FirebaseDatabase.getInstance().getReference(refDir)
-                                    .child(dataMap[i].toString()).get()
+                                    .child(dataMap[i] as String).get()
                                     .addOnSuccessListener { snapshot ->
                                         if (snapshot.exists()) {
                                             acTextView.setText(snapshot.child("name").toString(), false)
@@ -367,7 +369,7 @@ class Editpt2Activity : AppCompatActivity() {
                         "Noticias" -> dclass = Noticia(
                             (allViews[0] as EditText).text.toString(),
                             (allViews[1] as EditText).text.toString(),
-                            (allViews[2] as Button).hint.toString(),
+                            (allViews[2] as Button).hint?.toString() ?: "none",
                             (allViews[3] as EditText).text.toString(),
                             ZonedDateTime.now(ZoneId.of("America/Sao_Paulo")).format(
                                 DateTimeFormatter.ofPattern("dd/MM/yyyy")
@@ -375,7 +377,7 @@ class Editpt2Activity : AppCompatActivity() {
                         )
                         "InfoAcademicas" -> dclass = InfoAcademica(
                             (allViews[0] as EditText).text.toString(),
-                            (allViews[1] as Button).hint.toString(),
+                            (allViews[1] as Button).hint?.toString() ?: "none",
                             (allViews[2] as EditText).text.toString()
                         )
                     }
@@ -491,6 +493,28 @@ fun getBase64FromUri(uri: Uri, context: Context): String? {
     }
 }
 
-fun reorderDataAsList(dataMap: MutableMap<String, String>): List<String> {
-    TODO("calma calabreso")
+fun reorderDataAsList(dataMap: Map<String, Any?>, editTarget: String): List<Any?> {
+    val dataJson = Gson().toJson(dataMap)
+    var orderedDataClass: Any? = null
+    when (editTarget) {
+        "Alunos" -> {
+            orderedDataClass = Gson().fromJson(dataJson, Aluno::class.java)
+        }
+        "Professores" -> {
+            //orderedDataClass = Gson().fromJson(dataJson, Professor::class.java)
+        }
+        "Cursos" -> {
+            //orderedDataClass = Gson().fromJson(dataJson, Curso::class.java)
+        }
+        "Disciplinas" -> {
+            //orderedDataClass = Gson().fromJson(dataJson, Disciplina::class.java)
+        }
+        "Noticias" -> {
+            orderedDataClass = Gson().fromJson(dataJson, Noticia::class.java)
+        }
+        "InfoAcademicas" -> {
+            orderedDataClass = Gson().fromJson(dataJson, InfoAcademica::class.java)
+        }
+    }
+    return orderedDataClass!!::class.memberProperties.map { it.getter.call(orderedDataClass) }
 }
