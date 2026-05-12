@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtCourPromptTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/editpt2activity_prompt_insert"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            tools:ignore="MissingConstraints" />
+
+        <EditText
+            android:id="@+id/edtxtCourName"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:ems="10"
+            android:hint="@string/hint_nome"
+            android:inputType="text"
+            android:maxLines="2"
+            android:minLines="1"
+            tools:ignore="TouchTargetSizeCheck" />
+
+        <TextView
+            android:id="@+id/txtlblCourDurationSemester"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/npickCourDurationSemester"
+            android:text="Duração (em semestres)"
+            android:textAlignment="center"
+            tools:ignore="MissingConstraints" />
+
+        <me.angrybyte.numberpicker.view.ActualNumberPicker
+            android:id="@+id/npickCourDurationSemester"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            app:controls_color="@color/black"
+            app:draw_over_controls="true"
+            app:draw_over_text="false"
+            app:max_value="10"
+            app:min_value="1"
+            app:selection_color="#A0DD98FB"
+            app:show_bars="false"
+            app:show_controls="true"
+            app:show_highlight="true"
+            app:show_text="true"
+            app:text_color="@color/black"
+            app:text_size="16sp"
+            app:value="6"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/txtlblCourCapAlunos"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/npickStuSemester_depends_drpdwnStuCourse"
+            android:text="Capacidade de Alunos"
+            android:textAlignment="center" />
+
+        <me.angrybyte.numberpicker.view.ActualNumberPicker
+            android:id="@+id/npickCourCapAlunos"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center_horizontal"
+            app:controls_color="@color/black"
+            app:draw_over_controls="true"
+            app:draw_over_text="false"
+            app:max_value="40"
+            app:min_value="1"
+            app:selection_color="#A0DD98FB"
+            app:show_bars="false"
+            app:show_controls="true"
+            app:show_highlight="true"
+            app:show_text="true"
+            app:text_color="@color/black"
+            app:text_size="16sp"
+            app:value="40"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <TextView
+            android:id="@+id/txtlblDiscShift"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:labelFor="@id/rdgrpDiscShift"
+            android:text="Turno"
+            android:textAlignment="center"
+            tools:ignore="MissingConstraints" />
+
+        <RadioGroup
+            android:id="@+id/rdgrpCourShift"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rdbtnMatutino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:checked="true"
+                android:text="Matutino" />
+
+            <RadioButton
+                android:id="@+id/rdbtnVespertino"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Vespertino" />
+
+            <RadioButton
+                android:id="@+id/rdbtnNoturno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Noturno" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

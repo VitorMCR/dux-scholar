@@ -78,6 +78,5 @@ dependencies {
     implementation("com.google.android.material:material:1.13.0")
     implementation("me.angrybyte.picker:picker:1.3.1")
     implementation("io.coil-kt:coil:2.7.0")
-    implementation("com.google.code.gson:gson:2.14.0")
-    implementation("org.jetbrains.kotlin:kotlin-reflect:1.6.21")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
 }

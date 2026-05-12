@@ -32,7 +32,7 @@ class StudentProfileActivity : AppCompatActivity() {
         edttxtNome = findViewById(R.id.edttxtNome)
         edttxtEmail = findViewById(R.id.edttxtEmail)
         edttxtRA = findViewById(R.id.edttxtRa)
-        btnCarteirinha = findViewById(R.id.btnCarteirinha)
+        btnCarteirinha = findViewById(R.id.btnStuCarteirinha)
         btnSairuser = findViewById(R.id.btnSairuser)
         txtLink = findViewById(R.id.txtLink)
 

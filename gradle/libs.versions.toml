@@ -16,6 +16,7 @@ firebaseDatabase = "22.0.1"
 fragment = "1.8.9"
 firebaseAuthKtx = "24.0.1"
 firebaseAuth = "24.0.1"
+firebaseFunctionsKtx = "22.1.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -32,6 +33,7 @@ firebase-database = { group = "com.google.firebase", name = "firebase-database",
 androidx-fragment = { group = "androidx.fragment", name = "fragment", version.ref = "fragment" }
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
+firebase-functions-ktx = { group = "com.google.firebase", name = "firebase-functions-ktx", version.ref = "firebaseFunctionsKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

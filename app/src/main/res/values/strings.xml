@@ -3,14 +3,27 @@
     <string name="all_news_link"><u><i>Ver todas...</i></u></string>
     <string name="more_services_link"><u><i>Mais serviços...</i></u></string>
 
-    <string name="hint_nome">Nome Completo <font color='#FC5653'>*</font></string>
+    <string name="mainactivity_greet">Olá, %s</string>
+
+    <string name="editpt2activity_title_editing">EDITANDO %s</string>
+    <string name="editpt2activity_prompt_insert">Inserir %s</string>
+    <string name="editpt2activity_prompt_edit">Editar %s</string>
+
+    <string name="hint_nome_full">Nome Completo <font color='#FC5653'>*</font></string>
+    <string name="hint_nome">Nome <font color='#FC5653'>*</font></string>
     <string name="hint_email">E-mail <font color='#FC5653'>*</font></string>
     <string name="hint_ra">RA <font color='#FC5653'>*</font></string>
+    <string name="hint_matricula">Matrícula <font color='#FC5653'>*</font></string>
     <string name="hint_tel">Telefone <font color='#FC5653'>*</font></string>
     <string name="hint_senha">Senha temporária <font color='#FC5653'>*</font></string>
     <string name="hint_curso">Curso <font color='#FC5653'>*</font></string>
+    <string name="hint_prof">Professor <font color='#FC5653'>*</font></string>
     <string name="hint_title">Título <font color='#FC5653'>*</font></string>
     <string name="hint_header">Cabeçalho <font color='#FC5653'>*</font></string>
     <string name="hint_content">Conteúdo <font color='#FC5653'>*</font></string>
 
+    <string name="hint_dropdown_course">%1$s (%2$s)</string>
+
+    <string name="hint_btn_change">Alterar</string>
+    <string name="hint_btn_choose">Selecionar</string>
 </resources>

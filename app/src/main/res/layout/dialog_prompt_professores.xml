@@ -13,54 +13,39 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtProfPromptTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
             android:text="@string/editpt2activity_prompt_insert"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/edtxtNewTitle"
+            android:id="@+id/edtxtProfFullName"
             android:layout_width="match_parent"
             android:layout_height="48dp"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_title"
-            android:inputType="textMultiLine"
-            android:lines="1"
-            android:singleLine="false"
-            android:tag="required"
-            android:textSize="14sp" />
-
-        <EditText
-            android:id="@+id/edtxtNewHeader"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ems="10"
-            android:gravity="start|top"
-            android:hint="@string/hint_header"
-            android:inputType="textMultiLine"
-            android:justificationMode="inter_word"
-            android:maxLines="5"
-            android:minLines="2"
+            android:hint="@string/hint_nome_full"
+            android:inputType="text|textPersonName"
+            android:maxLines="1"
             android:singleLine="false"
             android:tag="required"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/txtlblNewImage"
+            android:id="@+id/txtlblProfProfilePic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            android:labelFor="@id/btnStuProfilePic"
-            android:text="Imagem de Destaque"
+            android:labelFor="@id/btnProfProfilePic"
+            android:text="Foto de Perfil"
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/btnNewImage"
+            android:id="@+id/btnProfProfilePic"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -77,16 +62,58 @@
             app:iconTint="#A9A8AA" />
 
         <EditText
-            android:id="@+id/edtxtNewContent"
+            android:id="@+id/edtxtProfEmail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:ems="10"
             android:gravity="start|top"
-            android:hint="@string/hint_content"
-            android:inputType="textMultiLine"
+            android:hint="@string/hint_email"
+            android:inputType="text|textEmailAddress"
             android:justificationMode="inter_word"
-            android:maxLines="15"
-            android:minLines="5"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:tag="required"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtxtProfMatricula"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/hint_matricula"
+            android:inputType="number"
+            android:justificationMode="inter_word"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:tag="required"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtxtProfPhone"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/hint_tel"
+            android:inputType="phone"
+            android:justificationMode="inter_word"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:tag="required"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/edtxtProfTempPassword"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp"
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/hint_senha"
+            android:inputType="text|textVisiblePassword"
+            android:justificationMode="inter_word"
+            android:maxLines="1"
             android:scrollbars="vertical"
             android:singleLine="false"
             android:tag="required"

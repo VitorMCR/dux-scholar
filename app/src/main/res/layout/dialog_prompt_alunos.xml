@@ -13,24 +13,25 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/txtStuPromptTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
-            android:text="Inserir Aluno"
+            android:layout_marginBottom="16dp"
+            android:text="@string/editpt2activity_prompt_insert"
             android:textSize="16sp"
             android:textStyle="bold" />
 
         <EditText
             android:id="@+id/edtxtStuFullName"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginTop="16dp"
-            android:hint="@string/hint_nome"
+            android:layout_height="48dp"
+            android:hint="@string/hint_nome_full"
             android:inputType="text|textPersonName"
             android:maxLines="1"
             android:singleLine="false"
+            android:tag="required"
             android:textSize="14sp" />
 
         <TextView
@@ -53,7 +54,7 @@
             android:elevation="4dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Selecionar"
+            android:text="@string/hint_btn_choose"
             android:textColor="@color/black"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_image_upload"
@@ -63,7 +64,7 @@
         <EditText
             android:id="@+id/edtxtStuEmail"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/hint_email"
@@ -71,12 +72,13 @@
             android:justificationMode="inter_word"
             android:maxLines="1"
             android:singleLine="false"
+            android:tag="required"
             android:textSize="14sp" />
 
         <EditText
             android:id="@+id/edtxtStuRA"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/hint_ra"
@@ -84,12 +86,13 @@
             android:justificationMode="inter_word"
             android:maxLines="1"
             android:singleLine="false"
+            android:tag="required"
             android:textSize="14sp" />
 
         <EditText
             android:id="@+id/edtxtStuPhone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/hint_tel"
@@ -97,12 +100,14 @@
             android:justificationMode="inter_word"
             android:maxLines="1"
             android:singleLine="false"
+            android:tag="required"
             android:textSize="14sp" />
 
         <EditText
-            android:id="@+id/edtxtStuPassword"
+            android:id="@+id/edtxtStuTempPassword"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="12dp"
             android:ems="10"
             android:gravity="start|top"
             android:hint="@string/hint_senha"
@@ -111,12 +116,9 @@
             android:maxLines="1"
             android:scrollbars="vertical"
             android:singleLine="false"
+            android:tag="required"
             android:textSize="14sp"
             android:verticalScrollbarPosition="right" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="12dp" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/drpdwnStuCourse"
@@ -124,7 +126,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp">
+            android:layout_marginEnd="8dp"
+            android:tag="required">
 
             <AutoCompleteTextView
                 android:id="@+id/actxtStuCourse"
@@ -133,7 +136,7 @@
                 android:layout_weight="1"
                 android:hint="@string/hint_curso"
                 android:inputType="none"
-                android:text="Selecione o Curso" />
+                android:tag="cursos" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -142,12 +145,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:labelFor="@id/npickStuSemester"
+            android:labelFor="@id/npickStuSemester_depends_drpdwnStuCourse"
             android:text="Semestre"
             android:textAlignment="center" />
 
         <me.angrybyte.numberpicker.view.ActualNumberPicker
-            android:id="@+id/npickStuSemester"
+            android:id="@+id/npickStuSemester_depends_drpdwnStuCourse"
             android:layout_width="wrap_content"
             android:layout_height="48dp"
             android:layout_centerHorizontal="true"
@@ -168,17 +171,17 @@
             app:value="1" />
 
         <TextView
-            android:id="@+id/txtlblCarteirinhaFront"
+            android:id="@+id/txtlblCarteirinha"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="4dp"
-            android:labelFor="@id/btnStuProfilePic"
+            android:labelFor="@id/btnStuCarteirinha"
             android:text="Carteirinha"
             android:textAlignment="center" />
 
         <Button
-            android:id="@+id/btnCarteirinhaFront"
+            android:id="@+id/btnStuCarteirinha"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -187,7 +190,7 @@
             android:elevation="4dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:text="Selecionar"
+            android:text="@string/hint_btn_choose"
             android:textColor="@color/black"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_image_upload"

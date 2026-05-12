@@ -1,14 +1,11 @@
 package com.example.duxscholar
 
-data class Aluno(
+data class Professor(
     val name: String = "",
     val pfp: String = "",
     val email: String = "",
-    val ra: String = "",
+    val matricula: String = "",
     val phone: String = "",
     val temppass: String = "",
-    val curso: String = "", // UID
-    val semester: Int = 0,
-    val carteirinha: String = "", // URI
     val active: Boolean = true
 )
