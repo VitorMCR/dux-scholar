@@ -237,10 +237,9 @@ class Editpt2Activity : AppCompatActivity() {
         }
 
         val allViews = getAllValidViews(dialogView)
-        Log.d("Editpt2Activity", allViews.toString())
 
         setupImageButtons(allViews)
-        setupDropdowns(allViews)
+        if (!setupDropdowns(allViews)) return
 
         val promptLayout =
             (dialogView as ViewGroup).children.firstOrNull() as LinearLayout
@@ -449,9 +448,9 @@ class Editpt2Activity : AppCompatActivity() {
         }
     }
 
-    private suspend fun setupDropdowns(allViews: List<View>) {
+    private suspend fun setupDropdowns(allViews: List<View>): Boolean {
         val textInputLayouts = allViews.filterIsInstance<TextInputLayout>()
-        if (textInputLayouts.isEmpty()) return
+        if (textInputLayouts.isEmpty()) return true
 
         val db = FirebaseDatabase.getInstance()
 
@@ -477,7 +476,7 @@ class Editpt2Activity : AppCompatActivity() {
 
             if (dropDownItems.isEmpty()) {
                 showEmptyDropdownWarning(refDir)
-                return
+                return false
             }
 
             val acAdapter = ArrayAdapter(this, R.layout.item_dropdown, dropDownItems)
@@ -495,6 +494,7 @@ class Editpt2Activity : AppCompatActivity() {
                 }
             }
         }
+        return true
     }
 
     /**
