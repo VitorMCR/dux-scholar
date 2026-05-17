@@ -2,4 +2,14 @@
 <resources>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    <color name="duxPalette0">#5E63BF</color>
+    <color name="duxPalette1">#8286D9</color>
+    <color name="duxPalette2">#6AD991</color>
+    <color name="duxPalette3">#C4F2D4</color>
+    <color name="duxPalette4">#1F1F1F</color>
+
+    <color name="textColor">@color/black</color>
+    <color name="textLinkColor">#12439E</color>
+    <color name="backgroundColor">@color/white</color>
 </resources>

@@ -1,14 +1,14 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
     <style name="Base.Theme.DuxScholar" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your dark theme here. -->
-        <!-- <item name="colorPrimary">@color/my_dark_primary</item> -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">@color/duxPalette4</item>
     </style>
 
     <style name="Theme.DuxScholar" parent="Base.Theme.DuxScholar" />
 
     <style name="Theme.DuxScholar.SplashScreen" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/black</item>
+        <item name="windowSplashScreenBackground">@color/duxPalette4</item>
         <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_launcher_round</item>
         <item name="postSplashScreenTheme">@style/Theme.DuxScholar</item>
     </style>

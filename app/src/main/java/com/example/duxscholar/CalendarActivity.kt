@@ -207,7 +207,7 @@ class CalendarActivity : AppCompatActivity() {
         val editDesc = dialogView.findViewById<EditText>(R.id.editDescription)
 
         AlertDialog.Builder(this)
-            .setTitle("Adicionar para ${date.day}/${date.month + 1}")
+            .setTitle("Adicionar para ${date.day.toString().padStart(2, '0')}/${date.month.toString().padStart(2, '0')}")
             .setView(dialogView)
             .setPositiveButton("Salvar") { _, _ ->
                 val title = editTitle.text.toString()

@@ -71,8 +71,6 @@ class MainActivity : AppCompatActivity() {
         lnlytNews = findViewById(R.id.lnlytNews)
         auth = Firebase.auth
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
-
         // Ação do botão user inferior + verificação
         val imgbtnUsuario = findViewById<ImageButton>(R.id.imgbtnUsuario)
 

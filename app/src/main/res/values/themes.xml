@@ -3,6 +3,11 @@
     <style name="Base.Theme.DuxScholar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/white</item>
+
+        <item name="colorPrimary">@color/duxPalette0</item>
+        <item name="colorPrimaryVariant">@color/duxPalette1</item>
+        <item name="colorSecondary">@color/duxPalette2</item>
+        <item name="colorSecondaryVariant">@color/duxPalette3</item>
     </style>
 
     <style name="Theme.DuxScholar" parent="Base.Theme.DuxScholar" />

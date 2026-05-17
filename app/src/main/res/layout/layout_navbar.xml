@@ -28,10 +28,10 @@
             android:id="@+id/imgbtnHome"
             android:layout_width="90dp"
             android:layout_height="80dp"
-            android:backgroundTint="#01FFFFFF"
+            android:backgroundTint="#00FFFFFF"
             android:contentDescription="Botão para página principal"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/img_icon_home" />
+            app:srcCompat="@drawable/ic_home" />
 
         <ImageButton
             android:id="@+id/imgbtnCalendario"
@@ -40,7 +40,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Botão para calendário"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/img_icon_calendar" />
+            app:srcCompat="@drawable/ic_calendar" />
 
         <ImageButton
             android:id="@+id/imgbtnNoticias"
@@ -49,7 +49,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Botão para aba notícias"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/img_icon_newspaper" />
+            app:srcCompat="@drawable/ic_newspaper" />
 
         <ImageButton
             android:id="@+id/imgbtnUsuario"
@@ -58,7 +58,7 @@
             android:backgroundTint="#00FFFFFF"
             android:contentDescription="Botão para área de usuário"
             android:scaleType="fitCenter"
-            app:srcCompat="@drawable/img_default_user" />
+            app:srcCompat="@drawable/ic_profile" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

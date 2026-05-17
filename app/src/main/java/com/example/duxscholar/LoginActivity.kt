@@ -145,6 +145,7 @@ class LoginActivity : AppCompatActivity() {
                 }
             } else {
                 Toast.makeText(baseContext, "Logado como administrador.", Toast.LENGTH_LONG).show()
+                break
             }
         }
     }

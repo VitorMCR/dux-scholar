@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="textColor">@color/white</color>
+    <color name="textLinkColor">#4288E4</color>
+    <color name="backgroundColor">@color/duxPalette4</color>
+
+    <color name="duxPalette0">#282C87</color>
+    <color name="duxPalette1">#373C9D</color>
+    <color name="duxPalette2">#0E831C</color>
+    <color name="duxPalette3">#7BBA92</color>
+</resources>
