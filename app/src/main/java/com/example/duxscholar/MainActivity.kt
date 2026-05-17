@@ -36,21 +36,12 @@ import kotlinx.coroutines.tasks.await
 
 
 class MainActivity : AppCompatActivity() {
-
-    private lateinit var auth: FirebaseAuth
-    private lateinit var authListener: FirebaseAuth.AuthStateListener
-
     private lateinit var binding: ActivityMainBinding
-    lateinit var btnChatbot: Button
-    lateinit var imgbtnUser: ShapeableImageView
-    lateinit var txtGreet: TextView
-    lateinit var imgbtnEditor: ImageButton
     lateinit var lnlytNews: LinearLayout
     var databaseReference: DatabaseReference? = null
-    lateinit var imgbtnCalendario: ImageButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val splashScreen = installSplashScreen()
+        installSplashScreen()
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -61,89 +52,23 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        imgbtnUser = findViewById(R.id.imgbtnUser)
-        imgbtnCalendario = findViewById(R.id.imgbtnCalendario)
-
-        txtGreet = findViewById(R.id.txtGreet)
-        txtGreet.text = getString(R.string.mainactivity_greet, "Usuário")
-
-        imgbtnEditor = findViewById(R.id.imgbtnEditor)
-        lnlytNews = findViewById(R.id.lnlytNews)
-        auth = Firebase.auth
-
-        // Ação do botão user inferior + verificação
-        val imgbtnUsuario = findViewById<ImageButton>(R.id.imgbtnUsuario)
-
-        imgbtnUsuario.setOnClickListener {
-            if (auth.currentUser != null) {
-                val intent = Intent(this, StudentProfileActivity::class.java)
-                startActivity(intent)
-            } else {
-                val intent = Intent(this, LoginActivity::class.java)
-                startActivity(intent)
-            }
-        }
-
-        authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-            val user = firebaseAuth.currentUser
-            if (user != null) {
-                txtGreet.text = getString(R.string.mainactivity_greet, user.displayName?.split(" ")[0])
-
-                lifecycleScope.launch {
-                    if (!checkBasicUser()) {
-                        imgbtnEditor.visibility = View.VISIBLE
-                    }
-                }
-
-//                imgbtnUser.setOnClickListener {
-//                    val intent = Intent(this@MainActivity, StudentProfileActivity::class.java)
-//                    startActivity(intent)
-//                }
-            } else {
-//                imgbtnUser.setOnClickListener {
-//                    val intent = Intent(this@MainActivity, LoginActivity::class.java)
-//                    startActivity(intent)
-//                }
-            }
-        }
-
-        imgbtnUser.setOnClickListener {
-            val intent = Intent(this@MainActivity, LoginActivity::class.java)
-            startActivity(intent)
-        }
-
-        imgbtnCalendario.setOnClickListener {
-            val intent = Intent(this@MainActivity, CalendarActivity::class.java)
-            startActivity(intent)
-        }
-
-
-
-        btnChatbot = findViewById(R.id.btnChatbot)
-
-        btnChatbot.setOnClickListener {
+        findViewById<Button>(R.id.btnChatbot).setOnClickListener {
             val intent = Intent(this@MainActivity, ChatbotActivity::class.java)
             startActivity(intent)
         }
 
-        imgbtnEditor.setOnClickListener {
-            val intent = Intent(this@MainActivity, EditActivity::class.java)
-            startActivity(intent)
-        }
-
-        val servicesText = findViewById<TextView>(R.id.txtMaisServ)
-        servicesText.setOnClickListener {
+        findViewById<TextView>(R.id.txtMaisServ).setOnClickListener {
             val intent = Intent(this, ServicesActivity::class.java)
             startActivity(intent)
         }
 
-        val newsText = findViewById<TextView>(R.id.txtMaisNews)
-        newsText.setOnClickListener {
+        findViewById<TextView>(R.id.txtMaisNews).setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
         }
 
         databaseReference = FirebaseDatabase.getInstance().getReference("noticias")
+        lnlytNews = findViewById(R.id.lnlytNews)
 
         databaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -176,50 +101,5 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
-    }
-
-    private suspend fun checkBasicUser(): Boolean {
-        var isBasicUser = false
-        for (userType in listOf("alunos", "professores")) {
-            databaseReference = FirebaseDatabase.getInstance().getReference(userType)
-
-            val snapshot = databaseReference!!.child(auth.currentUser!!.uid).get().await()
-            if (snapshot.exists()) {
-                isBasicUser = true
-                val profilePic = snapshot.child("pfp").value as String
-                loadProfileImage(profilePic, imgbtnUser)
-
-                break
-            }
-        }
-
-        return isBasicUser
-    }
-
-    private fun loadProfileImage(base64String: String, imageView: ImageView) {
-        if (base64String == "none" || base64String.isEmpty()) {
-            imageView.load(R.drawable.img_default_user)
-            return
-        }
-
-        try {
-            val imageBytes = Base64.decode(base64String, Base64.DEFAULT)
-
-            imageView.load(imageBytes) {
-                error(R.drawable.img_default_user)
-            }
-        } catch (_: Exception) {
-            imageView.load(R.drawable.img_default_user)
-        }
-    }
-
-    override fun onStart() {
-        super.onStart()
-        auth.addAuthStateListener(authListener)
-    }
-
-    override fun onStop() {
-        super.onStop()
-        auth.removeAuthStateListener(authListener)
     }
 }
