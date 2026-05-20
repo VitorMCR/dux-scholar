@@ -12,4 +12,6 @@
     <color name="textColor">@color/black</color>
     <color name="textLinkColor">#12439E</color>
     <color name="backgroundColor">@color/white</color>
+    <color name="buttonColor">@color/white</color>
+    <color name="editActivityButtonColor">#E9E9E9</color>
 </resources>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.firebase.database.*
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
@@ -25,7 +26,7 @@ class CalendarActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var adapter: NoteAdapter
     private lateinit var emptyStateText: TextView
-    private lateinit var btnAdd: ImageButton
+    private lateinit var fabAdd: FloatingActionButton
     //a
 
     // Lista local para o RecyclerView
@@ -42,7 +43,7 @@ class CalendarActivity : AppCompatActivity() {
         calendarView = findViewById(R.id.calendarView)
         recyclerView = findViewById(R.id.recyclerViewNotes)
         emptyStateText = findViewById(R.id.emptyStateText) // Usando o ID do seu XML
-        btnAdd = findViewById<ImageButton>(R.id.btnAdd)
+        fabAdd = findViewById(R.id.fabAdd)
 
         // Configurar RecyclerView
         // Dentro do onCreate da CalendarActivity
@@ -68,7 +69,7 @@ class CalendarActivity : AppCompatActivity() {
         }
 
         // Clique no texto vazio para adicionar nova nota
-        btnAdd.setOnClickListener {
+        fabAdd.setOnClickListener {
             val selectedDate = calendarView.selectedDate ?: CalendarDay.today()
             showAddDialogue(selectedDate)
         }

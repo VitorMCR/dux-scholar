@@ -3,6 +3,8 @@
     <color name="textColor">@color/white</color>
     <color name="textLinkColor">#4288E4</color>
     <color name="backgroundColor">@color/duxPalette4</color>
+    <color name="buttonColor">#6F6F6F</color>
+    <color name="editActivityButtonColor">#5D5C5C</color>
 
     <color name="duxPalette0">#282C87</color>
     <color name="duxPalette1">#373C9D</color>

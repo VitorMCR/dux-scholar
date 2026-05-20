@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuxScholar">
         <activity
-            android:name=".dialog_prompt_disciplinas"
-            android:exported="false" />
-        <activity
             android:name=".TrocarSenhaActivity"
             android:exported="false" />
         <activity
@@ -38,7 +35,7 @@
             android:exported="false" />
         <activity
             android:name=".CalendarActivity"
-            android:exported="true"></activity>
+            android:exported="false"/>
         <activity
             android:name=".StudentProfileActivity"
             android:exported="false" />

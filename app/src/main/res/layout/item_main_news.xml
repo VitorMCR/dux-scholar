@@ -15,7 +15,7 @@
         android:maxLines="1"
         android:text="Título"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:textColor="#000"
+        android:textColor="@color/textColor"
         android:textStyle="bold" />
 
     <TextView
@@ -28,7 +28,7 @@
         android:maxLines="4"
         android:paddingTop="15dp"
         android:text="Cabeçalho"
-        android:textColor="#000"
+        android:textColor="@color/textColor"
         android:textSize="10sp" />
 
 </FrameLayout>
