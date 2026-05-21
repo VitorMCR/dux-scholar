@@ -3,6 +3,8 @@
     <style name="Base.Theme.DuxScholar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/duxPalette4</item>
+
+        <item name="android:textColor">@color/textColor</item>
     </style>
 
     <style name="Theme.DuxScholar" parent="Base.Theme.DuxScholar" />

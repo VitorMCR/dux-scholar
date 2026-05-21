@@ -127,4 +127,19 @@
         app:layout_constraintHorizontal_bias="0.495"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnEditNoticias" />
+
+    <Button
+        android:id="@+id/btnEditSlides"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="@color/editActivityButtonColor"
+        android:onClick="goToPt2Screen"
+        android:text="Slides"
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnEditInfoAcademicas" />
 </androidx.constraintlayout.widget.ConstraintLayout>

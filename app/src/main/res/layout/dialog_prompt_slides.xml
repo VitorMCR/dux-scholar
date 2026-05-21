@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txtStuPromptTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:text="@string/editpt2activity_prompt_insert"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/edtxtSliIdentifier"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:hint="@string/hint_identifier"
+            android:inputType="text|textPersonName"
+            android:maxLines="1"
+            android:singleLine="false"
+            android:tag="required"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txtlblSliImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:labelFor="@id/btnSliImage"
+            android:text="Imagem para apresentar no slide"
+            android:textAlignment="center" />
+
+        <Button
+            android:id="@+id/btnSliImage"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/bg_import_button"
+            android:elevation="4dp"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:tag="required"
+            android:text="@string/hint_btn_choose"
+            android:textColor="@color/black"
+            app:backgroundTint="@null"
+            app:icon="@drawable/ic_image_upload"
+            app:iconSize="24dp"
+            app:iconTint="#A9A8AA" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

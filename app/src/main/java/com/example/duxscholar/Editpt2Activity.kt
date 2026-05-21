@@ -62,13 +62,15 @@ class Editpt2Activity : AppCompatActivity() {
     private val pickMedia =
         registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let {
+                val editTarget = intent.getStringExtra("WHAT_TO_EDIT").toString()
+
                 val sizeInBytes = getFileSize(it, this)
-                val limitInBytes = 256 * 1024 // 256KB
+                val limitInBytes = if (editTarget == "Slides" || editTarget == "Noticias") 2 * 1024 * 1024 else 256 * 1024 // 2MB - 256KB
 
                 if (sizeInBytes > limitInBytes) {
                     Toast.makeText(
                         this,
-                        "A imagem selecionada excede o tamanho máximo permitido (256 KB)",
+                        "A imagem selecionada excede o tamanho máximo permitido (${if (editTarget == "Slides" || editTarget == "Noticias") "2MB" else "256KB"})",
                         Toast.LENGTH_LONG
                     ).show()
                 } else {
@@ -215,6 +217,7 @@ class Editpt2Activity : AppCompatActivity() {
         FirebaseAuth.getInstance(secondaryApp)
     }
 
+    @SuppressLint("CutPasteId")
     suspend fun loadAlertDialog(
         layoutToLoad: XmlResourceParser,
         editTarget: String,
@@ -268,8 +271,13 @@ class Editpt2Activity : AppCompatActivity() {
         dialog.setOnShowListener {
             val button = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             button.setOnClickListener {
-                var inputIsValid = true
+                if (editTarget == "Slides" && dialogView.findViewById<Button>(R.id.btnSliImage).hint?.isBlank() ?: true) {
+                    Snackbar.make(dialogView, "Por favor, selecione uma imagem.",
+                        Snackbar.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }
 
+                var inputIsValid = true
                 allViews.filter { it is EditText || it is TextInputLayout }.forEach { view ->
                     if (view is EditText && view.tag == "required" && view.text.isBlank()) {
                         inputIsValid = false
@@ -361,6 +369,11 @@ class Editpt2Activity : AppCompatActivity() {
                         dialogView.findViewById<Button>(R.id.btnServIcon).hint?.toString()
                             ?: "none",
                         dialogView.findViewById<EditText>(R.id.edtxtServContent).text.toString()
+                    )
+
+                    "Slides" -> Slide(
+                        dialogView.findViewById<EditText>(R.id.edtxtSliIdentifier).text.toString(),
+                        dialogView.findViewById<Button>(R.id.btnSliImage).hint?.toString() ?: "none"
                     )
 
                     else -> throw IllegalArgumentException("Alvo desconhecido: $editTarget")
@@ -676,6 +689,18 @@ class Editpt2Activity : AppCompatActivity() {
                     dialogView.findViewById<EditText>(R.id.edtxtServContent)
                         .setText(dataMap.content)
                 }
+
+                "Slides" -> {
+                    val dataMap = snapshot.getValue(Slide::class.java) as Slide
+
+                    dialogView.findViewById<EditText>(R.id.edtxtSliIdentifier).setText(dataMap.name)
+
+                    val btnSliImage = dialogView.findViewById<Button>(R.id.btnSliImage)
+                    if (dataMap.image != "none") {
+                        btnSliImage.hint = dataMap.image
+                        btnSliImage.text = resources.getString(R.string.hint_btn_change)
+                    }
+                }
             }
         }
     }
@@ -688,6 +713,7 @@ class Editpt2Activity : AppCompatActivity() {
             "Disciplinas" -> R.layout.dialog_prompt_disciplinas
             "Noticias" -> R.layout.dialog_prompt_noticias
             "InfoAcademicas" -> R.layout.dialog_prompt_infoacademicas
+            "Slides" -> R.layout.dialog_prompt_slides
             else -> null
         } ?: return null
 

@@ -21,6 +21,7 @@
     <string name="hint_title">Título <font color='#FC5653'>*</font></string>
     <string name="hint_header">Cabeçalho <font color='#FC5653'>*</font></string>
     <string name="hint_content">Conteúdo <font color='#FC5653'>*</font></string>
+    <string name="hint_identifier">Identificador <font color='#FC5653'>*</font></string>
 
     <string name="hint_dropdown_course">%1$s (%2$s)</string>
 
