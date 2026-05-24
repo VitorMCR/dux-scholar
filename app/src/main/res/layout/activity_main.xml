@@ -53,16 +53,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img_icon_duque" />
 
-    <ImageView
-        android:id="@+id/imgCarousel"
-        android:layout_width="300dp"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/carouselRecyclerView"
+        android:layout_width="0dp"
         android:layout_height="250dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:clipChildren="false"
+        android:clipToPadding="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.531"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChatbot"
-        app:srcCompat="@drawable/img_default_mainbanner" />
+        app:layout_constraintTop_toBottomOf="@+id/btnChatbot" />
+
 
     <HorizontalScrollView
         android:id="@+id/horizontalScrollView"
@@ -91,7 +94,7 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imgCarousel">
+        app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerView">
 
         <TextView
             android:id="@+id/txtNews"

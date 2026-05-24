@@ -1,44 +1,46 @@
 package com.example.duxscholar
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.util.Base64
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.res.ResourcesCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
-import coil.load
+import androidx.recyclerview.widget.RecyclerView
 import com.example.duxscholar.databinding.ActivityMainBinding
-import com.google.android.material.imageview.ShapeableImageView
-import com.google.firebase.Firebase
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.tasks.await
+import java.io.ByteArrayOutputStream
 
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var lnlytNews: LinearLayout
     var databaseReference: DatabaseReference? = null
+    lateinit var snapHelper: com.google.android.material.carousel.CarouselSnapHelper
+    private var autoScrollJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -101,5 +103,79 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        val carouselRecyclerView = findViewById<RecyclerView>(R.id.carouselRecyclerView)
+        carouselRecyclerView.layoutManager = com.google.android.material.carousel.CarouselLayoutManager(
+            com.google.android.material.carousel.FullScreenCarouselStrategy()
+        )
+        snapHelper = com.google.android.material.carousel.CarouselSnapHelper()
+        snapHelper.attachToRecyclerView(carouselRecyclerView)
+
+        val images = mutableListOf<ByteArray>()
+        val adapter = CarouselAdapter(images)
+        carouselRecyclerView.adapter = adapter
+
+        FirebaseDatabase.getInstance().getReference("slides").addValueEventListener(object : ValueEventListener {
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onDataChange(snapshot: DataSnapshot) {
+                images.clear()
+                for (data in snapshot.children) {
+                    val imageBase64 = data.child("image").value.toString()
+
+                    try {
+                        val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
+                        images.add(imageBytes)
+                    } catch (e: Exception) {
+                        Log.e("Firebase", "Erro ao decodificar imagem: ${e.message}")
+                    }
+                }
+
+                if (images.isEmpty()) {
+                    images.add(drawableToByteArray(ResourcesCompat.getDrawable(resources, R.drawable.img_default_mainbanner, null)!!))
+                }
+                
+                adapter.notifyDataSetChanged()
+                startAutoScroll(carouselRecyclerView, images.size)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("Firebase", "ERRO: ${error.message}")
+            }
+        })
+
+        carouselRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    autoScrollJob?.cancel()
+                }
+            }
+        })
+    }
+
+    private fun startAutoScroll(recyclerView: RecyclerView, count: Int) {
+        autoScrollJob?.cancel()
+        if (count < 2) return
+
+        autoScrollJob = lifecycleScope.launch {
+            while (isActive) {
+                delay(5_000)
+                val layoutManager = recyclerView.layoutManager ?: continue
+                val snapView = snapHelper.findSnapView(layoutManager) ?: continue
+
+                val currentPosition = layoutManager.getPosition(snapView)
+                val nextPosition = (currentPosition + 1) % count
+
+                recyclerView.smoothScrollToPosition(nextPosition)
+            }
+        }
+    }
+
+    fun drawableToByteArray(drawable: Drawable): ByteArray {
+        val bitmap = (drawable as BitmapDrawable).bitmap
+        val stream = ByteArrayOutputStream()
+
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+
+        return stream.toByteArray()
     }
 }
