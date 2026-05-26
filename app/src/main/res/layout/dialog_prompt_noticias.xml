@@ -19,6 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:text="@string/editpt2activity_prompt_insert"
+            android:textColor="@color/textColor"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -32,6 +33,7 @@
             android:lines="1"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp" />
 
         <EditText
@@ -47,6 +49,7 @@
             android:minLines="2"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp" />
 
         <TextView
@@ -57,7 +60,8 @@
             android:layout_marginBottom="4dp"
             android:labelFor="@id/btnStuProfilePic"
             android:text="Imagem de Destaque"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/textColor" />
 
         <Button
             android:id="@+id/btnNewImage"
@@ -70,7 +74,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/hint_btn_choose"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_image_upload"
             app:iconSize="24dp"
@@ -90,8 +94,21 @@
             android:scrollbars="vertical"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp"
             android:verticalScrollbarPosition="right" />
+
+        <TextView
+            android:id="@+id/txtlblNewContentDisclaimer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="4dp"
+            android:labelFor="@id/btnStuProfilePic"
+            android:text="@string/hint_markdown"
+            android:textAlignment="center"
+            android:textColor="@color/textColor"
+            android:textColorLink="@color/textLinkColor" />
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

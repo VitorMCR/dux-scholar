@@ -23,6 +23,8 @@
     <string name="hint_content">Conteúdo <font color='#FC5653'>*</font></string>
     <string name="hint_identifier">Identificador <font color='#FC5653'>*</font></string>
 
+    <string name="hint_markdown"><i>Use <a href="https://www.markdownguide.org/cheat-sheet/">Markdown</a> para estilizar o seu texto.</i></string>
+
     <string name="hint_dropdown_course">%1$s (%2$s)</string>
 
     <string name="hint_btn_change">Alterar</string>

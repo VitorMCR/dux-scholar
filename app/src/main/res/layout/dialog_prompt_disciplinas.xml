@@ -21,6 +21,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:text="@string/editpt2activity_prompt_insert"
+            android:textColor="@color/textColor"
             android:textSize="16sp"
             android:textStyle="bold"
             tools:ignore="MissingConstraints" />
@@ -32,6 +33,7 @@
             android:hint="@string/hint_nome"
             android:inputType="text"
             android:tag="required"
+            android:textColor="@color/textColor"
             tools:ignore="TouchTargetSizeCheck" />
 
         <TextView
@@ -42,6 +44,7 @@
             android:labelFor="@id/rdgrpDiscShift"
             android:text="Turno"
             android:textAlignment="center"
+            android:textColor="@color/textColor"
             tools:ignore="MissingConstraints" />
 
         <RadioGroup
@@ -56,21 +59,24 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:checked="true"
-                android:text="Matutino" />
+                android:text="Matutino"
+                android:textColor="@color/textColor" />
 
             <RadioButton
                 android:id="@+id/rdbtnVespertino"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Vespertino" />
+                android:text="Vespertino"
+                android:textColor="@color/textColor" />
 
             <RadioButton
                 android:id="@+id/rdbtnNoturno"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Noturno" />
+                android:text="Noturno"
+                android:textColor="@color/textColor" />
 
         </RadioGroup>
 
@@ -91,7 +97,8 @@
                 android:layout_weight="1"
                 android:hint="@string/hint_prof"
                 android:inputType="none"
-                android:tag="professores" />
+                android:tag="professores"
+                android:textColor="@color/textColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

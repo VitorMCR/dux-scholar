@@ -20,6 +20,7 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:text="@string/editpt2activity_prompt_insert"
+            android:textColor="@color/textColor"
             android:textSize="16sp"
             android:textStyle="bold" />
 
@@ -32,6 +33,7 @@
             android:maxLines="1"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp" />
 
         <TextView
@@ -42,7 +44,8 @@
             android:layout_marginBottom="4dp"
             android:labelFor="@id/btnStuProfilePic"
             android:text="Foto de Perfil"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/textColor" />
 
         <Button
             android:id="@+id/btnStuProfilePic"
@@ -55,7 +58,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/hint_btn_choose"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_image_upload"
             app:iconSize="24dp"
@@ -73,6 +76,7 @@
             android:maxLines="1"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp" />
 
         <EditText
@@ -87,6 +91,7 @@
             android:maxLines="1"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp" />
 
         <EditText
@@ -101,6 +106,7 @@
             android:maxLines="1"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp" />
 
         <EditText
@@ -117,6 +123,7 @@
             android:scrollbars="vertical"
             android:singleLine="false"
             android:tag="required"
+            android:textColor="@color/textColor"
             android:textSize="14sp"
             android:verticalScrollbarPosition="right" />
 
@@ -136,7 +143,8 @@
                 android:layout_weight="1"
                 android:hint="@string/hint_curso"
                 android:inputType="none"
-                android:tag="cursos" />
+                android:tag="cursos"
+                android:textColor="@color/textColor" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -147,7 +155,8 @@
             android:layout_marginTop="8dp"
             android:labelFor="@id/npickStuSemester_depends_drpdwnStuCourse"
             android:text="Semestre"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/textColor" />
 
         <me.angrybyte.numberpicker.view.ActualNumberPicker
             android:id="@+id/npickStuSemester_depends_drpdwnStuCourse"
@@ -155,7 +164,7 @@
             android:layout_height="48dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center_horizontal"
-            app:controls_color="@color/black"
+            app:controls_color="@color/textColor"
             app:draw_over_controls="true"
             app:draw_over_text="false"
             app:max_value="6"
@@ -166,7 +175,7 @@
             app:show_fast_controls="false"
             app:show_highlight="true"
             app:show_text="true"
-            app:text_color="@color/black"
+            app:text_color="@color/textColor"
             app:text_size="16sp"
             app:value="1" />
 
@@ -178,7 +187,8 @@
             android:layout_marginBottom="4dp"
             android:labelFor="@id/btnStuCarteirinha"
             android:text="Carteirinha"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="@color/textColor" />
 
         <Button
             android:id="@+id/btnStuCarteirinha"
@@ -191,7 +201,7 @@
             android:ellipsize="end"
             android:maxLines="1"
             android:text="@string/hint_btn_choose"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             app:backgroundTint="@null"
             app:icon="@drawable/ic_image_upload"
             app:iconSize="24dp"

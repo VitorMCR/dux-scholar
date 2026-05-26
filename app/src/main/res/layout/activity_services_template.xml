@@ -28,11 +28,16 @@
     </LinearLayout>
 
     <!-- CONTEÚDO -->
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="24dp" />
+
     <TextView
         android:id="@+id/txtServiceContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:textSize="16sp" />
 
 </LinearLayout>

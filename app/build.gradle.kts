@@ -79,4 +79,5 @@ dependencies {
     implementation("me.angrybyte.picker:picker:1.3.1")
     implementation("io.coil-kt:coil:2.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
+    implementation("io.noties.markwon:core:4.6.2")
 }
