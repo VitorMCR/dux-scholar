@@ -16,22 +16,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btnSairuser"
-        android:layout_width="350sp"
-        android:layout_height="0dp"
-        android:layout_marginTop="420dp"
-        android:backgroundTint="#F21313"
-        android:drawableStart="@drawable/ic_arrow_back"
-        android:text="Sair"
-        android:textStyle="bold"
-        app:icon="@drawable/ic_arrow_back"
-        app:iconPadding="-16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.524"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
-
     <TextView
         android:id="@+id/txtHeader"
         android:layout_width="350sp"
@@ -55,7 +39,6 @@
         android:text="Nome:\nE-mail:\nRA:"
         android:textAlignment="textEnd"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/edttxtEmail"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txtHeader" />
 
@@ -75,16 +58,13 @@
             android:id="@+id/btnStuCarteirinha"
             android:layout_width="110sp"
             android:layout_height="90sp"
-            android:backgroundTint="@color/white"
+            android:background="@drawable/bg_card_services"
             android:drawableTop="@drawable/ic_carteirinha"
             android:text="Carteirinha"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="11sp"
-            app:cornerRadius="10dp"
-            app:iconTint="@color/black"
-            app:strokeColor="@color/black"
-            app:strokeWidth="2sp" />
+            android:textColor="@color/textColor"
+            android:textSize="10sp"
+            app:backgroundTint="@null" />
 
         <Space
             android:layout_width="12sp"
@@ -95,16 +75,13 @@
             android:id="@+id/btnNotasFaltas"
             android:layout_width="110sp"
             android:layout_height="90sp"
-            android:backgroundTint="@color/white"
-            android:drawableTop="@drawable/ic_grades"
+            android:background="@drawable/bg_card_services"
+            app:backgroundTint="@null"
+            android:drawableTop="@drawable/ic_gradeabsences"
             android:text="Notas/Faltas"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="10sp"
-            app:cornerRadius="10dp"
-            app:iconTint="@color/black"
-            app:strokeColor="@color/black"
-            app:strokeWidth="2sp" />
+            android:textColor="@color/textColor"
+            android:textSize="10sp" />
 
         <Space
             android:layout_width="12sp"
@@ -115,16 +92,13 @@
             android:id="@+id/btnHorarios"
             android:layout_width="110sp"
             android:layout_height="90sp"
-            android:backgroundTint="@color/white"
+            android:background="@drawable/bg_card_services"
+            app:backgroundTint="@null"
             android:drawableTop="@drawable/ic_clock"
             android:text="Horários"
             android:textAlignment="center"
-            android:textColor="@color/black"
-            android:textSize="10sp"
-            app:cornerRadius="10dp"
-            app:iconTint="@color/black"
-            app:strokeColor="@color/black"
-            app:strokeWidth="2sp" />
+            android:textColor="@color/textColor"
+            android:textSize="10sp" />
 
     </LinearLayout>
 
@@ -136,9 +110,11 @@
         android:backgroundTint="#928D9B"
         android:drawableStart="@drawable/ic_blocked"
         android:text="Rematrícula"
+        android:textColor="@color/white"
         android:textStyle="bold"
         app:icon="@drawable/ic_blocked"
         app:iconPadding="-16dp"
+        app:iconTint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
@@ -187,55 +163,6 @@
             </LinearLayout>
         </LinearLayout>
     </FrameLayout>
-
-    <EditText
-        android:id="@+id/edttxtNome"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="76dp"
-        android:ems="10"
-        android:inputType="text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/edttxtEmail"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="76dp"
-        android:ems="10"
-        android:inputType="textEmailAddress"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <EditText
-        android:id="@+id/edttxtRa"
-        android:layout_width="250dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="104dp"
-        android:layout_marginEnd="76dp"
-        android:ems="10"
-        android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtHeader"
-        tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/txtLink"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="84dp"
-        android:layout_marginTop="4dp"
-        android:text="Trocar senha"
-        android:textColor="#0000EE"
-        android:textSize="16sp"
-        android:textStyle="italic"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edttxtRa" />
 
     <com.example.duxscholar.NavbarView
         android:id="@+id/navbar"
