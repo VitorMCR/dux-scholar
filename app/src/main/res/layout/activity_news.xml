@@ -7,27 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".NewsActivity">
 
-    <com.example.duxscholar.NavbarView
-        android:id="@+id/navbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <View
-        android:id="@+id/viewServCabecalhoDivider4"
-        android:layout_width="200dp"
-        android:layout_height="1dp"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="190dp"
-        android:background="#000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtServCabecalho2"
-        tools:ignore="MissingConstraints" />
-
     <TextView
         android:id="@+id/txtServCabecalho2"
         android:layout_width="wrap_content"
@@ -44,30 +23,34 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
-    <ImageButton
-        android:id="@+id/imgbtnDuque"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="300dp"
-        android:backgroundTint="#00FFFFFF"
-        android:contentDescription="Widget chatbot"
-        android:scaleType="fitCenter"
+    <View
+        android:id="@+id/viewServCabecalhoDivider4"
+        android:layout_width="200dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="21dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="190dp"
+        android:background="#000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/img_icon_duque"
-        tools:ignore="MissingConstraints,SpeakableTextPresentCheck"
-        tools:layout_editor_absoluteY="532dp" />
+        app:layout_constraintTop_toBottomOf="@+id/txtServCabecalho2"
+        tools:ignore="MissingConstraints" />
 
-    <ListView
-        android:id="@+id/listviewNoticias"
-        android:layout_width="360dp"
-        android:layout_height="460dp"
-        android:layout_marginTop="32dp"
+    <com.example.duxscholar.DuqueButtonView
+        android:id="@+id/duquebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@+id/navbar"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <com.example.duxscholar.NavbarView
+        android:id="@+id/navbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewServCabecalhoDivider4"
-        tools:ignore="MissingConstraints">
-
-    </ListView>
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

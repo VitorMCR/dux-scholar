@@ -1,10 +1,12 @@
 package com.example.duxscholar
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.app.ActivityOptionsCompat
 import com.example.duxscholar.databinding.LayoutNavbarBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -14,7 +16,7 @@ class NavbarView @JvmOverloads constructor(
     defStyleAttr: Int = 0
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private lateinit var auth: FirebaseAuth
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val binding: LayoutNavbarBinding =
         LayoutNavbarBinding.inflate(LayoutInflater.from(context), this, true)
 
@@ -22,39 +24,59 @@ class NavbarView @JvmOverloads constructor(
         setupListeners()
     }
 
+    private fun getIndexForActivity(activityClass: Class<*>): Int {
+        return when (activityClass) {
+            MainActivity::class.java -> 0
+            CalendarActivity::class.java -> 1
+            NewsActivity::class.java -> 2
+            StudentProfileActivity::class.java, LoginActivity::class.java -> 3
+            else -> -1
+        }
+    }
+
+    private fun navigateTo(targetActivity: Class<*>) {
+        val currentActivity = context as? Activity
+        val currentIndex = currentActivity?.let { getIndexForActivity(it.javaClass) } ?: -1
+        val targetIndex = getIndexForActivity(targetActivity)
+
+        if (currentIndex == targetIndex && currentIndex != -1) return
+
+        val intent = Intent(context, targetActivity).apply {
+            addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+        }
+
+        if (currentActivity != null && currentIndex != -1 && targetIndex != -1) {
+            val (enterAnim, exitAnim) = if (targetIndex > currentIndex) {
+                // Indo à esquerda
+                Pair(R.anim.slide_in_right, R.anim.slide_out_left)
+            } else {
+                // Indo à direita
+                Pair(R.anim.slide_in_left, R.anim.slide_out_right)
+            }
+
+            val options = ActivityOptionsCompat.makeCustomAnimation(context, enterAnim, exitAnim)
+            context.startActivity(intent, options.toBundle())
+        }
+    }
+
     private fun setupListeners() {
         binding.imgbtnHome.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-            }
-            context.startActivity(intent)
+            navigateTo(MainActivity::class.java)
         }
 
         binding.imgbtnCalendario.setOnClickListener {
-            val intent = Intent(context, CalendarActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-            }
-            context.startActivity(intent)
+            navigateTo(CalendarActivity::class.java)
         }
 
         binding.imgbtnNoticias.setOnClickListener {
-            val intent = Intent(context, NewsActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-            }
-            context.startActivity(intent)
+            navigateTo(NewsActivity::class.java)
         }
 
         binding.imgbtnUsuario.setOnClickListener {
             if (auth.currentUser != null) {
-                val intent = Intent(context, StudentProfileActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-                }
-                context.startActivity(intent)
+                navigateTo(StudentProfileActivity::class.java)
             } else {
-                val intent = Intent(context, LoginActivity::class.java).apply {
-                    addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
-                }
-                context.startActivity(intent)
+                navigateTo(LoginActivity::class.java)
             }
         }
     }

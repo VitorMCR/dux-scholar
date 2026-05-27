@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ImageButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/imgbtnDuque"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:backgroundTint="#00FFFFFF"
+    android:contentDescription="Widget chatbot"
+    android:scaleType="centerCrop"
+    android:src="@drawable/img_icon_duque">
+
+</ImageButton>
