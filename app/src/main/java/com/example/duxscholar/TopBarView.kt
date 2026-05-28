@@ -74,7 +74,7 @@ class TopBarView @JvmOverloads constructor(
                     }
                 }
                 binding.imgbtnUser.setOnClickListener {
-                    val intent = Intent(context, StudentProfileActivity::class.java).apply {
+                    val intent = Intent(context, SettingsActivity::class.java).apply {
                         addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
                     }
                     context.startActivity(intent)

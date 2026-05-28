@@ -5,6 +5,18 @@
 
     <string name="mainactivity_greet">Olá, %s</string>
 
+    <string name="configactivity_title">Configurações de Conta</string>
+    <string name="configactivity_hint_nome">Nome</string>
+    <string name="configactivity_hint_email">E-mail</string>
+    <string name="configactivity_hint_newpassword">Nova Senha</string>
+    <string name="configactivity_hint_repnewpassword">Repetir Nova Senha</string>
+    <string name="configactivity_hint_pfp">Alterar Foto</string>
+    <string name="configactivity_submitchanges">Aplicar Alterações</string>
+    <string name="configactivity_logout">Sair</string>
+
+    <string name="studentprofileactivity_datalist">Status:\nRA:\nCurso:\nSemestre:\nTurno:</string>
+    <string name="studentprofileactivity_datatitle">DADOS DO ALUNO -\n%s</string>
+
     <string name="editpt2activity_title_editing">EDITANDO %s</string>
     <string name="editpt2activity_prompt_insert">Inserir %s</string>
     <string name="editpt2activity_prompt_edit">Editar %s</string>

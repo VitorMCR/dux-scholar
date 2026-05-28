@@ -6,6 +6,7 @@ import android.content.res.XmlResourceParser
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.text.method.LinkMovementMethod
 import android.util.Base64
 import android.util.Log
 import android.view.View
@@ -75,7 +76,7 @@ class Editpt2Activity : AppCompatActivity() {
                     ).show()
                 } else {
                     lastClickedButton?.text = getFileName(it, this)
-                    lastClickedButton?.hint = getBase64FromUri(it, this) // Funciona?
+                    lastClickedButton?.hint = getBase64FromUri(it, this)
                 }
             }
         }
@@ -239,6 +240,11 @@ class Editpt2Activity : AppCompatActivity() {
             else -> editTarget.slice(IntRange(0, editTarget.length - 2))
         }
 
+        when (editTarget) {
+            "Noticias" -> dialogView.findViewById<TextView>(R.id.txtlblNewContentDisclaimer).movementMethod = LinkMovementMethod.getInstance()
+            "InfoAcademicas" -> dialogView.findViewById<TextView>(R.id.txtlblServContentDisclaimer).movementMethod = LinkMovementMethod.getInstance()
+        }
+
         val allViews = getAllValidViews(dialogView)
 
         setupImageButtons(allViews)
@@ -253,13 +259,15 @@ class Editpt2Activity : AppCompatActivity() {
 
             when (editTarget) {
                 "Alunos" -> {
-                    dialogView.findViewById<EditText>(R.id.edtxtStuTempPassword).visibility =
-                        View.GONE
+                    val edtxtStuTempPassword = dialogView.findViewById<EditText>(R.id.edtxtStuTempPassword)
+                    edtxtStuTempPassword.tag = ""
+                    edtxtStuTempPassword.visibility = View.GONE
                 }
 
                 "Professores" -> {
-                    dialogView.findViewById<EditText>(R.id.edtxtProfTempPassword).visibility =
-                        View.GONE
+                    val edtxtProfTempPassword = dialogView.findViewById<EditText>(R.id.edtxtProfTempPassword)
+                    edtxtProfTempPassword.tag = ""
+                    edtxtProfTempPassword.visibility = View.GONE
                 }
             }
 
@@ -573,16 +581,19 @@ class Editpt2Activity : AppCompatActivity() {
 
                     val snapshotCourse = FirebaseDatabase.getInstance().getReference("cursos")
                         .child(dataMap.curso).get().await()
-                    if (snapshotCourse.exists()) {
-                        val name = snapshotCourse.child("name").value?.toString() ?: ""
-                        val shift = snapshotCourse.child("shift").value?.toString() ?: ""
-                        acTextView.setText(getString(R.string.hint_dropdown_course, name, shift), false)
-                    }
 
                     val npickStuSemester =
                         dialogView.findViewById<ActualNumberPicker>(R.id.npickStuSemester_depends_drpdwnStuCourse)
                     npickStuSemester.value = dataMap.semester
                     npickStuSemester.invalidate()
+
+                    if (snapshotCourse.exists()) {
+                        val name = snapshotCourse.child("name").value?.toString() ?: ""
+                        val shift = snapshotCourse.child("shift").value?.toString() ?: ""
+                        acTextView.setText(getString(R.string.hint_dropdown_course, name, shift), false)
+
+                        npickStuSemester.maxValue = snapshotCourse.child("duration").value?.toString()?.toInt() ?: 0
+                    }
 
                     val btnStuCarteirinha = dialogView.findViewById<Button>(R.id.btnStuCarteirinha)
                     if (dataMap.carteirinha != "none") {
@@ -748,7 +759,7 @@ private fun getAllValidViews(view: View): List<View> {
 
 // TRATAMENTO DE ARQUIVO
 
-private fun getFileName(uri: Uri, context: Context): String? {
+fun getFileName(uri: Uri, context: Context): String? {
     var fileName: String? = null
 
     if (uri.scheme == "content") {
@@ -773,7 +784,7 @@ private fun getFileName(uri: Uri, context: Context): String? {
     return fileName
 }
 
-private fun getFileSize(uri: Uri, context: Context): Long {
+fun getFileSize(uri: Uri, context: Context): Long {
     return context.contentResolver.query(uri, null, null, null, null)?.use { cursor ->
         val sizeIndex = cursor.getColumnIndex(OpenableColumns.SIZE)
         cursor.moveToFirst()
@@ -781,7 +792,7 @@ private fun getFileSize(uri: Uri, context: Context): Long {
     } ?: 0L
 }
 
-private fun getBase64FromUri(uri: Uri, context: Context): String? {
+fun getBase64FromUri(uri: Uri, context: Context): String? {
     return try {
         val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
         val bytes = inputStream?.readBytes()

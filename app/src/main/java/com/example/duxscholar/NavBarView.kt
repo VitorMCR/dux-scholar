@@ -9,6 +9,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.app.ActivityOptionsCompat
 import com.example.duxscholar.databinding.LayoutNavbarBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.FirebaseDatabase
 
 class NavbarView @JvmOverloads constructor(
     context: Context,
@@ -74,7 +75,11 @@ class NavbarView @JvmOverloads constructor(
 
         binding.imgbtnUsuario.setOnClickListener {
             if (auth.currentUser != null) {
-                navigateTo(StudentProfileActivity::class.java)
+                FirebaseDatabase.getInstance().getReference("alunos").child(auth.currentUser!!.uid).get().addOnSuccessListener { snapshot ->
+                    if (snapshot.exists()) {
+                        navigateTo(StudentProfileActivity::class.java)
+                    }
+                }
             } else {
                 navigateTo(LoginActivity::class.java)
             }
