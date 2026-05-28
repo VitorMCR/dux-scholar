@@ -10,6 +10,7 @@
     <color name="duxPalette4">#1F1F1F</color>
 
     <color name="textColor">@color/black</color>
+    <color name="minorTextColor">#9F9F9F</color>
     <color name="textLinkColor">#12439E</color>
     <color name="backgroundColor">@color/white</color>
     <color name="buttonColor">@color/white</color>

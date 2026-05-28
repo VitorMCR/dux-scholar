@@ -3,6 +3,9 @@
     <string name="all_news_link"><u><i>Ver todas...</i></u></string>
     <string name="more_services_link"><u><i>Mais serviços...</i></u></string>
 
+    <string name="carteirinhaactivity_missing"><i>Sua carteirinha ainda não foi emitida.</i></string>
+    <string name="carteirinhaactivity_description">Apresente as seguinte imagem em cinemas, shows ou eventos para usufruir de seus benefícios estudantis.</string>
+
     <string name="mainactivity_greet">Olá, %s</string>
 
     <string name="configactivity_title">Configurações de Conta</string>

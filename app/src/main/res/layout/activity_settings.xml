@@ -7,12 +7,12 @@
     android:layout_height="match_parent"
     tools:context=".SettingsActivity">
 
-    <ImageView
+    <ImageButton
         android:id="@+id/btnConfigClose"
-        android:layout_width="28dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="24dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
         android:layout_marginTop="24dp"
+        android:background="#00FFFFFF"
         android:contentDescription="Botão voltar"
         android:src="@drawable/ic_arrow_back"
         app:layout_constraintStart_toStartOf="parent"

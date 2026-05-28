@@ -12,7 +12,7 @@
         android:layout_width="370sp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:text="Apresente as seguintes imagens em cinemas, shows ou eventos para usufruir de seus benefícios estudantis."
+        android:text="@string/carteirinhaactivity_description"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,5 +28,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_arrow_back_alt" />
+
+    <ImageView
+        android:id="@+id/imgCarteirinha"
+        android:layout_width="350dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="82dp"
+        android:contentDescription="carteirinha do aluno"
+        android:scaleType="fitCenter"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtBenefEstudantis"
+        tools:srcCompat="@drawable/ic_image_upload" />
+
+    <TextView
+        android:id="@+id/txtCarteirinhaMissing"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="184dp"
+        android:text="@string/carteirinhaactivity_missing"
+        android:textColor="@color/minorTextColor"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtBenefEstudantis" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
