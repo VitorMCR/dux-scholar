@@ -1,9 +1,10 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <!-- Base application theme. -->
     <style name="Base.Theme.DuxScholar" parent="Theme.Material3.DayNight.NoActionBar">
         <item name="android:windowFullscreen">true</item>
         <item name="android:windowBackground">@color/white</item>
         <item name="android:textColor">@color/textColor</item>
+        <item name="colorAccent">@color/duxPalette1</item>
     </style>
 
     <style name="Theme.DuxScholar" parent="Base.Theme.DuxScholar" />
@@ -16,5 +17,21 @@
 
     <style name="ShapeAppearanceOverlay.App.CornerSize50Percent" parent="">
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="CalendarDateTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="CalendarHeaderTextAppearance" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">@color/textColor</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="CalendarWeekDayTextAppearance" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">@color/minorTextColor</item>
+        <item name="android:textSize">12sp</item>
     </style>
 </resources>

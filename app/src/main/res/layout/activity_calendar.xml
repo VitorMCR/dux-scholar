@@ -15,7 +15,15 @@
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:mcv_dateTextAppearance="@style/CalendarDateTextAppearance"
+        app:mcv_headerTextAppearance="@style/CalendarHeaderTextAppearance"
+        app:mcv_selectionColor="@color/duxPalette1"
+        app:mcv_selectionMode="single"
+        app:mcv_weekDayTextAppearance="@style/CalendarWeekDayTextAppearance"
+        app:mcv_leftArrow="@drawable/ic_arrow_calendar_back"
+        app:mcv_rightArrow="@drawable/ic_arrow_calendar_forward"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewNotes"

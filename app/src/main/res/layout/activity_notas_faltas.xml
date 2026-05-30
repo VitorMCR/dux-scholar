@@ -57,7 +57,7 @@
         android:scaleType="fitCenter"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_arrow_back_alt"
+        app:srcCompat="@drawable/ic_arrow_back"
         tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
     <include layout="@layout/layout_navbar" />

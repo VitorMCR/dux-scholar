@@ -1,11 +1,9 @@
 package com.example.duxscholar
 
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -142,6 +140,9 @@ class CalendarActivity : AppCompatActivity() {
             .setMaximumDate(CalendarDay.from(2030, 12, 31))
             .commit()
 
+        calendarView.setWeekDayLabels(R.array.calendaractivity_weekdaylabels)
+        calendarView.setTitleMonths(R.array.calendaractivity_monthlabels)
+
         // Seleciona o dia de hoje por padrão e carrega as notas
         calendarView.setSelectedDate(CalendarDay.today())
         fetchNotesForDate(CalendarDay.today())
@@ -191,7 +192,7 @@ class CalendarActivity : AppCompatActivity() {
                     }
                 }
                 calendarView.removeDecorators()
-                calendarView.addDecorator(EventDecorator(Color.parseColor("#8218f2"), datesWithNotes))
+                calendarView.addDecorator(EventDecorator(getColor(R.color.duxPalette1), datesWithNotes))
             }
 
             override fun onCancelled(error: DatabaseError) {}

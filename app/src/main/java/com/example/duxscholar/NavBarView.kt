@@ -66,7 +66,11 @@ class NavbarView @JvmOverloads constructor(
         }
 
         binding.imgbtnCalendario.setOnClickListener {
-            navigateTo(CalendarActivity::class.java)
+            if (auth.currentUser != null) {
+                navigateTo(CalendarActivity::class.java)
+            } else {
+                navigateTo(LoginActivity::class.java)
+            }
         }
 
         binding.imgbtnNoticias.setOnClickListener {
