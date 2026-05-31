@@ -3,6 +3,7 @@ package com.example.duxscholar
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -11,6 +12,7 @@ import android.util.Base64
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -38,6 +40,7 @@ import java.io.ByteArrayOutputStream
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     lateinit var lnlytNews: LinearLayout
+    lateinit var lnyltInfoAcademica: LinearLayout  // ← NOVO
     var databaseReference: DatabaseReference? = null
     lateinit var snapHelper: com.google.android.material.carousel.CarouselSnapHelper
     private var autoScrollJob: Job? = null
@@ -68,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
         }
+
 
         databaseReference = FirebaseDatabase.getInstance().getReference("noticias")
         lnlytNews = findViewById(R.id.lnlytNews)
@@ -101,8 +105,53 @@ class MainActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
                 Log.e("Firebase", "ERRO: ${error.message}")
             }
-
         })
+
+
+        lnyltInfoAcademica = findViewById(R.id.lnyltInfoAcademica)
+
+        FirebaseDatabase.getInstance().getReference("infoacademicas")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    lnyltInfoAcademica.removeAllViews()
+                    val inflater = LayoutInflater.from(this@MainActivity)
+
+                    for (data in snapshot.children) {
+                        val name    = data.child("name").value.toString()
+                        val iconB64 = data.child("icon").value.toString()
+
+                        val itemView = inflater.inflate(
+                            R.layout.item_service,
+                            lnyltInfoAcademica,
+                            false
+                        )
+
+                        val widthPx  = (107 * resources.displayMetrics.density).toInt()
+                        val heightPx = (120 * resources.displayMetrics.density).toInt()
+                        val marginPx = (8 * resources.displayMetrics.density).toInt()
+                        val params = LinearLayout.LayoutParams(widthPx, heightPx)
+                        params.setMargins(marginPx, 0, marginPx, 0)
+                        itemView.layoutParams = params
+
+                        itemView.findViewById<TextView>(R.id.txtNome).text = name
+
+                        try {
+                            val bytes  = Base64.decode(iconB64, Base64.DEFAULT)
+                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                            itemView.findViewById<ImageView>(R.id.imgIcon).setImageBitmap(bitmap)
+                        } catch (e: Exception) {
+                            Log.e("Firebase", "Erro ao decodificar ícone: ${e.message}")
+                        }
+
+                        lnyltInfoAcademica.addView(itemView)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("Firebase", "ERRO: ${error.message}")
+                }
+            })
+
 
         val carouselRecyclerView = findViewById<RecyclerView>(R.id.carouselRecyclerView)
         carouselRecyclerView.layoutManager = com.google.android.material.carousel.CarouselLayoutManager(
@@ -133,7 +182,7 @@ class MainActivity : AppCompatActivity() {
                 if (images.isEmpty()) {
                     images.add(drawableToByteArray(ResourcesCompat.getDrawable(resources, R.drawable.img_default_mainbanner, null)!!))
                 }
-                
+
                 adapter.notifyDataSetChanged()
                 startAutoScroll(carouselRecyclerView, images.size)
             }
