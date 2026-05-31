@@ -1,75 +1,235 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
+    <!-- Tela principal do chat -->
     <LinearLayout
-        android:id="@+id/lnlytTopbar"
+        android:id="@+id/layoutChat"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@color/backgroundColor"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingHorizontal="12dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/btnClose"
-            android:layout_width="28dp"
-            android:layout_height="28dp"
-            android:layout_marginEnd="25dp"
-            android:src="@drawable/ic_arrow_back" />
+        <LinearLayout
+            android:id="@+id/lnlytTopbar"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@color/backgroundColor"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingHorizontal="12dp">
 
+            <ImageView
+                android:id="@+id/btnClose"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="25dp"
+                android:src="@drawable/ic_arrow_back" />
 
-        <TextView
-            android:id="@+id/txtTitle"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/txtTitle"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Converse com Duque"
+                android:textColor="@color/textColor"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/btnNewChat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nova conversa"
+                android:textSize="13sp"
+                android:textColor="@color/textColor"
+                android:alpha="0.6"
+                android:layout_marginStart="8dp" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recvChat"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:padding="8dp" />
+
+        <!-- Chips de sugestões -->
+        <HorizontalScrollView
+            android:id="@+id/scrollChips"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Converse com Duque"
-            android:textColor="@color/textColor"
-            android:textSize="18sp" />
+            android:scrollbars="none"
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="6dp">
+
+            <LinearLayout
+                android:id="@+id/lnlytChips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical" />
+
+        </HorizontalScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/editTextInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bg_input"
+                android:hint="Digite sua mensagem..."
+                android:textSize="15sp"
+                android:minHeight="56dp"
+                android:maxLines="5"
+                android:gravity="center_vertical" />
+
+            <ImageButton
+                android:id="@+id/buttonSend"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_send_button"
+                android:src="@drawable/ic_send"
+                android:contentDescription="Enviar"
+                android:padding="12dp"
+                android:onClick="buttonSendChat" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
-     <androidx.recyclerview.widget.RecyclerView
-         android:id="@+id/recvChat"
-         android:layout_width="match_parent"
-         android:layout_height="0dp"
-         android:layout_weight="1"
-         android:padding="8dp"/>
+    <!-- Splash de introdução do Duque -->
+    <LinearLayout
+        android:id="@+id/layoutSplash"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:background="@color/backgroundColor"
+        android:visibility="visible">
 
-     <LinearLayout
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content"
-         android:padding="12dp"
-         android:orientation="horizontal"
-         android:gravity="center_vertical">
+        <ImageView
+            android:id="@+id/imgSplashDuque"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/img_duque"
+            android:alpha="0" />
 
-         <EditText
-             android:id="@+id/editTextInput"
-             android:layout_width="0dp"
-             android:layout_height="wrap_content"
-             android:layout_weight="1"
-             android:background="@drawable/bg_input"
-             android:hint="Digite sua mensagem..."
-             android:textSize="15sp"
-             android:minHeight="56dp"
-             android:maxLines="5"
-             android:gravity="center_vertical"/>
+        <TextView
+            android:id="@+id/txtSplashName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Duque"
+            android:textSize="28sp"
+            android:textColor="@color/textColor"
+            android:layout_marginTop="16dp"
+            android:alpha="0" />
 
-         <ImageButton
-             android:id="@+id/buttonSend"
-             android:layout_width="48dp"
-             android:layout_height="48dp"
-             android:layout_marginStart="8dp"
-             android:background="@drawable/bg_send_button"
-             android:src="@drawable/ic_send"
-             android:contentDescription="Enviar"
-             android:padding="12dp"
-             android:onClick="buttonSendChat"/>
+        <TextView
+            android:id="@+id/txtSplashSub"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Seu assistente pessoal"
+            android:textSize="15sp"
+            android:textColor="@color/textColor"
+            android:alpha="0"
+            android:layout_marginTop="6dp" />
 
-     </LinearLayout>
+    </LinearLayout>
 
- </LinearLayout>
+    <!-- Modal de confirmação "Nova conversa" -->
+    <FrameLayout
+        android:id="@+id/layoutModalOverlay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#99000000"
+        android:visibility="gone"
+        android:clickable="true"
+        android:focusable="true">
+
+        <LinearLayout
+            android:id="@+id/layoutModal"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="vertical"
+            android:background="@color/backgroundColor"
+            android:padding="24dp">
+
+            <!-- Ícone do Duque no modal -->
+            <ImageView
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:src="@drawable/img_duque"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="12dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Nova conversa"
+                android:textSize="17sp"
+                android:textColor="@color/textColor"
+                android:layout_marginBottom="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Ao iniciar uma nova conversa, as mensagens anteriores serão apagadas e não poderão ser recuperadas."
+                android:textSize="13sp"
+                android:textColor="@color/textColor"
+                android:alpha="0.6"
+                android:gravity="center"
+                android:layout_marginBottom="24dp" />
+
+            <!-- Botões do modal -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/btnModalCancel"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Cancelar"
+                    android:textSize="14sp"
+                    android:textColor="@color/textColor"
+                    android:alpha="0.5"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+                <TextView
+                    android:id="@+id/btnModalConfirm"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Confirmar"
+                    android:textSize="14sp"
+                    android:textColor="@color/textColor"
+                    android:gravity="center"
+                    android:padding="10dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+</FrameLayout>

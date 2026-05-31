@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.Gravity
 import android.animation.ObjectAnimator
 import android.view.animation.AccelerateDecelerateInterpolator
-
+import android.view.animation.DecelerateInterpolator
 
 
 class MessageAdapter(private val messages: MutableList<Message>) :
@@ -20,6 +20,7 @@ class MessageAdapter(private val messages: MutableList<Message>) :
 
     class MessageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val textMessage: TextView = view.findViewById(R.id.textMessage)
+        val textTimestamp: TextView = view.findViewById(R.id.textTimestamp)
         val imageBot: ImageView = view.findViewById(R.id.imageBot)
         val container: LinearLayout = view.findViewById(R.id.container)
     }
@@ -35,7 +36,6 @@ class MessageAdapter(private val messages: MutableList<Message>) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         return if (viewType == TYPE_TYPING) {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_chatbot_typing, parent, false)
@@ -56,22 +56,22 @@ class MessageAdapter(private val messages: MutableList<Message>) :
         if (holder is TypingViewHolder) {
 
             fun animateDot(view: View, delay: Long) {
-
                 val moveUp = ObjectAnimator.ofFloat(view, "translationY", 0f, -15f, 0f)
                 moveUp.duration = 850
                 moveUp.startDelay = delay
                 moveUp.interpolator = AccelerateDecelerateInterpolator()
                 moveUp.repeatCount = ObjectAnimator.INFINITE
-
                 moveUp.start()
             }
 
             animateDot(holder.dot1, 0)
             animateDot(holder.dot2, 100)
             animateDot(holder.dot3, 200)
+
         } else if (holder is MessageViewHolder) {
 
             holder.textMessage.text = message.text
+            holder.textTimestamp.text = message.timestamp
 
             val params = holder.container.layoutParams as FrameLayout.LayoutParams
 
@@ -79,13 +79,32 @@ class MessageAdapter(private val messages: MutableList<Message>) :
                 params.gravity = Gravity.END
                 holder.textMessage.setBackgroundResource(R.drawable.bg_chatbot_message_user)
                 holder.imageBot.visibility = View.GONE
+                holder.textTimestamp.gravity = Gravity.END
+                holder.itemView.setOnLongClickListener(null)
             } else {
                 params.gravity = Gravity.START
                 holder.textMessage.setBackgroundResource(R.drawable.bg_chatbot_message_bot)
                 holder.imageBot.visibility = View.VISIBLE
+                holder.textTimestamp.gravity = Gravity.START
+
+                // Long press copia a mensagem do bot
+                holder.itemView.setOnLongClickListener {
+                    (it.context as? ChatbotActivity)?.copyMessageToClipboard(message.text)
+                    true
+                }
             }
 
             holder.container.layoutParams = params
+
+            // Animação de entrada: slide de baixo + fade in
+            holder.itemView.translationY = 40f
+            holder.itemView.alpha = 0f
+            holder.itemView.animate()
+                .translationY(0f)
+                .alpha(1f)
+                .setDuration(250)
+                .setInterpolator(DecelerateInterpolator())
+                .start()
         }
     }
 }
