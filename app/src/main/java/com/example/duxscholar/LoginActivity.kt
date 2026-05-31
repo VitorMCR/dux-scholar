@@ -3,10 +3,10 @@ package com.example.duxscholar
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.net.toUri
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.lifecycle.lifecycleScope
@@ -26,9 +26,6 @@ class LoginActivity : AppCompatActivity() {
     lateinit var edtxtEmail: EditText
     lateinit var edtxtSenha: EditText
     lateinit var btnEntrar: Button
-    lateinit var btnDeslogar: Button
-    lateinit var btnDefinirNome: Button
-    lateinit var edtxtNome: EditText
     var databaseReference: DatabaseReference? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,10 +45,6 @@ class LoginActivity : AppCompatActivity() {
         edtxtSenha = findViewById(R.id.edtxtSenha)
 
         btnEntrar = findViewById(R.id.btnEntrar)
-        btnDeslogar = findViewById(R.id.btnDeslogar)
-
-        btnDefinirNome = findViewById(R.id.btnDefinirNome)
-        edtxtNome = findViewById(R.id.edttxtNome)
 
         btnEntrar.setOnClickListener {
             val email: String = edtxtEmail.text.toString()
@@ -76,32 +69,15 @@ class LoginActivity : AppCompatActivity() {
                     } else {
                         Toast.makeText(
                             baseContext,
-                            "Falha na autenticação. Tente novamente mais tarde.",
+                            "Falha na autenticação. Verifique o email/senha digitado ou tente novamente mais tarde.",
                             Toast.LENGTH_LONG
                         ).show()
                     }
                 }
         }
 
-        btnDeslogar.setOnClickListener {
-            auth.signOut()
-        }
-
-        btnDefinirNome.setOnClickListener {
-            val profileUpdate = userProfileChangeRequest {
-                displayName = edtxtNome.text.toString()
-            }
-
-            auth.currentUser!!.updateProfile(profileUpdate)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        Toast.makeText(
-                            baseContext,
-                            "Alterado com sucesso.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
+        findViewById<ImageView>(R.id.imgbtnLoginClose).setOnClickListener {
+            finish()
         }
     }
 

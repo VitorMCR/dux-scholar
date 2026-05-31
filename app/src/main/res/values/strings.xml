@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Dux Scholar</string>
-    <string name="all_news_link"><u><i>Ver todas...</i></u></string>
-    <string name="more_services_link"><u><i>Mais serviços...</i></u></string>
+
+    <string name="contentdescription_back">Voltar</string>
 
     <string name="carteirinhaactivity_missing"><i>Sua carteirinha ainda não foi emitida.</i></string>
     <string name="carteirinhaactivity_description">Apresente as seguinte imagem em cinemas, shows ou eventos para usufruir de seus benefícios estudantis.</string>
@@ -31,7 +31,14 @@
         <item>Dezembro</item>
     </string-array>
 
+    <string name="loginactivity_title">Entre na sua Conta Institucional</string>
+    <string name="loginactivity_hint_email">E-mail</string>
+    <string name="loginactivity_hint_password">Senha</string>
+    <string name="loginactivity_button">Entrar</string>
+
     <string name="mainactivity_greet">Olá, %s</string>
+    <string name="mainactivity_allnews_link"><u><i>Ver todas...</i></u></string>
+    <string name="mainactivity_moreservices_link"><u><i>Mais serviços...</i></u></string>
 
     <string name="configactivity_title">Configurações de Conta</string>
     <string name="configactivity_hint_nome">Nome</string>
