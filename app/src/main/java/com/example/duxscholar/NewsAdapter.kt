@@ -5,18 +5,18 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
-import com.example.duxscholar.databinding.ItemServiceBinding
+import com.example.duxscholar.databinding.ItemNewsBinding
 
-class ServiceAdapter(
-    private val lista: List<InfoAcademica>,
-    private val onClick: (InfoAcademica) -> Unit
-) : RecyclerView.Adapter<ServiceAdapter.ViewHolder>() {
+class NewsAdapter(
+    private val lista: List<Noticia>,
+    private val onClick: (Noticia) -> Unit
+) : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
-    class ViewHolder(val binding: ItemServiceBinding)
+    class ViewHolder(val binding: ItemNewsBinding)
         : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ItemServiceBinding.inflate(
+        val binding = ItemNewsBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -29,24 +29,24 @@ class ServiceAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = lista[position]
 
-        holder.binding.txtNome.text = item.name
+        holder.binding.txtNewTitle.text = item.name
+        holder.binding.txtNewHeader.text = item.header
+        holder.binding.txtNewDate.text = item.date
 
         try {
-            if (item.icon.isNotEmpty()) {
-                val base64String = if (item.icon.contains(",")) {
-                    item.icon.substringAfter(",")
+            if (item.image.isNotEmpty()) {
+                val base64String = if (item.image.contains(",")) {
+                    item.image.substringAfter(",")
                 } else {
-                    item.icon
+                    item.image
                 }
                 val imageBytes = Base64.decode(base64String, Base64.DEFAULT)
-                holder.binding.imgIcon.load(imageBytes)
+                holder.binding.imgNewImage.load(imageBytes)
             } else {
-                // fallback caso não seja base64
-                holder.binding.imgIcon.setImageResource(android.R.drawable.ic_menu_gallery)
+                holder.binding.imgNewImage.setImageResource(android.R.drawable.ic_menu_gallery)
             }
         } catch (_: Exception) {
-            // evita crash
-            holder.binding.imgIcon.setImageResource(android.R.drawable.ic_menu_report_image)
+            holder.binding.imgNewImage.setImageResource(android.R.drawable.ic_menu_report_image)
         }
 
         holder.itemView.setOnClickListener {

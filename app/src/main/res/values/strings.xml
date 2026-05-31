@@ -40,6 +40,8 @@
     <string name="mainactivity_allnews_link"><u><i>Ver todas...</i></u></string>
     <string name="mainactivity_moreservices_link"><u><i>Mais serviços...</i></u></string>
 
+    <string name="newsactivity_readmore">Ler Mais >></string>
+
     <string name="configactivity_title">Configurações de Conta</string>
     <string name="configactivity_hint_nome">Nome</string>
     <string name="configactivity_hint_email">E-mail</string>

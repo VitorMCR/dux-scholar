@@ -12,7 +12,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/btnBack"
+            android:id="@+id/btnServBack"
             android:layout_width="32dp"
             android:layout_height="32dp"
             app:srcCompat="@drawable/ic_arrow_back"/>
@@ -21,10 +21,11 @@
             android:id="@+id/txtServiceTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="8dp"
             android:text="Título"
             android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginStart="8dp"/>
+            android:textStyle="bold" />
     </LinearLayout>
 
     <!-- CONTEÚDO -->

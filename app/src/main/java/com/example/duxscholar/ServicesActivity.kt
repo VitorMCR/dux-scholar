@@ -9,11 +9,10 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.*
 
 class ServicesActivity : AppCompatActivity() {
-
     lateinit var recycler: RecyclerView
     lateinit var list: MutableList<InfoAcademica>
     lateinit var adapter: ServiceAdapter
-    lateinit var db: DatabaseReference
+    lateinit var databaseReference: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,9 +38,9 @@ class ServicesActivity : AppCompatActivity() {
         recycler.layoutManager = GridLayoutManager(this, 2)
         recycler.adapter = adapter
 
-        db = FirebaseDatabase.getInstance().getReference("infoacademicas")
+        databaseReference = FirebaseDatabase.getInstance().getReference("infoacademicas")
 
-        db.addValueEventListener(object : ValueEventListener {
+        databaseReference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 list.clear()
 

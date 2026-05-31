@@ -18,7 +18,7 @@ class ServicesTemplateActivity : AppCompatActivity() {
 
         txtTitle = findViewById(R.id.txtServiceTitle)
         txtContent = findViewById(R.id.txtServiceContent)
-        btnBack = findViewById(R.id.btnBack)
+        btnBack = findViewById(R.id.btnServBack)
 
         val title = intent.getStringExtra("TITLE")
         val content = intent.getStringExtra("CONTENT") ?: ""

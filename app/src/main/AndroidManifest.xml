@@ -13,10 +13,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.DuxScholar">
         <activity
-            android:name=".SettingsActivity"
+            android:name=".NewsTemplateActivity"
             android:exported="false" />
         <activity
-            android:name=".TrocarSenhaActivity"
+            android:name=".SettingsActivity"
             android:exported="false" />
         <activity
             android:name=".Editpt2Activity"

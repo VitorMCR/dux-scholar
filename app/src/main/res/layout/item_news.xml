@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/lnlytNewLayout"
+    android:layout_width="380dp"
+    android:layout_height="170dp"
+    android:layout_gravity="center_horizontal"
+    android:layout_marginBottom="24dp"
+    android:background="@drawable/bg_news"
+    android:elevation="4dp"
+    android:gravity="center"
+    android:orientation="horizontal"
+    android:padding="8dp">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/imgNewImage"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="@drawable/bg_roundborder"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+        tools:srcCompat="@tools:sample/avatars" />
+
+    <LinearLayout
+        android:id="@+id/lnlytNewContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txtNewTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:maxLines="2"
+            android:text="Conheça o Mascote da FATEC!"
+            android:textColor="@color/textColor"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtNewHeader"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxLines="4"
+            android:text="Lorem ipsum dolor sit amet, consectetur aidpiscing elit, sed do eiusmod tempor incididunt faimofawnfwaoihjfwaionh wiorowiroiwr"
+            android:textColor="@color/textColor"
+            app:lineHeight="20sp" />
+
+        <LinearLayout
+            android:id="@+id/lnlytNewDetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_marginStart="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/txtNewDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:text="01/01/1969"
+                android:textColor="@color/minorTextColor" />
+
+            <TextView
+                android:id="@+id/txtNewReadMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:gravity="end"
+                android:text="@string/newsactivity_readmore"
+                android:textColor="@color/minorTextColor"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
