@@ -9,9 +9,11 @@ import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import android.util.Base64
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
+import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -21,6 +23,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.core.view.isEmpty
 import androidx.core.view.updateLayoutParams
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
@@ -36,11 +39,8 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    lateinit var lnlytNews: LinearLayout
-    lateinit var lnyltInfoAcademica: LinearLayout  // ← NOVO
     var databaseReference: DatabaseReference? = null
     lateinit var snapHelper: com.google.android.material.carousel.CarouselSnapHelper
     private var autoScrollJob: Job? = null
@@ -50,55 +50,61 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(R.layout.activity_main)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        setContentView(binding.root)
+        
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
 
-        findViewById<Button>(R.id.btnChatbot).setOnClickListener {
+        binding.btnChatbot.setOnClickListener {
             val intent = Intent(this@MainActivity, ChatbotActivity::class.java)
             startActivity(intent)
         }
 
-        findViewById<TextView>(R.id.txtMaisServ).setOnClickListener {
+        binding.txtMaisServ.setOnClickListener {
             val intent = Intent(this, ServicesActivity::class.java)
             startActivity(intent)
         }
 
-        findViewById<TextView>(R.id.txtMaisNews).setOnClickListener {
+        binding.txtMaisNews.setOnClickListener {
             val intent = Intent(this, NewsActivity::class.java)
             startActivity(intent)
         }
 
-
+        // Noticias
         databaseReference = FirebaseDatabase.getInstance().getReference("noticias")
-        lnlytNews = findViewById(R.id.lnlytNews)
+        binding.lnlytNews.setOnClickListener {
+            findViewById<ImageButton>(R.id.imgbtnNoticias).callOnClick()
+        }
 
         databaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                lnlytNews.removeAllViews()
+                binding.lnlytNews.removeAllViews()
                 val inflater = LayoutInflater.from(this@MainActivity)
-                var limit = if (snapshot.childrenCount <= 4) snapshot.childrenCount else 4
+                var limit = 4
                 for (data in snapshot.children) {
                     if (limit > 0) {
-                        val newLayoutInstance =
-                            inflater.inflate(R.layout.item_main_news, lnlytNews, false)
-                        newLayoutInstance.findViewById<TextView>(R.id.txtNewstitle).text =
-                            data.child("name").value.toString()
-                        newLayoutInstance.findViewById<TextView>(R.id.txtNewsdesc).text =
-                            data.child("header").value.toString()
-                        if ((limit - 1).toInt() == 0) {
+                        val newLayoutInstance = inflater.inflate(R.layout.item_main_news, binding.lnlytNews, false)
+                        newLayoutInstance.findViewById<TextView>(R.id.txtNewstitle).text = data.child("name").value.toString()
+                        newLayoutInstance.findViewById<TextView>(R.id.txtNewsdesc).text = data.child("header").value.toString()
+                        
+                        if ((limit - 1) == 0) {
                             newLayoutInstance.updateLayoutParams<ViewGroup.MarginLayoutParams> {
-                                marginEnd =
-                                    (8 * baseContext.resources.displayMetrics.density).toInt()
+                                marginEnd = (8 * resources.displayMetrics.density).toInt()
                             }
                         }
-
-                        lnlytNews.addView(newLayoutInstance)
+                        binding.lnlytNews.addView(newLayoutInstance)
                         limit -= 1
                     } else break
+                }
+
+                if (binding.lnlytNews.isEmpty()) {
+                    binding.txtNewsNothing.visibility = View.VISIBLE
+                    binding.lnlytNews.gravity = Gravity.CENTER
+                } else {
+                    binding.txtNewsNothing.visibility = View.GONE
                 }
             }
 
@@ -107,43 +113,48 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-
-        lnyltInfoAcademica = findViewById(R.id.lnyltInfoAcademica)
-
+        // Informações Acadêmicas
         FirebaseDatabase.getInstance().getReference("infoacademicas")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    lnyltInfoAcademica.removeAllViews()
+                    binding.lnyltInfoAcademica.removeAllViews()
                     val inflater = LayoutInflater.from(this@MainActivity)
 
+                    var limit = 3
                     for (data in snapshot.children) {
-                        val name    = data.child("name").value.toString()
-                        val iconB64 = data.child("icon").value.toString()
+                        if (limit > 0) {
+                            val name = data.child("name").value.toString()
+                            val iconB64 = data.child("icon").value.toString()
 
-                        val itemView = inflater.inflate(
-                            R.layout.item_service,
-                            lnyltInfoAcademica,
-                            false
-                        )
+                            val itemView = inflater.inflate(R.layout.item_service, binding.lnyltInfoAcademica, false)
 
-                        val widthPx  = (107 * resources.displayMetrics.density).toInt()
-                        val heightPx = (120 * resources.displayMetrics.density).toInt()
-                        val marginPx = (8 * resources.displayMetrics.density).toInt()
-                        val params = LinearLayout.LayoutParams(widthPx, heightPx)
-                        params.setMargins(marginPx, 0, marginPx, 0)
-                        itemView.layoutParams = params
+                            val widthPx = (120 * resources.displayMetrics.density).toInt()
+                            val heightPx = (120 * resources.displayMetrics.density).toInt()
+                            val marginPx = (8 * resources.displayMetrics.density).toInt()
+                            val params = LinearLayout.LayoutParams(widthPx, heightPx)
+                            params.setMargins(marginPx, 0, marginPx, 0)
+                            itemView.layoutParams = params
 
-                        itemView.findViewById<TextView>(R.id.txtNome).text = name
+                            itemView.findViewById<TextView>(R.id.txtNome).text = name
 
-                        try {
-                            val bytes  = Base64.decode(iconB64, Base64.DEFAULT)
-                            val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
-                            itemView.findViewById<ImageView>(R.id.imgIcon).setImageBitmap(bitmap)
-                        } catch (e: Exception) {
-                            Log.e("Firebase", "Erro ao decodificar ícone: ${e.message}")
-                        }
+                            try {
+                                val bytes = Base64.decode(iconB64, Base64.DEFAULT)
+                                val bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.size)
+                                itemView.findViewById<ImageView>(R.id.imgIcon).setImageBitmap(bitmap)
+                            } catch (e: Exception) {
+                                Log.e("Firebase", "Erro ao decodificar ícone: ${e.message}")
+                            }
 
-                        lnyltInfoAcademica.addView(itemView)
+                            binding.lnyltInfoAcademica.addView(itemView)
+                            limit -= 1
+                        } else break
+                    }
+
+                    if (binding.lnyltInfoAcademica.isEmpty()) {
+                        binding.txtInfoAcNothing.visibility = View.VISIBLE
+                        binding.lnyltInfoAcademica.gravity = Gravity.CENTER
+                    } else {
+                        binding.txtInfoAcNothing.visibility = View.GONE
                     }
                 }
 
@@ -152,8 +163,8 @@ class MainActivity : AppCompatActivity() {
                 }
             })
 
-
-        val carouselRecyclerView = findViewById<RecyclerView>(R.id.carouselRecyclerView)
+        // Carousel
+        val carouselRecyclerView = binding.carouselRecyclerView
         carouselRecyclerView.layoutManager = com.google.android.material.carousel.CarouselLayoutManager(
             com.google.android.material.carousel.FullScreenCarouselStrategy()
         )
@@ -170,7 +181,6 @@ class MainActivity : AppCompatActivity() {
                 images.clear()
                 for (data in snapshot.children) {
                     val imageBase64 = data.child("image").value.toString()
-
                     try {
                         val imageBytes = Base64.decode(imageBase64, Base64.DEFAULT)
                         images.add(imageBytes)
@@ -222,9 +232,7 @@ class MainActivity : AppCompatActivity() {
     fun drawableToByteArray(drawable: Drawable): ByteArray {
         val bitmap = (drawable as BitmapDrawable).bitmap
         val stream = ByteArrayOutputStream()
-
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-
         return stream.toByteArray()
     }
 }

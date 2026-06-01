@@ -31,7 +31,7 @@
             android:name=".NotasFaltasActivity"
             android:exported="false" />
         <activity
-            android:name=".HorarioActivity"
+            android:name=".EditCourseScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".CarteirinhaActivity"
