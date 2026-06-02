@@ -2,6 +2,7 @@ package com.example.duxscholar
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.content.res.XmlResourceParser
 import android.net.Uri
 import android.os.Bundle
@@ -170,7 +171,14 @@ class Editpt2Activity : AppCompatActivity() {
                         .setNegativeButton("Não") { dialog, _ -> dialog.dismiss() }
                         .show()
                 }
-            })
+
+                override fun onCourseHoursClick(position: Int) {
+                    val intent = Intent(this@Editpt2Activity, EditCourseScheduleActivity::class.java)
+                    intent.putExtra("COURSE_ID", entries[position].id)
+                    intent.putExtra("COURSE_NAME", entries[position].title)
+                    startActivity(intent)
+                }
+            }, editTarget.lowercase() == "cursos")
 
         recvEditList = findViewById(R.id.recvEditList)
         recvEditList.adapter = editEntryAdapter
@@ -184,10 +192,12 @@ class Editpt2Activity : AppCompatActivity() {
                         if (data.child("active")
                                 .exists() && data.child("active").value == false
                         ) continue
+
                         val entry = EditEntry(
                             data.child("name").value.toString(),
                             data.key.toString()
                         )
+
                         entry.let { entries.add(it) }
                     }
                     editEntryAdapter.notifyDataSetChanged()

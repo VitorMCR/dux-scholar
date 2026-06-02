@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroundColor"
+    tools:context=".EditCourseScheduleActivity">
+
+    <LinearLayout
+        android:id="@+id/lnlytTopbar"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/backgroundColor"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imgbtnVoltarHorario"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="25dp"
+            android:contentDescription="Botão voltar"
+            android:src="@drawable/ic_arrow_back" />
+
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/txtHorarioTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Grade Horária"
+        android:textColor="@color/textColor"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lnlytTopbar" />
+
+    <TextView
+        android:id="@+id/txtHorarioCursoNome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Curso"
+        android:textColor="@color/textColor"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/txtHorarioTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/txtHorarioTitulo" />
+
+    <View
+        android:id="@+id/viewDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="24dp"
+        android:background="@color/textColor"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/txtHorarioTitulo"
+        app:layout_constraintTop_toBottomOf="@+id/txtHorarioCursoNome" />
+
+    <!-- Top scrolling list of semester selectors -->
+    <HorizontalScrollView
+        android:id="@+id/hscrollSemesters"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:scrollbars="none"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/viewDivider">
+
+        <LinearLayout
+            android:id="@+id/llSemesterSelectors"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp" />
+    </HorizontalScrollView>
+
+    <!-- Vertical scroll for the list of daily tables -->
+    <ScrollView
+        android:id="@+id/scrollTablesContainer"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:clipChildren="true"
+        android:clipToPadding="true"
+        app:layout_constraintBottom_toTopOf="@+id/btnSaveHorario"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hscrollSemesters">
+
+        <LinearLayout
+            android:id="@+id/llDailyTablesContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp"
+            android:clipChildren="true"
+            android:clipToPadding="true" />
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btnSaveHorario"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:background="@drawable/bg_editlist"
+        android:text="Salvar Grade"
+        android:textColor="@color/textColor"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

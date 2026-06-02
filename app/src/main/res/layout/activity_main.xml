@@ -18,7 +18,7 @@
 
     <Button
         android:id="@+id/btnChatbot"
-        android:layout_width="350dp"
+        android:layout_width="350sp"
         android:layout_height="52dp"
         android:layout_marginTop="96dp"
         android:background="@drawable/bg_input"
@@ -39,120 +39,165 @@
         android:id="@+id/imgDuqueIcon"
         android:layout_width="54dp"
         android:layout_height="52dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="96dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/img_icon_duque" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/carouselRecyclerView"
-        android:layout_width="0dp"
-        android:layout_height="250dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnChatbot" />
-
-    <HorizontalScrollView
-        android:id="@+id/horizontalScrollView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:scrollIndicators="none"
-        android:scrollbarAlwaysDrawHorizontalTrack="false"
-        android:scrollbarAlwaysDrawVerticalTrack="false"
-        android:scrollbarSize="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lnlytNewsHeader">
-
-        <LinearLayout
-            android:id="@+id/lnlytNews"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
-    </HorizontalScrollView>
-
-    <LinearLayout
-        android:id="@+id/lnlytNewsHeader"
+    <ScrollView
+        android:id="@+id/scrollMainContent"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:fillViewport="true"
+        app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerView">
+        app:layout_constraintTop_toBottomOf="@+id/btnChatbot">
 
-        <TextView
-            android:id="@+id/txtNews"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="fill"
-            android:layout_marginStart="24dp"
-            android:text="Notícias rápidas"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-            android:textColor="@color/textColor"
-            android:textSize="16sp" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/txtMaisNews"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:layout_marginStart="180dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:text="@string/mainactivity_allnews_link"
-            android:textAlignment="textEnd"
-            android:textColor="@color/textLinkColor"
-            android:textSize="12sp" />
-    </LinearLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/carouselRecyclerView"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/txtInfoAcademica"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="Informações Acadêmicas"
-        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-        android:textColor="@color/textColor"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+            <LinearLayout
+                android:id="@+id/lnlytNewsHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/carouselRecyclerView">
 
-    <LinearLayout
-        android:id="@+id/lnyltInfoAcademica"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:orientation="horizontal"
-        android:gravity="center"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtInfoAcademica" />
+                <TextView
+                    android:id="@+id/txtNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="fill"
+                    android:layout_marginStart="24dp"
+                    android:text="@string/mainactivity_quicknews"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/textColor"
+                    android:textSize="16sp" />
 
+                <TextView
+                    android:id="@+id/txtMaisNews"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="32dp"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:gravity="fill_vertical|end"
+                    android:text="@string/mainactivity_allnews_link"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textLinkColor"
+                    android:textSize="14sp" />
+            </LinearLayout>
 
+            <HorizontalScrollView
+                android:id="@+id/horizontalScrollView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:minHeight="100dp"
+                android:scrollIndicators="none"
+                android:scrollbarAlwaysDrawHorizontalTrack="false"
+                android:scrollbarAlwaysDrawVerticalTrack="false"
+                android:scrollbarSize="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lnlytNewsHeader">
 
-    <TextView
-        android:id="@+id/txtMaisServ"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="@string/mainactivity_moreservices_link"
-        android:textAppearance="@style/TextAppearance.AppCompat.Small"
-        android:textColor="@color/textLinkColor"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lnyltInfoAcademica" />
+                <LinearLayout
+                    android:id="@+id/lnlytNews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal" />
+            </HorizontalScrollView>
 
-    <com.example.duxscholar.NavbarView
+            <TextView
+                android:id="@+id/txtNewsNothing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/contentdescription_nothing"
+                android:textColor="@color/minorTextColor"
+                android:textStyle="italic"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/horizontalScrollView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/horizontalScrollView" />
+
+            <TextView
+                android:id="@+id/txtInfoAcademica"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/servicesactivity_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                android:textColor="@color/textColor"
+                android:textSize="16sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/horizontalScrollView" />
+
+            <LinearLayout
+                android:id="@+id/lnyltInfoAcademica"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:gravity="center"
+                android:minHeight="100dp"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/txtInfoAcademica" />
+
+            <TextView
+                android:id="@+id/txtInfoAcNothing"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/contentdescription_nothing"
+                android:textColor="@color/minorTextColor"
+                android:textStyle="italic"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/lnyltInfoAcademica"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/lnyltInfoAcademica" />
+
+            <TextView
+                android:id="@+id/txtMaisServ"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:text="@string/mainactivity_moreservices_link"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:textColor="@color/textLinkColor"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lnyltInfoAcademica" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
+    <com.example.duxscholar.NavBarView
         android:id="@+id/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

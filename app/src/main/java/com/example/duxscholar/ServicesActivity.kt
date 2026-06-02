@@ -2,7 +2,7 @@ package com.example.duxscholar
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,7 +29,7 @@ class ServicesActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        val btnBack = findViewById<Button>(R.id.btnBackServices)
+        val btnBack = findViewById<ImageView>(R.id.btnBackServices)
 
         btnBack.setOnClickListener {
             finish()

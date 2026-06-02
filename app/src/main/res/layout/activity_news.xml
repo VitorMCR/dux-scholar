@@ -9,31 +9,27 @@
     tools:context=".NewsActivity">
 
     <TextView
-        android:id="@+id/txtServCabecalho2"
+        android:id="@+id/txtNewsCabecalho"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="21dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="154dp"
+        android:layout_marginTop="36dp"
         android:ems="10"
         android:text="Notícias"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/viewServCabecalhoDivider4"
+        android:id="@+id/viewNewsCabecalhoDivider"
         android:layout_width="200dp"
         android:layout_height="1dp"
         android:layout_marginStart="21dp"
         android:layout_marginTop="4dp"
-        android:layout_marginEnd="190dp"
         android:background="@color/textColor"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtServCabecalho2" />
+        app:layout_constraintTop_toBottomOf="@+id/txtNewsCabecalho" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerNews"
@@ -44,7 +40,7 @@
         app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/viewServCabecalhoDivider4" />
+        app:layout_constraintTop_toBottomOf="@+id/viewNewsCabecalhoDivider" />
 
     <com.example.duxscholar.DuqueButtonView
         android:id="@+id/duquebutton"
@@ -55,7 +51,7 @@
         app:layout_constraintBottom_toTopOf="@+id/navbar"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <com.example.duxscholar.NavbarView
+    <com.example.duxscholar.NavBarView
         android:id="@+id/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

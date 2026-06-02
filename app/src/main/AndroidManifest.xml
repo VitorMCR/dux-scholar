@@ -10,7 +10,6 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
         android:theme="@style/Theme.DuxScholar">
         <activity
             android:name=".NewsTemplateActivity"
@@ -31,7 +30,7 @@
             android:name=".NotasFaltasActivity"
             android:exported="false" />
         <activity
-            android:name=".HorarioActivity"
+            android:name=".EditCourseScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".CarteirinhaActivity"
@@ -43,7 +42,7 @@
             android:name=".StudentProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".HoursActivity"
+            android:name=".StudentScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".ServicesActivity"

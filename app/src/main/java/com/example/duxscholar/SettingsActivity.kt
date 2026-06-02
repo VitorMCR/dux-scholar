@@ -14,6 +14,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
+import com.google.firebase.database.FirebaseDatabase
 
 class SettingsActivity : AppCompatActivity() {
     lateinit var auth: FirebaseAuth
@@ -41,7 +42,7 @@ class SettingsActivity : AppCompatActivity() {
                 if (edtxtConfigNewPass.text.toString().length >= 6) {
                     user.updatePassword(edtxtConfigNewPass.text.toString()).addOnSuccessListener {
                         Snackbar.make(window.decorView.rootView, "Senha alterada com sucesso!", Snackbar.LENGTH_SHORT).show()
-
+                        FirebaseDatabase.getInstance().getReference("alunos").child(user.uid).child("temppass").setValue("")
                         edtxtConfigNewPass.text.clear()
                         edtxtConfigRepNewPass.text.clear()
                     }

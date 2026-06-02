@@ -60,10 +60,9 @@ class TopBarView @JvmOverloads constructor(
         authListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
             val user = firebaseAuth.currentUser
             if (user != null) {
-                binding.txtGreet.text = context.getString(R.string.mainactivity_greet, user.displayName?.split(" ")[0])
-
                 findViewTreeLifecycleOwner()?.lifecycleScope?.launch {
                     if (!checkBasicUser()) {
+                        binding.txtGreet.text = context.getString(R.string.mainactivity_greet, "Admin")
                         binding.imgbtnEditor.visibility = VISIBLE
                         binding.imgbtnEditor.setOnClickListener {
                             val intent = Intent(context, EditActivity::class.java).apply {
@@ -71,6 +70,8 @@ class TopBarView @JvmOverloads constructor(
                             }
                             context.startActivity(intent)
                         }
+                    } else {
+                        binding.txtGreet.text = context.getString(R.string.mainactivity_greet, user.displayName?.split(" ")[0])
                     }
                 }
                 binding.imgbtnUser.setOnClickListener {
