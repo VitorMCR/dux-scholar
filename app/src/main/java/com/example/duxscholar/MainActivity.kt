@@ -74,10 +74,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Noticias
-        databaseReference = FirebaseDatabase.getInstance().getReference("noticias")
         binding.lnlytNews.setOnClickListener {
             findViewById<ImageButton>(R.id.imgbtnNoticias).callOnClick()
         }
+
+        databaseReference = FirebaseDatabase.getInstance().getReference("noticias")
 
         databaseReference!!.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -114,6 +115,10 @@ class MainActivity : AppCompatActivity() {
         })
 
         // Informações Acadêmicas
+        binding.lnyltInfoAcademica.setOnClickListener {
+            binding.txtMaisServ.callOnClick()
+        }
+
         FirebaseDatabase.getInstance().getReference("infoacademicas")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -130,9 +135,8 @@ class MainActivity : AppCompatActivity() {
 
                             val widthPx = (120 * resources.displayMetrics.density).toInt()
                             val heightPx = (120 * resources.displayMetrics.density).toInt()
-                            val marginPx = (8 * resources.displayMetrics.density).toInt()
                             val params = LinearLayout.LayoutParams(widthPx, heightPx)
-                            params.setMargins(marginPx, 0, marginPx, 0)
+                            params.weight = 1.0f
                             itemView.layoutParams = params
 
                             itemView.findViewById<TextView>(R.id.txtNome).text = name

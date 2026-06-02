@@ -56,7 +56,7 @@
     <string name="configactivity_logout">Sair</string>
 
     <string name="studentprofileactivity_datalist">Status:\nRA:\nCurso:\nSemestre:\nTurno:</string>
-    <string name="studentprofileactivity_datatitle">DADOS DO ALUNO -\n%s</string>
+    <string name="studentprofileactivity_datatitle">DADOS DO ALUNO\n%s</string>
 
     <string name="studentscheduleactivity_title">Horários</string>
     <string name="studentscheduleactivity_no_classes">Não há aulas para este dia.</string>
