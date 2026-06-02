@@ -80,4 +80,5 @@ dependencies {
     implementation("io.coil-kt:coil:2.7.0")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3")
     implementation("io.noties.markwon:core:4.6.2")
+    implementation("com.github.chrisbanes:PhotoView:2.3.0")
 }

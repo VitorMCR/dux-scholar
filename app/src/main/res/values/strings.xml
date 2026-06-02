@@ -58,6 +58,9 @@
     <string name="studentprofileactivity_datalist">Status:\nRA:\nCurso:\nSemestre:\nTurno:</string>
     <string name="studentprofileactivity_datatitle">DADOS DO ALUNO -\n%s</string>
 
+    <string name="studentscheduleactivity_title">Horários</string>
+    <string name="studentscheduleactivity_no_classes">Não há aulas para este dia.</string>
+
     <string name="editpt2activity_title_editing">EDITANDO %s</string>
     <string name="editpt2activity_prompt_insert">Inserir %s</string>
     <string name="editpt2activity_prompt_edit">Editar %s</string>

@@ -43,7 +43,7 @@
             android:name=".StudentProfileActivity"
             android:exported="false" />
         <activity
-            android:name=".HoursActivity"
+            android:name=".StudentScheduleActivity"
             android:exported="false" />
         <activity
             android:name=".ServicesActivity"

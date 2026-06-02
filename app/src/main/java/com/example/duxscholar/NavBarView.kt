@@ -11,7 +11,7 @@ import com.example.duxscholar.databinding.LayoutNavbarBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 
-class NavbarView @JvmOverloads constructor(
+class NavBarView @JvmOverloads constructor(
     context: Context,
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0

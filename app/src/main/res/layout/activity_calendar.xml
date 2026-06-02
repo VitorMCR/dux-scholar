@@ -41,7 +41,7 @@
         android:layout_marginTop="24dp"
         android:textAlignment="center"
         android:textColor="@color/textColor"
-        android:textSize="14dp"
+        android:textSize="14sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:maxImageSize="32dp" />
 
-    <com.example.duxscholar.NavbarView
+    <com.example.duxscholar.NavBarView
         android:id="@+id/navbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

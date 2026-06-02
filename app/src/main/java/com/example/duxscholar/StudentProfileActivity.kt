@@ -16,6 +16,7 @@ import kotlinx.coroutines.tasks.await
 
 class StudentProfileActivity : AppCompatActivity() {
     lateinit var btnCarteirinha: Button
+    lateinit var btnHorarios: Button
     lateinit var auth: FirebaseAuth
     lateinit var txtDataLabelValues: TextView
     lateinit var txtDataHeader: TextView
@@ -28,9 +29,15 @@ class StudentProfileActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         btnCarteirinha = findViewById(R.id.btnStuCarteirinha)
+        btnHorarios = findViewById(R.id.btnHorarios)
 
         btnCarteirinha.setOnClickListener {
             val intent = Intent(this, CarteirinhaActivity::class.java)
+            startActivity(intent)
+        }
+
+        btnHorarios.setOnClickListener {
+            val intent = Intent(this, StudentScheduleActivity::class.java)
             startActivity(intent)
         }
 
