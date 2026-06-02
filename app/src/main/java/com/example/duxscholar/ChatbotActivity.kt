@@ -70,9 +70,6 @@ class ChatbotActivity : AppCompatActivity() {
 
     private val INPUT_MAX_CHARS = 500
 
-    private val PREFS_NAME = "chatbot_prefs"
-    private val KEY_HISTORY = "conversation_history"
-
     private val chipSuggestions = listOf(
         "Quais são os cursos?",
         "Ver notícias",
@@ -81,6 +78,12 @@ class ChatbotActivity : AppCompatActivity() {
         "Contato da faculdade",
         "Transporte escolar"
     )
+
+    companion object {
+        // Controla se o splash já foi exibido nessa sessão do app
+        // Reseta quando o processo do app é encerrado (app fechado de verdade)
+        var splashAlreadyShown = false
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -156,39 +159,42 @@ class ChatbotActivity : AppCompatActivity() {
                 }
             })
 
-        showSplashThenChat()
+        // Se o splash já foi exibido nessa sessão, vai direto pro chat
+        if (splashAlreadyShown) {
+            layoutSplash.visibility = View.GONE
+            layoutChat.visibility = View.VISIBLE
+            addMessage(
+                "Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?",
+                false
+            )
+        } else {
+            showSplashThenChat()
+        }
     }
 
     private fun setupButtons() {
-        // Botão fechar
         findViewById<ImageView>(R.id.btnClose).setOnClickListener { finish() }
 
-        // Botão "Nova conversa" — abre o modal
         findViewById<TextView>(R.id.btnNewChat).setOnClickListener {
             showNewChatModal()
         }
 
-        // Clique fora do modal (no overlay) fecha sem confirmar
         layoutModalOverlay.setOnClickListener {
             hideNewChatModal()
         }
 
-        // Botão cancelar do modal
         findViewById<TextView>(R.id.btnModalCancel).setOnClickListener {
             hideNewChatModal()
         }
 
-        // Botão confirmar do modal
         findViewById<TextView>(R.id.btnModalConfirm).setOnClickListener {
             hideNewChatModal()
             clearConversation()
         }
 
-        // Impede que o clique no card do modal feche o overlay
         findViewById<LinearLayout>(R.id.layoutModal).setOnClickListener { }
     }
 
-    // Exibe o modal com fade in
     private fun showNewChatModal() {
         layoutModalOverlay.visibility = View.VISIBLE
         layoutModalOverlay.alpha = 0f
@@ -198,7 +204,6 @@ class ChatbotActivity : AppCompatActivity() {
             .start()
     }
 
-    // Fecha o modal com fade out
     private fun hideNewChatModal() {
         layoutModalOverlay.animate()
             .alpha(0f)
@@ -216,9 +221,7 @@ class ChatbotActivity : AppCompatActivity() {
         imgDuque.scaleX = 0.5f
         imgDuque.scaleY = 0.5f
         imgDuque.animate()
-            .alpha(1f)
-            .scaleX(1f)
-            .scaleY(1f)
+            .alpha(1f).scaleX(1f).scaleY(1f)
             .setDuration(500)
             .withEndAction {
                 txtName.animate().alpha(1f).setDuration(350).withEndAction {
@@ -241,64 +244,26 @@ class ChatbotActivity : AppCompatActivity() {
                     .alpha(1f)
                     .setDuration(350)
                     .withEndAction {
-                        loadHistoryOrWelcome()
+                        // Marca que o splash já foi exibido nessa sessão
+                        splashAlreadyShown = true
+                        addMessage(
+                            "Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?",
+                            false
+                        )
                     }.start()
             }.start()
     }
 
-    private fun loadHistoryOrWelcome() {
-        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val savedHistory = prefs.getString(KEY_HISTORY, null)
-
-        if (!savedHistory.isNullOrEmpty()) {
-            try {
-                conversationHistory = JSONArray(savedHistory)
-                for (i in 0 until conversationHistory.length()) {
-                    val turn = conversationHistory.getJSONObject(i)
-                    val role = turn.getString("role")
-                    val text = turn.getJSONArray("parts")
-                        .getJSONObject(0)
-                        .getString("text")
-
-                    val displayText = if (role == "user" && text.contains("Pergunta do aluno:")) {
-                        text.substringAfter("Pergunta do aluno:").trim()
-                    } else {
-                        text
-                    }
-
-                    val isUser = role == "user"
-                    messages.add(Message(displayText, isUser, false, ""))
-                }
-                adapter.notifyDataSetChanged()
-                recyclerView.post {
-                    recyclerView.scrollToPosition(messages.size - 1)
-                }
-                return
-            } catch (e: Exception) {
-                Log.e("Chatbot", "Erro ao restaurar histórico: ${e.message}")
-            }
-        }
-
-        addMessage("Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?", false)
-    }
-
-    private fun saveHistory() {
-        val prefs = getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        prefs.edit().putString(KEY_HISTORY, conversationHistory.toString()).apply()
-    }
-
     private fun clearConversation() {
         conversationHistory = JSONArray()
-        getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-            .edit().remove(KEY_HISTORY).apply()
-
         messages.clear()
         adapter.notifyDataSetChanged()
-
         setChipsEnabled(true)
         setSendButtonEnabled(true)
-
-        addMessage("Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?", false)
+        addMessage(
+            "Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?",
+            false
+        )
         Toast.makeText(this, "Nova conversa iniciada!", Toast.LENGTH_SHORT).show()
     }
 
@@ -363,7 +328,9 @@ class ChatbotActivity : AppCompatActivity() {
     }
 
     private fun getCurrentTime(): String {
-        return SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        sdf.timeZone = TimeZone.getTimeZone("America/Sao_Paulo")
+        return sdf.format(Date())
     }
 
     private fun addMessage(text: String, isUser: Boolean) {
@@ -524,11 +491,10 @@ class ChatbotActivity : AppCompatActivity() {
                 }
                 conversationHistory.put(modelTurn)
 
-                saveHistory()
-
                 runOnUiThread { callback(text) }
 
             } catch (e: Exception) {
+                // Remove a última mensagem do usuário do histórico se a requisição falhou
                 if (conversationHistory.length() > 0) {
                     val cleaned = JSONArray()
                     for (i in 0 until conversationHistory.length() - 1) {
@@ -536,9 +502,18 @@ class ChatbotActivity : AppCompatActivity() {
                     }
                     conversationHistory.put(cleaned)
                 }
-                runOnUiThread {
-                    callback("Não consegui me conectar agora. Tente novamente em instantes.")
+
+                // erros
+                val errorMessage = when (e) {
+                    is java.net.UnknownHostException -> "Sem conexão com a internet. Verifique sua rede."
+                    is java.net.SocketTimeoutException -> "Tempo de resposta esgotado. Tente novamente."
+                    is java.io.IOException -> "Erro de conexão: ${e.message}"
+                    else -> "Erro: ${e.javaClass.simpleName} — ${e.message}"
                 }
+
+                Log.e("ChatbotActivity", "Erro ao chamar Gemini: ${e.javaClass.name} — ${e.message}")
+
+                runOnUiThread { callback(errorMessage) }
             }
         }.start()
     }
