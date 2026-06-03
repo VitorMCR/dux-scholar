@@ -42,7 +42,11 @@ class SettingsActivity : AppCompatActivity() {
                 if (edtxtConfigNewPass.text.toString().length >= 6) {
                     user.updatePassword(edtxtConfigNewPass.text.toString()).addOnSuccessListener {
                         Snackbar.make(window.decorView.rootView, "Senha alterada com sucesso!", Snackbar.LENGTH_SHORT).show()
-                        FirebaseDatabase.getInstance().getReference("alunos").child(user.uid).child("temppass").setValue("")
+                        FirebaseDatabase.getInstance().getReference("alunos").child(user.uid).get().addOnSuccessListener {
+                            if (it.exists()) {
+                                FirebaseDatabase.getInstance().getReference("alunos").child(user.uid).child("temppass").setValue("")
+                            }
+                        }
                         edtxtConfigNewPass.text.clear()
                         edtxtConfigRepNewPass.text.clear()
                     }
