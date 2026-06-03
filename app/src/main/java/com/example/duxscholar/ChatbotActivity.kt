@@ -24,6 +24,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -34,8 +37,6 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
-import java.io.BufferedReader
-import java.io.InputStreamReader
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -70,9 +71,20 @@ class ChatbotActivity : AppCompatActivity() {
     private var disciplinasContext: String = ""
     private var horarioContext: String = ""
 
+    // Contexto do aluno logado
+    private var alunoContext: String = ""
+    private var alunoCarregado = false
+
+    // Dados do aluno logado
+    private var alunoNome: String = ""
+    private var alunoRA: String = ""
+    private var alunoSemestre: String = ""
+    private var alunoCursoId: String = ""
+    private var alunoCursoNome: String = ""
+
     // Mapas para resolver relacionamentos entre tabelas
     private val cursosMap = mutableMapOf<String, String>()
-    private val professoresMap = mutableMapOf<String, String>() // id -> nome do professor
+    private val professoresMap = mutableMapOf<String, String>()
     private val disciplinasMap = mutableMapOf<String, Map<String, String>>()
 
     // Controle de carregamento
@@ -105,13 +117,13 @@ class ChatbotActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_chatbot)
 
-        editTextInput     = findViewById(R.id.editTextInput)
-        recyclerView      = findViewById(R.id.recvChat)
-        lnlytChips        = findViewById(R.id.lnlytChips)
-        scrollChips       = findViewById(R.id.scrollChips)
-        buttonSend        = findViewById(R.id.buttonSend)
-        layoutChat        = findViewById(R.id.layoutChat)
-        layoutSplash      = findViewById(R.id.layoutSplash)
+        editTextInput      = findViewById(R.id.editTextInput)
+        recyclerView       = findViewById(R.id.recvChat)
+        lnlytChips         = findViewById(R.id.lnlytChips)
+        scrollChips        = findViewById(R.id.scrollChips)
+        buttonSend         = findViewById(R.id.buttonSend)
+        layoutChat         = findViewById(R.id.layoutChat)
+        layoutSplash       = findViewById(R.id.layoutSplash)
         layoutModalOverlay = findViewById(R.id.layoutModalOverlay)
 
         adapter = MessageAdapter(messages)
@@ -140,15 +152,101 @@ class ChatbotActivity : AppCompatActivity() {
             }
         })
 
+        // Carrega dados do Firebase em paralelo
+        loadAlunoLogado()
         loadFirebaseData()
 
         if (splashAlreadyShown) {
             layoutSplash.visibility = View.GONE
             layoutChat.visibility   = View.VISIBLE
-            addMessage("Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?", false)
+            addWelcomeMessage()
         } else {
             showSplashThenChat()
         }
+    }
+
+    // ─────────────────────────────────────────────
+    // CARREGAMENTO DO ALUNO LOGADO
+    // ─────────────────────────────────────────────
+
+    private fun loadAlunoLogado() {
+        val uid = Firebase.auth.currentUser?.uid
+
+        // Se não há usuário logado, marca como carregado sem dados (acesso anônimo)
+        if (uid == null) {
+            alunoCarregado = true
+            Log.d("Firebase", "Nenhum usuário logado — chatbot sem contexto de aluno")
+            return
+        }
+
+        FirebaseDatabase.getInstance().getReference("alunos").child(uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (!snapshot.exists()) {
+                        alunoCarregado = true
+                        Log.d("Firebase", "Aluno não encontrado no banco")
+                        return
+                    }
+
+                    val aluno = snapshot.getValue(Aluno::class.java) ?: run {
+                        alunoCarregado = true
+                        return
+                    }
+
+                    alunoNome     = aluno.name
+                    alunoRA       = aluno.ra
+                    alunoSemestre = aluno.semester.toString()
+                    alunoCursoId  = aluno.curso
+
+                    // JOIN: busca o nome do curso pelo ID
+                    FirebaseDatabase.getInstance().getReference("cursos").child(alunoCursoId)
+                        .addListenerForSingleValueEvent(object : ValueEventListener {
+                            override fun onDataChange(cursoSnapshot: DataSnapshot) {
+                                if (cursoSnapshot.exists()) {
+                                    val curso = cursoSnapshot.getValue(Curso::class.java)
+                                    alunoCursoNome = curso?.name ?: ""
+                                }
+
+                                // Monta o contexto do aluno com os dados já resolvidos
+                                montarContextoAluno()
+                                alunoCarregado = true
+                                Log.d("Firebase", "Aluno logado carregado: $alunoNome — $alunoCursoNome — ${alunoSemestre}º sem")
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                alunoCarregado = true
+                                Log.e("Firebase", "Erro ao buscar curso do aluno: ${error.message}")
+                            }
+                        })
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    alunoCarregado = true
+                    Log.e("Firebase", "Erro ao buscar aluno logado: ${error.message}")
+                }
+            })
+    }
+
+    private fun montarContextoAluno() {
+        if (alunoNome.isBlank()) {
+            alunoContext = ""
+            return
+        }
+
+        val sb = StringBuilder()
+        sb.append("Dados do aluno que está conversando agora:\n")
+        sb.append("- Nome: $alunoNome\n")
+        if (alunoRA.isNotBlank())       sb.append("- Registro Acadêmico (RA): $alunoRA\n")
+        if (alunoCursoNome.isNotBlank()) sb.append("- Curso: $alunoCursoNome\n")
+        if (alunoSemestre.isNotBlank()) sb.append("- Semestre atual: ${alunoSemestre}º semestre\n")
+
+        sb.append("\n")
+        sb.append("Instruções especiais para o aluno logado:\n")
+        sb.append("- Quando o aluno perguntar sobre 'minha grade', 'minhas aulas', 'que aulas tenho', use o curso e semestre acima para filtrar os dados da grade de horários.\n")
+        sb.append("- Quando o aluno perguntar 'que aula tenho na segunda' ou qualquer dia da semana, filtre a grade pelo curso e semestre do aluno e mostre as disciplinas do dia solicitado.\n")
+        sb.append("- Você pode chamar o aluno pelo primeiro nome ao responder, para tornar a conversa mais pessoal.\n")
+
+        alunoContext = sb.toString()
     }
 
     // ─────────────────────────────────────────────
@@ -157,7 +255,6 @@ class ChatbotActivity : AppCompatActivity() {
 
     private fun loadFirebaseData() {
 
-        // Notícias
         FirebaseDatabase.getInstance().getReference("noticias")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -173,7 +270,6 @@ class ChatbotActivity : AppCompatActivity() {
                 }
             })
 
-        // Informações acadêmicas
         FirebaseDatabase.getInstance().getReference("infoacademicas")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -188,45 +284,38 @@ class ChatbotActivity : AppCompatActivity() {
                 }
             })
 
-        // Professores
         FirebaseDatabase.getInstance().getReference("professores")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val sb = StringBuilder("Professores da instituição:\n")
                     for (data in snapshot.children) {
-                        val id = data.key ?: continue
+                        val id   = data.key ?: continue
                         val nome = data.child("name").value.toString()
                         val email = data.child("email").value.toString()
-
-                        // Salva no mapa para cruzar com as disciplinas depois
                         professoresMap[id] = nome
-
                         sb.append("- Nome: $nome\n")
                         sb.append("  Email: $email\n")
                     }
-                    professoresContext = sb.toString()
+                    professoresContext  = sb.toString()
                     professoresCarregados = true
-                    tentarMontarDisciplinas() // Chama a verificação
+                    tentarMontarDisciplinas()
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("Firebase", "Erro professores: ${error.message}")
                 }
             })
 
-        // Cursos
         FirebaseDatabase.getInstance().getReference("cursos")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val sb = StringBuilder("Cursos da instituição:\n")
                     for (data in snapshot.children) {
-                        val id       = data.key ?: continue
-                        val nome     = data.child("name").value.toString()
-                        val periodo  = data.child("shift").value.toString()
-                        val duracao  = data.child("duration").value.toString()
-                        val vagas    = data.child("capacity").value.toString()
-
+                        val id      = data.key ?: continue
+                        val nome    = data.child("name").value.toString()
+                        val periodo = data.child("shift").value.toString()
+                        val duracao = data.child("duration").value.toString()
+                        val vagas   = data.child("capacity").value.toString()
                         cursosMap[id] = nome
-
                         sb.append("- Curso: $nome\n")
                         sb.append("  Período: $periodo\n")
                         sb.append("  Duração: $duracao semestres\n")
@@ -241,19 +330,17 @@ class ChatbotActivity : AppCompatActivity() {
                 }
             })
 
-        // Disciplinas
         FirebaseDatabase.getInstance().getReference("disciplinas")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    disciplinasSnap = snapshot // Guarda o snapshot
-                    tentarMontarDisciplinas() // Tenta montar se professores já carregou
+                    disciplinasSnap = snapshot
+                    tentarMontarDisciplinas()
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("Firebase", "Erro disciplinas: ${error.message}")
                 }
             })
 
-        // Horários
         FirebaseDatabase.getInstance().getReference("horarios_aula")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -266,53 +353,47 @@ class ChatbotActivity : AppCompatActivity() {
             })
     }
 
-    // Só monta o contexto de disciplinas quando os professores já foram carregados
     private fun tentarMontarDisciplinas() {
         val snapshot = disciplinasSnap ?: return
-        if (!professoresCarregados) return // Aguarda o carregamento dos professores
+        if (!professoresCarregados) return
 
         val sb = StringBuilder("Disciplinas da instituição:\n")
         for (data in snapshot.children) {
-            val id        = data.key ?: continue
-            val nome      = data.child("name").value.toString()
-            val periodo   = data.child("shift").value.toString()
-            val profId    = data.child("professor").value.toString() // Este é o ID
-            val semestre  = data.child("semester").value?.toString() ?: ""
-            val cursoId   = data.child("course").value?.toString() ?: ""
-
-            // CRUZAMENTO DE DADOS: Pega o ID e busca o Nome Real
+            val id       = data.key ?: continue
+            val nome     = data.child("name").value.toString()
+            val periodo  = data.child("shift").value.toString()
+            val profId   = data.child("professor").value.toString()
+            val semestre = data.child("semester").value?.toString() ?: ""
+            val cursoId  = data.child("course").value?.toString() ?: ""
             val profNome = professoresMap[profId] ?: "Professor não alocado"
 
             disciplinasMap[id] = mapOf(
                 "nome"      to nome,
-                "professor" to profNome, // Agora guarda o NOME
+                "professor" to profNome,
                 "periodo"   to periodo,
                 "semestre"  to semestre,
                 "cursoId"   to cursoId
             )
 
             sb.append("- Disciplina: $nome\n")
-            sb.append("  Professor: $profNome\n") // O Gemini recebe apenas o NOME
+            sb.append("  Professor: $profNome\n")
             sb.append("  Período: $periodo\n")
             if (semestre.isNotEmpty()) sb.append("  Semestre: $semestre\n")
         }
-        disciplinasContext   = sb.toString()
+        disciplinasContext    = sb.toString()
         disciplinasCarregadas = true
-        tentarMontarHorario() // Segue o fluxo normal
+        tentarMontarHorario()
     }
 
-    // Só monta o contexto de horários quando cursos, disciplinas e o snapshot já chegaram
     private fun tentarMontarHorario() {
         val snapshot = horariosPendentes ?: return
         if (!cursosCarregados || !disciplinasCarregadas) return
 
         val sb = StringBuilder("Grade de Horários por curso e semestre:\n")
 
-        // Estrutura: horarios_aula / [cursoId] / [semestre] / [diaDaSemana] / [0,1,2...] = disciplinaId ou "none"
         for (cursoSnap in snapshot.children) {
             val cursoId   = cursoSnap.key ?: continue
             val cursoNome = cursosMap[cursoId] ?: "Curso $cursoId"
-
             sb.append("\nCurso: $cursoNome\n")
 
             for (semestreSnap in cursoSnap.children) {
@@ -326,14 +407,13 @@ class ChatbotActivity : AppCompatActivity() {
                     for (aulaSnap in diaSnap.children) {
                         val discId = aulaSnap.value?.toString() ?: continue
                         if (discId == "none") continue
-
                         val disc = disciplinasMap[discId]
                         if (disc != null) {
-                            val nomedisc = disc["nome"] ?: discId
+                            val nomeDisc = disc["nome"] ?: discId
                             val prof     = disc["professor"] ?: ""
                             disciplinasNoDia.add(
-                                if (prof.isNotEmpty()) "$nomedisc (Prof: $prof)"
-                                else nomedisc
+                                if (prof.isNotEmpty()) "$nomeDisc (Prof: $prof)"
+                                else nomeDisc
                             )
                         }
                     }
@@ -357,6 +437,12 @@ class ChatbotActivity : AppCompatActivity() {
         val base = loadContextFromAssets()
         val sb   = StringBuilder()
         sb.append(base).append("\n\n")
+
+        // Injeta o contexto do aluno logo após as instruções base,
+        // para que o Gemini saiba quem está conversando desde o início
+        if (alunoContext.isNotEmpty()) {
+            sb.append(alunoContext).append("\n")
+        }
 
         sb.append("""
             Instruções de relacionamento entre dados:
@@ -382,6 +468,16 @@ class ChatbotActivity : AppCompatActivity() {
     // ─────────────────────────────────────────────
     // UI
     // ─────────────────────────────────────────────
+
+    private fun addWelcomeMessage() {
+        val greeting = if (alunoNome.isNotBlank()) {
+            val firstName = alunoNome.split(" ").firstOrNull() ?: alunoNome
+            "Olá, $firstName! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?"
+        } else {
+            "Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?"
+        }
+        addMessage(greeting, false)
+    }
 
     private fun setupButtons() {
         findViewById<ImageView>(R.id.btnClose).setOnClickListener { finish() }
@@ -439,7 +535,7 @@ class ChatbotActivity : AppCompatActivity() {
                 layoutChat.animate().alpha(1f).setDuration(350)
                     .withEndAction {
                         splashAlreadyShown = true
-                        addMessage("Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?", false)
+                        addWelcomeMessage()
                     }.start()
             }.start()
     }
@@ -450,7 +546,7 @@ class ChatbotActivity : AppCompatActivity() {
         adapter.notifyDataSetChanged()
         setChipsEnabled(true)
         setSendButtonEnabled(true)
-        addMessage("Olá! Meu nome é Duque, seu assistente pessoal!\n\nComo posso te ajudar?", false)
+        addWelcomeMessage()
         Toast.makeText(this, "Nova conversa iniciada!", Toast.LENGTH_SHORT).show()
     }
 
@@ -644,11 +740,11 @@ class ChatbotActivity : AppCompatActivity() {
                     for (i in 0 until conversationHistory.length() - 1) {
                         cleaned.put(conversationHistory.get(i))
                     }
-                    conversationHistory.put(cleaned)
+                    conversationHistory = cleaned
                 }
 
                 val errorMessage = when (e) {
-                    is java.net.UnknownHostException  -> "Sem conexão com a internet. Verifique sua rede."
+                    is java.net.UnknownHostException   -> "Sem conexão com a internet. Verifique sua rede."
                     is java.net.SocketTimeoutException -> "Tempo de resposta esgotado. Tente novamente."
                     is java.io.IOException             -> "Erro de conexão: ${e.message}"
                     else -> "Erro: ${e.javaClass.simpleName} — ${e.message}"
