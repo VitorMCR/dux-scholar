@@ -4,10 +4,14 @@ Um *proof of concept* para um aplicativo voltado a instituições de ensino. Con
 ## *Features*
 * Painel de configuração para administradores
   * Cadastre alunos e professores, adicione notícias, informações acadêmicas, cursos, disciplinas e mais.
-* Mascote *Chatbot* auxiliar que atualiza seus conhecimentos conforme adições são feitas pelo painel de configuração.
+* **Duque** - Mascote *Chatbot* auxiliar que atualiza seus conhecimentos conforme adições são feitas pelo painel de configuração.
 * Calendário, para marcar datas importantes
 * Tela exclusiva para alunos: carteirinha, horários e dados relevantes.
 * Suporte a [Markdown](https://www.markdownguide.org/cheat-sheet/) para formatação de notícias e informações acadêmicas.
+
+<p align="center">
+ <img width="270" height="600" alt="Screenshot_20260630_175914" src="https://github.com/user-attachments/assets/1f8bc8cf-523f-4c1a-9da8-80d6ef44a8eb" />
+</p>
 
 # Como Utilizar
 
@@ -33,7 +37,7 @@ API_KEY="SUA_CHAVE_AQUI"
 6. No *Dashboard* do seu projeto do Firebase, procure e inicie ***Authentication*** e ***Realtime Database***.
 7. Na página ***Authentication***, crie um usuário qualquer - este será sua conta de **administrador**.
 8. No Android Studio, [configure um emulador](https://developer.android.com/studio/run/emulator?hl=pt-br) ou [conecte seu celular via "depuração USB"](https://developer.android.com/studio/run/device?hl=pt-br) e inicie o app.
-9. Faça log-in com a conta que você criou no *Dashboard*. Acesse o **ícone de lápis** no canto superior direito para abrir o painel de configuração.
+9. Faça log-in com a conta que você criou no *Dashboard* clicando na foto de perfil. Acesse o **ícone de lápis** no canto superior direito para abrir o painel de configuração.
 10. Aproveite!
 
-*O projeto não está completo e atualmente se encontra em hiato. Sinta-se livre para criar um fork e incrementar funcionalidades!*
+*DISCLAIMER: O projeto não está completo e atualmente se encontra em hiato. Sinta-se livre para criar um fork e incrementar funcionalidades!*
